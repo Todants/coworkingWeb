@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="card">
+            <div class="content">
+                <div class="imgBx"><img src="igor.jpg" width="120" height="120"></div>
+                <div class="contentBx">
+                    <h3>    Игорь Поляков </h3>
+                    <span>      Тимлид </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="content">
+                <div class="imgBx"><img src="yarik.jpg" width="120" height="120"></div>
+                <div class="contentBx">
+                    <h3>    Ярослав Максин </h3>
+                    <span>      Frontend-разработчик </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="content">
+                <div class="imgBx"><img src="vadim.jpg" width="120" height="120"></div>
+                <div class="contentBx">
+                    <h3>    Вадим Захаров </h3>
+                    <span>      Тестировщик </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(white, cadetblue);
+}
+
+.contact-container{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.contact-left{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+}
+
+.contact-left-title h2{
+    font-weight: 600;
+    color: white;
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+.contact-left-title hr {
+    border: none;
+    width: 120px;
+    height: 5px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-input{
+    width: 400px;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 25px;
+    font-weight: 500;
+    color: black;
+    border-radius: 50px;
+}
+
+.contact-left textarea{
+    height: 140px;
+    padding-top: 15px;
+    border-radius: 20px;
+}
+
+.contact-input:focus{
+    border: 2px solid cadetblue;
+}
+
+.contact-input::placeholder{
+    color: grey;
+}
+
+.contact-left button{
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 16px;
+    color: white;
+    gap: 10px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(270deg, white, cadetblue);
+    cursor: pointer;
+}
+
+.contact-left button img{
+    height: 15px;
+}
+
+.contact-right img{
+    width: 500px;
+}
+
+@media (max-width:800px){
+    .contact-inputs{
+        width:80vw;
+    }
+    .contact-right{
+        display: none;
+    }
+
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: whitesmoke;
+    transition: opacity 2s, visibility 2s;
+}
+
+.loader::after{
+    content: "";
+    width: 75px;
+    height:75px;
+    border: 15px solid whitesmoke;
+    border-top-color: whitesmoke;
+    border-radius: 50%;
+    animation: loading 2s ease infinite;
+}
+
+.loader--hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+@keyframes loading {
+    from {transform: rotate(0turn) }
+    to {transform: rotate(1turn) }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+.logo {
+    font-size: 2em;
+    color: skyblue;
+    user-select: none;
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: skyblue;
+    text-decoration: none;
+    font-weight:500;
+    margin-left: 40px;
+}
+
+
+.navigation a:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    transform-origin: right;
+    background: skyblue;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .75s;
+}
+
+.navigation a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+.navigation .btnLogin {
+    width:130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid skyblue;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size:1.1em;
+    color: skyblue;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .75s;
+}
+
+.navigation .btnLogin:hover{ /* Кнопка регистрации/входа */
+    background: cadetblue;
+    color: skyblue;
+}

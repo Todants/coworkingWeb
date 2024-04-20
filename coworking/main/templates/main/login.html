@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'main/css/login.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container" id="container">
+    <div class="form-container sign-up">
+        <form>
+            <h1>Создать Аккаунт</h1>
+            <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-vk"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-odnoklassniki"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <span>или использовать электронную почту для регистрации</span>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button> Войти </button>
+        </form>
+    </div>
+    <div class="form-container sign-in">
+        <form>
+            <h1> Войти </h1>
+            <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-vk"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-odnoklassniki"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <span>или использовать электронную почту с паролем</span>
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <a href="#">Забыли пароль?</a>
+            <a class="btnLogin" href="#">Войти</a>
+        </form>
+    </div>
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>Добро пожаловать</h1>
+                <p>Введите свои персональные данные для использования функционала сайта</p>
+                <button class="hidden" id="login"> Войти </button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Привет, друг!</h1>
+                <p>Зарегистрирутесь, чтобы получить доступ к функционалу сайта</p>
+                <button class="hidden" id="register"> Зарегистрироваться </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loader"></div>
+{% endblock %}
