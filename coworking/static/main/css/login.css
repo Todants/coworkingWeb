@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@font-face {
+    font-family: "Sans pro Regular";
+    src: url("/static/main/fonts/SourceSansPro-SemiBold.ttf");
+  }
+@font-face {
+    font-family: "Sans pro Light";
+    src: url("/static/main/fonts/SourceSansPro-Light.ttf");
+  }
+@font-face {
+    font-family: "Sans pro 400";
+    src: url("/static/main/fonts/SourceSansPro-Regular.ttf");
+  }
 
-.container {
-    background-color: #222222;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    position: relative;
-    overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;   
 }
+
+
+
 
 .container p{
     font-size: 14px;
@@ -23,55 +34,42 @@
 }
 
 
-.container button {
-    background-color: skyblue;
-    color: #161616;
-    font-size: 12px;
-    padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
-}
 
-.container button.hidden {
-    background-color: transparent;
-    border-color: #161616;
-}
+
 
 .container form {
-    background-color: #222222;
+    background-color: var(--main-bg-color);
+    display: flex;
+    
+    flex-direction: column;
+    height: 70%;
+
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    height: 100%;
+    padding: 0 120px;
+    margin-top: 10%;
+    
 }
 
 .container input {
-    background-color: #161616;
+    background-color: var(--white-bg-color);
     border: none;
-    color: #ca5f25;
-    margin: 8px 0;
-    padding: 10px 15px;
+    color: var(--gray-color);
+    margin-top: 20px;
+    padding: 10px 25px;
     font-size: 13px;
-    border-radius: 8px;
+    border-radius: 40px;
     width: 100%;
+    height: 8%;
     outline: none;
 }
 
 .container input:focus {
-    background-color: #161616;
-    border: 2px solid #ca5f25;
-    color: #ca5f25;
-    margin: 8px 0;
+    background-color: var(--main-bg-color);
+    border: 2px solid var(--gray-color);
+    color: var(--gray-color);
     padding: 10px 15px;
     font-size: 13px;
-    border-radius: 8px;
     width: 100%;
     outline: none;
 }
@@ -84,7 +82,7 @@
 }
 
 .sign-in {
-    left: 0;
+    left: 50%;
     width: 50%;
     z-index: 2;
 }
@@ -107,42 +105,15 @@
     animation: move 0.6s;
 }
 
-@keyframes move {
-    0%, 49.99%{
-        opacity: 0;
-        z-index: 1;
-    }
-    50%, 100%{
-        opacity: 1;
-        z-index: 5;
-    }
-}
-
-.social-icons {
-    margin: 20px 0;
-}
-
-.social-icons a {
-    border: 1px solid #161616;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-}
-
 .toggle-container {
     position: absolute;
     top: 0;
-    left: 50%;
+    left: 0%;
     width: 50%;
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
-    z-index: 1000;
+   
 }
 
 .container.active .toggle-container{
@@ -151,14 +122,13 @@
 }
 
 .toggle{
-    background-color: #222222;
+    background-color: var(--main-bg-color);
     height: 100%;   
-    background: linear-gradient(to right, #ca632b, #ca5f25);
-    color: #222222;
+    background: var(--white-orange-color);
+    color: var(--main-bg-color);
     position: relative;
-    left: -100%;
+    left: 100%;
     height: 100%;
-    width: 200%;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
@@ -167,10 +137,38 @@
     transform: translateX(50%);
 }
 
+.toggle-panel .btnLogin{
+    margin-top: 19%;
+    color: var(--white-bg-color);
+    border: 2px solid var(--white-bg-color);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background: transparent;
+    
+
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size:1.1em;
+    
+    font-weight: 500;
+    margin-left: 4px;
+    margin-right: 4px;
+    transition: .75s; 
+}
+
+.toggle-panel .btnLogin:hover{
+    background: var(--white-bg-color);
+    color: var(--white-orange-color);
+}
+
+
 .toggle-panel{
     position: absolute;
     width: 50%;
-    height: 100%;
+    margin-top: 16%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,50 +197,54 @@
     transform: translateX(200%);
 }
 
-@keyframes loading {
-    from {transform: rotate(0turn) }
-    to {transform: rotate(1turn) }
-}
-
 .toggle-container{
-    color:#ca632b;
-    background-color: #ca632b;
+    color:var(--white-orange-color);
+    background-color: var(--white-orange-color);
 }
 
 form h1{
-    color: #ca632b;
+    color: var(--gray-color);
+    font-family: "Sans pro 400";
+    margin-top: 40%;
+    margin-bottom: 20px;
 }
 
 form .btnLogin {
-    color: #ca5f25;
-    border: 2px solid #ca5f25;
+    color: var(--gray-color);
+    border: 2px solid var(--gray-color);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     background: transparent;
+    font-family: "Sans pro 400";
     
 
+    width: 100%;
     outline: none;
-    border-radius: 6px;
+    border-radius: 40px;
     cursor: pointer;
     font-size:1.1em;
     
     font-weight: 500;
-    margin-left: 40px;
+    margin-left: 4px;
+    margin-right: 4px;
     transition: .75s;
-    margin-top: 20px;
+    margin-top: 35px;
     
 }
 form a{
-    color: #ca632b
+    color: var(--gray-color);
+    margin-top: 15px;
+    text-decoration: none;
+    font-family: "Sans pro Light";
 }
 
 form span{
-    color: #ca632b
+    color: var(--gray-color);
 }
 
 form .btnLogin:hover{ /* Кнопка регистрации/входа */
-    background: #ca5f25;
-    color: #161616;
+    background: var(--gray-color);
+    color: var(--main-bg-color);
 }

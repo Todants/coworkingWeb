@@ -1,59 +1,50 @@
-{% extends 'main/base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Бронь </title>
+    <meta charset="UTF-8">
+    <meta name="viewsport" content="width=device-width, initial-scale=1.0">
 
-{% block styles %}
-<link rel="stylesheet" href="{% static 'main/css/login.css' %}">
-{% endblock %}
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
 
 
-{% block content %}
-<div class="container" id="container">
-    <div class="form-container sign-up">
-        <form>
-            <h1>Создать Аккаунт</h1>
-            <div class="social-icons">
-                <a href="#" class="icon"><i class="fa-brands fa-vk"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-odnoklassniki"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            </div>
-            <span>или использовать электронную почту для регистрации</span>
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
-            <button> Войти </button>
-        </form>
-    </div>
-    <div class="form-container sign-in">
-        <form>
-            <h1> Войти </h1>
-            <div class="social-icons">
-                <a href="#" class="icon"><i class="fa-brands fa-vk"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-odnoklassniki"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            </div>
-            <span>или использовать электронную почту с паролем</span>
-            <input type="email" placeholder="Email">
-            <input type="password" placeholder="Password">
-            <a href="#">Забыли пароль?</a>
-            <a class="btnLogin" href="#">Войти</a>
-        </form>
-    </div>
-    <div class="toggle-container">
-        <div class="toggle">
-            <div class="toggle-panel toggle-left">
-                <h1>Добро пожаловать</h1>
-                <p>Введите свои персональные данные для использования функционала сайта</p>
-                <button class="hidden" id="login"> Войти </button>
-            </div>
-            <div class="toggle-panel toggle-right">
-                <h1>Привет, друг!</h1>
-                <p>Зарегистрирутесь, чтобы получить доступ к функционалу сайта</p>
-                <button class="hidden" id="register"> Зарегистрироваться </button>
+    <title> c07working </title>
+</head>
+<body>
+    <header style="background-color: transparent;">
+
+        <a class ="logo" href="/"> cO7working </a>
+
+
+    </header>
+    <div class="container" id="container">
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right">
+                    <h1>Привет, друг!</h1>
+                    <p>Зарегистрируйтесь, чтобы получить доступ к функционалу сайта</p>
+                    <a class="btnLogin" href="register">Регистрация</a>
+                </div>
             </div>
         </div>
+        <div class="form-container sign-in">
+            <form>
+                <h1> Войти </h1>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                
+                <a class="btnLogin" href="#">Войти</a>
+                <a href="#">Забыли пароль?</a>
+
+                
+            </form>
+        </div>
+
     </div>
-</div>
-<div class="loader"></div>
-{% endblock %}
+
+    <div class="loader"></div>
+</body>
+</html>
+

@@ -1,3 +1,12 @@
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;
+    --soliders: black;
+}
+
+
 .container{
     position: relative ;
     z-index: 1;
@@ -5,16 +14,17 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: 40px 0;
+    margin-top: 40px;
+    width: 90%;
+   
 }
 
 .container .card{
     position: relative;
-    width: 200px;
-    height: 300px;
-    background: #d94d04;
-    margin: 20px;
-    box-shadow: 0 15px 35px #d94d04;
+    width: 180px;
+    height: 270px;
+    background: var(--white-orange-color);
+    margin-right: 2%;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -28,7 +38,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    opacity: 0.5;
     transition: 0.5s;
 }
 
@@ -39,11 +48,11 @@
 
 .container .card .content .imgBx{
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 135px;
+    height: 135px;
     border-radius: 50%;
     overflow: hidden;
-    border: 10px solid black;
+    border: 10px solid var(--soliders);
 }
 
 .container .card .content .imgBx img{
@@ -66,11 +75,9 @@
     line-height: 1.1em;
 }
 
-.container .card .content .contentBx h3 span{
-    font-size: 12px;
-    font-weight: 300;
-    text-transform: initial;
+.container .card .content .contentBx p{
     text-align: center;
+    margin: 20px 0 10px;
 }
 
 section::before{
@@ -80,7 +87,7 @@ section::before{
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(white, #d94d04);
+    background: linear-gradient(white, var(--white-orange-color));
     clip-path: circle(30% at right 70%);
 }
 
@@ -91,6 +98,6 @@ section::before{
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#d94d04, white);
+    background: linear-gradient(var(--white-orange-color), white);
     clip-path: circle(20% at 10% 10%);
 }

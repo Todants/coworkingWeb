@@ -1,48 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Обратная связь </title>
-    <link rel="stylesheet" href="contacts.css">
-    <script>
-        window.addEventListener("load", () => {
-            const loader = document.querySelector(".loader");
-            
-            document.querySelector(".loader").classList.add("loader--hidden");
-            
-            document.QuerySelector(".loader").addEventListener("transitionend", () => {
-                document.body.removeChild(document.querySelector("loader"));
-            });
-        });
-    </script>
-</head>
-<body>
-    <header>
-        <h2 class ="logo"> cO7working </h2>
-        <nav class="navigation">
-            <a href="base.html"> Бронь </a>
-            <a href="about.html"> О нас </a>
-            <a href="contacts.html"> Обратная связь</a>
-            <button class="btnLogin" onclick="document.location='login.html'"> Войти </button>
-        </nav>
-    </header>
-    <div class="contact-container">
-        <form action="https://api.web3forms.com/submit" method="POST" class="contact-left">
-            <div class="contact-left-title">
-                <h2> Свяжитесь с нами! </h2>
-                <hr>
-            </div>
-            <input type="hidden" name="access_key" value="24c40340-d039-470b-9818-8bc952a0aa67">
-            <input type="text" name="name" placeholder="Ваше имя" class="contact-input" required>
-            <input type="text" name="email" placeholder="Ваша почта" class="contact-input" required>
-            <textarea name="message" placeholder="Ваше сообщение" class="contact-input" required></textarea>
-            <button type="submit"> Отправить <img src="assets/arrow_icon.png"> </button>
-        </form>
-        <div class="contact-right">
-            <img src="assets/right_img.png" alt="">
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'main/css/contacts.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <form action="https://api.web3forms.com/submit" method="POST" class="contact-left">
+        <div class="contact-left-title">
+            <h2> Свяжитесь с нами! </h2>
+            <hr>
         </div>
+        <input type="hidden" name="access_key" value="24c40340-d039-470b-9818-8bc952a0aa67">
+        <input type="text" name="name" placeholder="Ваше имя" class="contact-input" required>
+        <input type="text" name="email" placeholder="Ваша почта" class="contact-input" required>
+        <textarea name="message" placeholder="Ваше сообщение" class="contact-input" required></textarea>
+        <button type="submit"> Отправить <img src="{% static 'main/img/arrow_icon.png' %}"> </button>
+    </form>
+    <div class="contact-right">
+        <img src="{% static 'main/img/right_img.png' %}" alt="">
     </div>
-    <div class="loader"></div>
-</body>
-</html>
+</div>
+{% endblock %}

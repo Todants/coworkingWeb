@@ -14,13 +14,19 @@
 </head>
 <body>
     <header>
-        <h2 class ="logo"> cO7working </h2>
+
         <nav class="navigation">
-            <a class="aStyle" href="/"> Бронь </a>
+            <a class ="logo" href=""> cO7working </a>
+            <a class="aStyle" href="book"> Бронь </a>
             <a class="aStyle" href="about"> О нас </a>
             <a class="aStyle" href="contacts"> Обратная связь</a>
-            <a class="btnLogin" href="login">Войти</a>
         </nav>
+
+        <div class="leftnav">
+            <a class="btnReg" href="login">Регистрация</a>
+            <a class="btnLogin" href="login">Войти</a>
+        </div>
+
     </header>
     {% block content %}{% endblock %}
 
