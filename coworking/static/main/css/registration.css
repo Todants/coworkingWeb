@@ -1,3 +1,24 @@
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;
+    --soliders: black;
+}
+@font-face {
+    font-family: "Sans pro Regular";
+    src: url("/static/main/fonts/SourceSansPro-SemiBold.ttf");
+  }
+@font-face {
+    font-family: "Sans pro Light";
+    src: url("/static/main/fonts/SourceSansPro-Light.ttf");
+  }
+@font-face {
+    font-family: "Sans pro 400";
+    src: url("/static/main/fonts/SourceSansPro-Regular.ttf");
+  }
+
+
 * {
     margin: 0;
     padding: 0;
@@ -10,13 +31,13 @@ body{
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg,orange, black);
+    background: var(--main-bg-color);
 }
 
 .container{
     max-width: 700px;
     width: 100%;
-    background: white;
+    background: var(--white-bg-color);
     padding: 25px 30px;
     border-radius: 5px;  
 }
@@ -25,6 +46,8 @@ body{
     font-size: 25px;
     font-weight: 500;
     position: relative;
+    color: var(--white-orange-color);
+    font-family: "Sans pro Regular";
 }
 
 .container .title::before{
