@@ -16,5 +16,10 @@ def about(request):
 def contacts(request):
     return render(request, 'main/contacts.html')
 
+
 def profile(request):
     return render(request, 'main/profile.html')
+
+
+def temp(request):
+    return render(request, 'main/registration.html')
