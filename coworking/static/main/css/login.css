@@ -127,13 +127,6 @@
 }
 
 
-
-.content{
-    justify-content: center;
-    position: relative;
-}
-
-
 .toggle-left{
     transform: translateX(-200%);
 }
@@ -154,11 +147,16 @@
 .toggle-container{
     color:var(--white-orange-color);
     background-color: var(--white-orange-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Дополнительные стили */
+    width: 50%; /* или любая другая ширина */
+    height: 100%; /* или любая другая высота */
 }
 
 
-img{
-    width: 70%;
+img{    
     height: 70%;
     object-fit: cover;
 }
