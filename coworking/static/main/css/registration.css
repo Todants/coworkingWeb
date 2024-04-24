@@ -27,19 +27,27 @@
 }
 
 body{
-    display: flex;
     height: 100vh;
+    background: var(--main-bg-color);
+}
+
+.place{
+    background-color: var(--main-bg-color);
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: var(--main-bg-color);
+    width: 100%;
+    height: 100%;
 }
 
 .container{
     max-width: 700px;
-    width: 100%;
-    background: var(--white-bg-color);
+    width: 20%;
+    background: var(--white-orange-color);
     padding: 25px 30px;
-    border-radius: 5px;  
+    border-radius: 5px; 
+    height: 80%; 
+    margin: 5% 5% 5% 5%;
 }
 
 .container .title{

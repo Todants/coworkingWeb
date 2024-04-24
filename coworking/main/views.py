@@ -20,6 +20,9 @@ def contacts(request):
 def profile(request):
     return render(request, 'main/profile.html')
 
+def registration(request):
+    return render(request, 'main/registration.html')
+
 
 def temp(request):
     return render(request, 'main/registration.html')

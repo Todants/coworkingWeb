@@ -43,7 +43,7 @@
 
 .container .card:hover .content{
     opacity: 1;
-    transform: translateY(-20px);
+    transform: translateY(-30px);
 }
 
 .container .card .content .imgBx{
