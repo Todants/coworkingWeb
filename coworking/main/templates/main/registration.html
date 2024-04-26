@@ -18,23 +18,119 @@
         <h1 class="heading">Choose Your Side</h1>
 
         <div class="containers">
-            <div class="container">
+            
+            <div class="container" id="container1">
                 <h2 class="container-text">Create Your Perfect Workplace.</h2>
                 <div class="imgbox">
                     <img src="{% static 'main/img/woodcutter.png' %}" alt="">
                 </div>
-                <a class="RegBtn" href="#">Create</a>
+                <button class="RegBtn" onclick="toggleContainer12()">Create</button>
             </div>
 
-            <div class="container">
+            <div class="container" id="container2"  style="display: none;" >
+                <h2 class="container-text">Create Your Perfect Workplace.</h2>
+                <form>
+                    <input type="place" placeholder="Company name">
+                    <input type="place" placeholder="Email">
+                    <input id="phone" type="text" placeholder="Phone">
+                    <input type="place" placeholder="Password">
+                    <input type="place" placeholder="Confirm password">   
+                </form>
+                <button class="RegBtn">Confirm</button>
+            </div>
+            
+            <div class="container" id="container3">
                 <h2 class="container-text">Find Yourself In Creative Space.</h2>
                 <div class="imgbox">
                     <img src="{% static 'main/img/spaceman.png' %}" alt="" style="margin-right: 8%;">
                 </div>
-                <a class="RegBtn" href="#">Find</a>
+                <button class="RegBtn" onclick="toggleContainer34()">Create</button>
+            </div>
+
+            <div class="container" id="container4"  style="display: none;" >
+                <h2 class="container-text">Find Yourself In Creative Space.</h2>
+                <form>
+                    <input type="place" placeholder="Company name">
+                    <input type="place" placeholder="Email">
+                    <input id="phone" type="text" placeholder="Phone">
+                    <input type="place" placeholder="Password">
+                    <input type="place" placeholder="Confirm password">   
+                    <input type="place" placeholder="Confirm password"> 
+                    <input type="place" placeholder="Confirm password"> 
+                </form>
+                <button class="RegBtn">Confirm</button>
+                
             </div>
         </div>
     </div>
+    <script>
+        function toggleContainer12() 
+        {
+            var container1 = document.getElementById("container1");
+            var container2 = document.getElementById("container2");
+            var container3 = document.getElementById("container3");
+            var container4 = document.getElementById("container4");
+
+            container1.style.display = "none";
+            container2.style.display = "block"; 
+            container3.style.display = "block";
+            container4.style.display = "none";
+        }
+        function toggleContainer34() 
+        {
+            var container1 = document.getElementById("container1");
+            var container2 = document.getElementById("container2");
+            var container3 = document.getElementById("container3");
+            var container4 = document.getElementById("container4");
+
+            container3.style.display = "none";
+            container4.style.display = "block"; 
+            container1.style.display = "block";
+            container2.style.display = "none";
+
+        }
+    </script>
+    <script>
+        // Получаем поле ввода
+        var inputField = document.getElementById("phone");
+    
+        // Добавляем обработчик события на каждый ввод пользователя
+        inputField.addEventListener("input", function(event) {
+            // Получаем введенное значение
+            var inputValue = event.target.value;
+    
+            // Удаляем все символы, кроме цифр
+            var numericValue = inputValue.replace(/\D/g, '');
+    
+            // Форматируем значение в соответствии с нужным шаблоном
+            var formattedValue = formatPhoneNumber(numericValue);
+    
+            // Устанавливаем отформатированное значение в поле ввода
+            inputField.value = formattedValue;
+        });
+    
+        // Функция для форматирования номера телефона
+        function formatPhoneNumber(phoneNumber) {
+            var formattedNumber = "";
+    
+            // Добавляем код страны (предположим, что это Россия, код +7)
+            if (phoneNumber.length > 0) {
+                formattedNumber += "+7";
+            }
+    
+            // Добавляем код оператора
+            if (phoneNumber.length > 1) {
+                formattedNumber += " (" + phoneNumber.substring(1, 4);
+            }
+    
+            // Добавляем номер телефона
+            if (phoneNumber.length > 4) {
+                formattedNumber += ") " + phoneNumber.substring(4, 11);
+            }   
+    
+            return formattedNumber;
+        }
+    </script>
 </body>
 
 </html>
