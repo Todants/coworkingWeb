@@ -14,6 +14,7 @@ class Users(models.Model):
 
 
 class Businesses(models.Model):
+    objects = models.Manager()
     company_name = models.CharField(max_length=50, blank=False, null=False)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
