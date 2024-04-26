@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 
 def index(request):
+    if request.POST:
+        post_data = request.POST
+        for key, value in post_data.items():
+            print(f"{key}: {value}")
     return render(request, 'main/base.html')
 
 
@@ -19,6 +23,7 @@ def contacts(request):
 
 def profile(request):
     return render(request, 'main/profile.html')
+
 
 def registration(request):
     return render(request, 'main/registration.html')

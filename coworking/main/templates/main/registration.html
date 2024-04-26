@@ -29,14 +29,15 @@
 
             <div class="container" id="container2"  style="display: none;" >
                 <h2 class="container-text">Create Your Perfect Workplace.</h2>
-                <form>
-                    <input type="place" placeholder="Company name">
-                    <input type="place" placeholder="Email">
-                    <input id="phone" type="text" placeholder="Phone">
-                    <input type="place" placeholder="Password">
-                    <input type="place" placeholder="Confirm password">   
+                <form method="POST" action="/">
+                    {% csrf_token %}
+                    <input type="place" name="company_name" placeholder="Company name" required>
+                    <input type="place" name="email" placeholder="Email" required>
+                    <input id="phone" name="phone" type="text" placeholder="Phone" required>
+                    <input type="place" name="password" placeholder="Password" required>
+                    <input type="place" name="confirm_password" placeholder="Confirm password" required>
+                    <button type="submit" class="RegBtn">Confirm</button>
                 </form>
-                <button class="RegBtn">Confirm</button>
             </div>
             
             <div class="container" id="container3">
@@ -49,16 +50,17 @@
 
             <div class="container" id="container4"  style="display: none;" >
                 <h2 class="container-text">Find Yourself In Creative Space.</h2>
-                <form>
-                    <input type="place" placeholder="Company name">
-                    <input type="place" placeholder="Email">
-                    <input id="phone" type="text" placeholder="Phone">
-                    <input type="place" placeholder="Password">
-                    <input type="place" placeholder="Confirm password">   
-                    <input type="place" placeholder="Confirm password"> 
-                    <input type="place" placeholder="Confirm password"> 
+                <form method="POST" action="/">
+                    {% csrf_token %}
+                    <input type="place" placeholder="Company name" required>
+                    <input type="place" placeholder="Email" required>
+                    <input id="phone" type="text" placeholder="Phone" required>
+                    <input type="place" placeholder="Password" required>
+                    <input type="place" placeholder="Confirm password" required>
+                    <input type="place" placeholder="Confirm password" required>
+                    <input type="place" placeholder="Confirm password" required>
+                    <button type="submit" class="RegBtn">Confirm</button>
                 </form>
-                <button class="RegBtn">Confirm</button>
                 
             </div>
         </div>
