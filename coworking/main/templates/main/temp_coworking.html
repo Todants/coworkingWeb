@@ -2,10 +2,31 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'main/css/contacts.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
+<link rel="stylesheet" href="{% static 'main/css/coworking.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
 + посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
 {% endblock %}
 
 {% block content %}
-    <!--Ярик, сюда пиши html Код который в профиле будет-->
+<div class="container">
+    <div class="left-image">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
+    </div>
+    <div class="right-images">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 2">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 3">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 4">
+    </div>
+    
+</div>
+<div class="text-container">
+    <div class="image-box">
+        <img class="logo-img" src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
+    </div>
+    <div class="text-box">
+        <h2>Заголовок 2</h2>
+        <p>Текст 2</p>
+    </div>
+</div>
+   
 {% endblock %}
