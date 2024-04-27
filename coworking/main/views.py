@@ -58,3 +58,6 @@ def registration(request):
 
 def temp(request):
     return render(request, 'main/registration.html')
+
+def coworking(request):
+    return render(request, 'main/temp_coworking.html')
