@@ -33,9 +33,12 @@
                     {% csrf_token %}
                     <input type="place" name="company_name" placeholder="Company name" required>
                     <input type="place" name="email" placeholder="Email" required>
-                    <input id="phone" name="phone" type="text" placeholder="Phone" required>
+                    <h5 class="text" >This Email already used</h5>
+                    <input id="phone1" name="phone" type="text" placeholder="Phone" required>
+                    <h5 class="text" >This Phone already used</h5>
                     <input type="place" name="password" placeholder="Password" required>
                     <input type="place" name="confirm_password" placeholder="Confirm password" required>
+                    <h5 class="text" >Password mismatch</h5>
                     <button type="submit" class="RegBtn" name="form_type_btn" value="company">Confirm</button>
                 </form>
             </div>
@@ -52,13 +55,16 @@
                 <h2 class="container-text">Find Yourself In Creative Space.</h2>
                 <form method="POST" action="/">
                     {% csrf_token %}
-                    <input type="place" placeholder="Company name" required>
+                    <input type="place" placeholder="First name" required>
+                    <input type="place" placeholder="Last name" required> 
+                    <input id="phone2" name="phone" type="text" placeholder="Phone" required>
+                    <h5 class="text" >This Phone already used</h5>
+                    <input id="birth" type="text" placeholder="Date of birth" required>      
                     <input type="place" placeholder="Email" required>
-                    <input id="phone" type="text" placeholder="Phone" required>
+                    <h5 class="text" >This Email already used</h5>
                     <input type="place" placeholder="Password" required>
                     <input type="place" placeholder="Confirm password" required>
-                    <input type="place" placeholder="Confirm password" required>
-                    <input type="place" placeholder="Confirm password" required>
+                    <h5 class="text" >This Email already used</h5>
                     <button type="submit" class="RegBtn" name="form_type_btn" value="user">Confirm</button>
                 </form>
                 
@@ -93,11 +99,47 @@
         }
     </script>
     <script>
+
         // Получаем поле ввода
-        var inputField = document.getElementById("phone");
+        var inputField3 = document.getElementById("birth");
+        // Добавляем обработчик события на каждый ввод пользователя
+        inputField3.addEventListener("input", function(event) {
+            // Получаем введенное значение
+            var inputValue = event.target.value;
+    
+            // Удаляем все символы, кроме цифр
+            var numericValue = inputValue.replace(/\D/g, '');
+    
+            // Форматируем значение в соответствии с нужным шаблоном
+            var formattedValue = formatDateBirth(numericValue);
+    
+            // Устанавливаем отформатированное значение в поле ввода
+            inputField3.value = formattedValue;
+        });
+
+        // Функция для форматирования номера телефона
+        function formatDateBirth(phoneNumber) {
+            var formattedNumber = phoneNumber.substring(0, 2); 
+            // Добавляем код страны (предположим, что это Россия, код +7)
+
+             // Добавляем номер телефона
+             if (phoneNumber.length > 2) {
+                formattedNumber += "." + phoneNumber.substring(2, 4);
+                
+            }  
+            if (phoneNumber.length > 4) {
+                formattedNumber += "." + phoneNumber.substring(4, 8);
+
+            }
+            return formattedNumber;
+        }
+
+
+        // Получаем поле ввода
+        var inputField1 = document.getElementById("phone1");
     
         // Добавляем обработчик события на каждый ввод пользователя
-        inputField.addEventListener("input", function(event) {
+        inputField1.addEventListener("input", function(event) {
             // Получаем введенное значение
             var inputValue = event.target.value;
     
@@ -108,9 +150,27 @@
             var formattedValue = formatPhoneNumber(numericValue);
     
             // Устанавливаем отформатированное значение в поле ввода
-            inputField.value = formattedValue;
+            inputField1.value = formattedValue;
         });
-    
+
+        var inputField2 = document.getElementById("phone2");
+        
+        // Добавляем обработчик события на каждый ввод пользователя
+        inputField2.addEventListener("input", function(event) {
+            // Получаем введенное значение
+            var inputValue = event.target.value;
+
+            // Удаляем все символы, кроме цифр
+            var numericValue = inputValue.replace(/\D/g, '');
+
+            // Форматируем значение в соответствии с нужным шаблоном
+            var formattedValue = formatPhoneNumber(numericValue);
+
+            // Устанавливаем отформатированное значение в поле ввода
+            inputField2.value = formattedValue;
+        });
+
+   
         // Функция для форматирования номера телефона
         function formatPhoneNumber(phoneNumber) {
             var formattedNumber = "";

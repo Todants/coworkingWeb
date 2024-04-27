@@ -86,6 +86,13 @@ body{
     margin-bottom: 30px;        
 }
 
+.text{
+    font-family: "Sans pro Light";
+    color: black;
+    margin-bottom: -8px;
+    display: flex;
+}
+
 form .RegBtn{
     background-color: var(--white-orange-color);
     display: flex;
