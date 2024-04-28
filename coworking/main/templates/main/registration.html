@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ru" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <title> Регистрация </title>
@@ -29,17 +29,24 @@
 
             <div class="container" id="container2"  style="display: none;" >
                 <h2 class="container-text">Create Your Perfect Workplace.</h2>
-                <form method="POST" action="/">
+                <form id="registration_form" method="POST">
                     {% csrf_token %}
-                    <input type="place" name="company_name" placeholder="Company name" required>
-                    <input type="place" name="email" placeholder="Email" required>
-                    <h5 class="text" >This Email already used</h5>
-                    <input id="phone1" name="phone" type="text" placeholder="Phone" required>
-                    <h5 class="text" >This Phone already used</h5>
-                    <input type="place" name="password" placeholder="Password" required>
-                    <input type="place" name="confirm_password" placeholder="Confirm password" required>
-                    <h5 class="text" >Password mismatch</h5>
-                    <button type="submit" class="RegBtn" name="form_type_btn" value="company">Confirm</button>
+                    <input type="hidden" name="form_type_btn" value="company">
+
+                    <input type="text" name="company_name" id="company_name" placeholder="Company name" required>
+                    <div id="error-company_name" style="display: none;">A company by that name already exists</div>
+
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                    <div id="error-email" style="display: none;">This Email already used</div>
+
+                    <input id="phone1" name="phone" id="phone" type="text" placeholder="Phone" required>
+                    <div id="error-phone" style="display: none;">This Phone already used</div>
+
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
+                    <div id="error-password" style="display: none;">Passwords don't match</div>
+
+                    <button type="submit" class="RegBtn">Confirm</button>
                 </form>
             </div>
             
@@ -192,6 +199,46 @@
     
             return formattedNumber;
         }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#registration_form').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '{% url "registration" %}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        window.location.href = "profile";
+                    },
+                    error: function(xhr, status, error) {
+                        var errors = JSON.parse(xhr.responseText).error;
+                        if (errors.company_name) {
+                            $('#error-company_name').show();
+                        } else {
+                            $('#error-company_name').hide();
+                        }
+                        if (errors.email) {
+                            $('#error-email').show();
+                        } else {
+                            $('#error-email').hide();
+                        }
+                        if (errors.phone) {
+                            $('#error-phone').show();
+                        } else {
+                            $('#error-phone').hide();
+                        }
+                        if (errors.password) {
+                            $('#error-password').show();
+                        } else {
+                            $('#error-password').hide();
+                        }
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
