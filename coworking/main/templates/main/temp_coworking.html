@@ -11,9 +11,11 @@
     <div class="left-image">
         <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
     </div>
-    <div class="right-images">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
-    </div>
+    <div class="slider-container">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Image 1" class="slider-image" id="sliderImage">
+        <button id="prevBtn"></button>
+        <button id="nextBtn"></button>
+      </div>
     
 </div>
 <div class="text-container">
@@ -42,6 +44,56 @@
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
 </div>
+<script>
+    const sliderImage = document.getElementById('sliderImage');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const images = ["{% static 'main/img/main-image.jpg' %}", "{% static 'main/img/coworking1.jpg' %}", "{% static 'main/img/coworking2.jpg' %}"]; // Пути к изображениям
+    let currentImageIndex = 0;
+    let intervalId;
 
+    function showImage(index) {
+    sliderImage.src = images[index];
+    sliderImage.classList.remove('hide');
+    }
+
+    function hideImage() {
+    sliderImage.classList.add('hide');
+    }
+
+    function nextImage() {
+    hideImage();
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    setTimeout(() => {
+        showImage(currentImageIndex);
+    }, 500); // Время анимации перелистывания (0.5 секунды)
+    }
+
+    function startSlider() {
+    intervalId = setInterval(nextImage, 2000); // Интервал в миллисекундах (2000 мс = 2 секунды)
+    }
+
+    function stopSlider() {
+    clearInterval(intervalId);
+    }
+
+    prevBtn.addEventListener('click', () => {
+    hideImage();
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    setTimeout(() => {
+        showImage(currentImageIndex);
+    }, 500); // Время анимации перелистывания (0.5 секунды)
+    stopSlider(); // Остановка автоматического перелистывания при ручном управлении
+    });
+
+    nextBtn.addEventListener('click', () => {
+    nextImage();
+    stopSlider(); // Остановка автоматического перелистывания при ручном управлении
+    });
+
+    // Запуск автоматического перелистывания при загрузке страницы
+    startSlider();
+
+</script>
    
 {% endblock %}
