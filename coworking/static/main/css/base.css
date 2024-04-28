@@ -186,3 +186,9 @@ header {
     padding: 10px 30px;
     width: 40%;
 }
+
+@media only screen and (max-width: 1310px) {
+    .navigation input{
+        display: none;
+    }
+}
