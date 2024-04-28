@@ -1,13 +1,43 @@
 from django.shortcuts import render
-from .models import Businesses
+from .models import Businesses, Users
 from django.http import JsonResponse
+from datetime import datetime
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 
 def index(request):
+    if request.user.is_authenticated:
+        user_email = request.user.email
+        user_data = None
+        if Users.objects.filter(email=user_email).exists():
+            user_data = Users.objects.get(email=user_email)
+        elif Businesses.objects.filter(email=user_email).exists():
+            user_data = Businesses.objects.get(email=user_email)
+
+        if user_data:
+            print("Email:", user_data.email)
+            return render(request, 'main/base_logged_in.html')
+        else:
+            print("Разлогинило")
+            logout(request)
     return render(request, 'main/base.html')
 
 
-def login(request):
+def login_view(request):
+    if request.POST:
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': 'User created successfully'}, status=201)
+        else:
+            return JsonResponse({'error': {'cum': 'cum'}}, status=400)
+
     return render(request, 'main/login.html')
 
 
@@ -20,7 +50,6 @@ def contacts(request):
 
 
 def profile(request):
-
     return render(request, 'main/profile.html')
 
 
@@ -28,13 +57,16 @@ def registration(request):
     if request.POST:
         form_type = request.POST.get('form_type_btn')
         if form_type == 'company':
+
             company_name = request.POST.get('company_name')
             email = request.POST.get('email')
             phone_number = request.POST.get('phone')
             password1 = request.POST.get('password')
             password2 = request.POST.get('confirm_password')
+
             company_name_exists, email_exists, phone_number_exists, password_exists = True, True, True, True
             tempD = {}
+
             if Businesses.objects.filter(company_name=company_name).exists():
                 company_name_exists = False
                 tempD['company_name'] = 'company_name'
@@ -51,7 +83,7 @@ def registration(request):
                 password_exists = False
                 tempD['password'] = 'password'
 
-            if not(company_name_exists and email_exists and phone_number_exists and password_exists):
+            if not (company_name_exists and email_exists and phone_number_exists and password_exists):
                 return JsonResponse({'error': tempD}, status=400)
 
             Businesses.objects.create(
@@ -60,7 +92,55 @@ def registration(request):
                 password=password1,
                 phone_number=phone_number
             )
+            User.objects.create_user(username=email, email=email, password=password1)
+            user = authenticate(username=email, password=password1)
+            if user is not None:
+                login(request, user)
 
+            return JsonResponse({'success': 'User created successfully'}, status=201)
+
+        elif form_type == 'user':
+            email = request.POST.get('email2')
+            password = request.POST.get('password2')
+            confirm_password = request.POST.get('confirm_password2')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            phone_number = request.POST.get('phone2')
+
+            date_of_birth = request.POST.get('birth')
+            parsed_date = datetime.strptime(date_of_birth, '%d.%m.%Y')
+            date_of_birth = parsed_date.strftime('%Y-%m-%d')
+
+            email_exists, phone_number_exists, password_exists = True, True, True
+            tempD = {}
+
+            if Businesses.objects.filter(email=email).exists():
+                email_exists = False
+                tempD['email'] = 'email'
+
+            if Businesses.objects.filter(phone_number=phone_number).exists():
+                phone_number_exists = False
+                tempD['phone'] = 'phone'
+
+            if password != confirm_password:
+                password_exists = False
+                tempD['password'] = 'password'
+
+            if not (email_exists and phone_number_exists and password_exists):
+                return JsonResponse({'error': tempD}, status=400)
+
+            Users.objects.create(
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                phone_number=phone_number,
+                date_of_birth=date_of_birth
+            )
+            User.objects.create_user(username=email, email=email, password=password)
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
     return render(request, 'main/registration.html')

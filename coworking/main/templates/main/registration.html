@@ -39,7 +39,7 @@
                     <input type="email" name="email" id="email" placeholder="Email" required>
                     <div id="error-email" style="display: none;">This Email already used</div>
 
-                    <input id="phone1" name="phone" id="phone" type="text" placeholder="Phone" required>
+                    <input id="phone1" name="phone" type="text" placeholder="Phone" required>
                     <div id="error-phone" style="display: none;">This Phone already used</div>
 
                     <input type="password" name="password" id="password" placeholder="Password" required>
@@ -60,24 +60,32 @@
 
             <div class="container" id="container4"  style="display: none;" >
                 <h2 class="container-text">Find Yourself In Creative Space.</h2>
-                <form method="POST" action="/">
+                <form id="registration_form2" method="POST">
                     {% csrf_token %}
-                    <input type="place" placeholder="First name" required>
-                    <input type="place" placeholder="Last name" required> 
-                    <input id="phone2" name="phone" type="text" placeholder="Phone" required>
-                    <h5 class="text" >This Phone already used</h5>
-                    <input id="birth" type="text" placeholder="Date of birth" required>      
-                    <input type="place" placeholder="Email" required>
-                    <h5 class="text" >This Email already used</h5>
-                    <input type="place" placeholder="Password" required>
-                    <input type="place" placeholder="Confirm password" required>
-                    <h5 class="text" >This Email already used</h5>
+                    <input type="hidden" name="form_type_btn" value="user">
+
+                    <input type="text" name="first_name" placeholder="First name" required>
+                    <input type="text" name="last_name" placeholder="Last name" required>
+
+                    <input id="phone2" name="phone2" type="text" placeholder="Phone" required>
+                    <div id="error-phone-user" style="display: none;">This Phone already used</div>
+
+                    <input id="birth" type="text" name="birth" placeholder="Date of birth" required>
+
+                    <input type="text" name="email2" placeholder="Email" required>
+                    <div id="error-email-user" style="display: none;">This Email already used</div>
+
+                    <input type="text" name="password2"  placeholder="Password" required>
+                    <input type="text" name="confirm_password2" placeholder="Confirm password" required>
+                    <div id="error-password-user" style="display: none;">Passwords don't match</div>
+
                     <button type="submit" class="RegBtn" name="form_type_btn" value="user">Confirm</button>
                 </form>
                 
             </div>
         </div>
     </div>
+
     <script>
         function toggleContainer12() 
         {
@@ -234,6 +242,40 @@
                             $('#error-password').show();
                         } else {
                             $('#error-password').hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#registration_form2').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '{% url "registration" %}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        window.location.href = "profile";
+                    },
+                    error: function(xhr, status, error) {
+                        var errors = JSON.parse(xhr.responseText).error;
+                        if (errors.email) {
+                            $('#error-email-user').show();
+                        } else {
+                            $('#error-email-user').hide();
+                        }
+                        if (errors.phone) {
+                            $('#error-phone-user').show();
+                        } else {
+                            $('#error-phone-user').hide();
+                        }
+                        if (errors.password) {
+                            $('#error-password-user').show();
+                        } else {
+                            $('#error-password-user').hide();
                         }
                     }
                 });

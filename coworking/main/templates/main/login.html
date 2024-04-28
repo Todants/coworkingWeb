@@ -24,18 +24,45 @@
             <img src="{% static 'main/img/table.png' %}" alt="">
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form id="login_form" method="POST">
+                {% csrf_token %}
                 <h1> Войти </h1>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                
-                <a class="btnLogin" href="#">Войти</a>
+
+                <input type="email" name="email" placeholder="Email">
+
+                <input type="password" name="password" placeholder="Password">
+                <div id="error-password" style="display: none;">Invalid email or password</div>
+
+                <button type="submit" class="btnLogin">Login</button>
                 <a href="#">Забыли пароль?</a>     
             </form>
         </div>
 
     </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#login_form').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '{% url "login" %}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        window.location.href = "profile";
+                    },
+                    error: function(xhr, status, error) {
+                        var errors = response.error;
+                        if (errors.cum) {
+                            $('#error-password').show();
+                        } else {
+                            $('#error-password').hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 

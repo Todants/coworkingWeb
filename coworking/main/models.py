@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth.hashers import check_password
 
 
 class Users(models.Model):
+    objects = models.Manager()
+
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
@@ -12,13 +15,20 @@ class Users(models.Model):
     def __str__(self):
         return self.first_name
 
+    def check_password(self, password):
+        return check_password(password, self.password)
+
 
 class Businesses(models.Model):
     objects = models.Manager()
+
     company_name = models.CharField(max_length=50, blank=False, null=False)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
     phone_number = models.CharField(max_length=50)
+
+    def check_password(self, password):
+        return check_password(password, self.password)
 
 
 class CoworkingSpaces(models.Model):
