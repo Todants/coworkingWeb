@@ -7,93 +7,50 @@
 {% endblock %}
 
 {% block content %}
-<div class="container" style="margin-top: 100px;">
+<div class="container">
     <div class="left-image">
         <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
     </div>
-    <div class="slider-container">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Image 1" class="slider-image" id="sliderImage">
-        <button id="prevBtn"></button>
-        <button id="nextBtn"></button>
-      </div>
+    <div class="right-images">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 2">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 3">
+        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 4">
+    </div>
     
 </div>
 <div class="text-container">
-    <div class="image-box">
-        <img class="logo-img" src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
-    </div>
     <div class="text-box">
         <h2>Andplace</h2>
         <p>Andplace — это смарт-офисы премиум-класса в центре Петербурга. Уютные и светлые пространства с панорамными окнами оснащены всем необходимым для работы в команде или в одиночку.</p>
     </div>
 </div>
+<hr class="line">
 <div class="text-container">
-    <div class="text-box" style="width: 100%;">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
-        <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
+    <div class="overview">
+        <h2 style="margin-left: 20px;">Space overview</h2>
+        <div class="item">
+            <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
+            <p>High-speed internet</p>
+        </div>
+        <div class="item">
+            <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
+            <p>High-speed internet</p>
+        </div>
     </div>
 </div>
-<div class="container">
+<div class="spaces">
+    <h2>Spaces</h2>
+    <div class="container-space">
+        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+    </div>
+</div>
+<div class="1container">
     <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
 </div>
-<script>
-    const sliderImage = document.getElementById('sliderImage');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const images = ["{% static 'main/img/main-image.jpg' %}", "{% static 'main/img/coworking1.jpg' %}", "{% static 'main/img/coworking2.jpg' %}"]; // Пути к изображениям
-    let currentImageIndex = 0;
-    let intervalId;
-
-    function showImage(index) {
-    sliderImage.src = images[index];
-    sliderImage.classList.remove('hide');
-    }
-
-    function hideImage() {
-    sliderImage.classList.add('hide');
-    }
-
-    function nextImage() {
-    hideImage();
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-    setTimeout(() => {
-        showImage(currentImageIndex);
-    }, 500); // Время анимации перелистывания (0.5 секунды)
-    }
-
-    function startSlider() {
-    intervalId = setInterval(nextImage, 2000); // Интервал в миллисекундах (2000 мс = 2 секунды)
-    }
-
-    function stopSlider() {
-    clearInterval(intervalId);
-    }
-
-    prevBtn.addEventListener('click', () => {
-    hideImage();
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setTimeout(() => {
-        showImage(currentImageIndex);
-    }, 500); // Время анимации перелистывания (0.5 секунды)
-    stopSlider(); // Остановка автоматического перелистывания при ручном управлении
-    });
-
-    nextBtn.addEventListener('click', () => {
-    nextImage();
-    stopSlider(); // Остановка автоматического перелистывания при ручном управлении
-    });
-
-    // Запуск автоматического перелистывания при загрузке страницы
-    startSlider();
-
-</script>
    
 {% endblock %}

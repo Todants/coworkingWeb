@@ -32,11 +32,19 @@ body {
     margin: 0;
     padding: 0;
 }
+
+
+.logo-img img{
+    max-width: 100%; /* Изображение будет занимать максимальную ширину контейнера */
+    height: auto; /* Сохраняем пропорции изображения */
+}
+
 .container {
     width: 96%; /* Пример: установите желаемую ширину в процентах или пикселях */
     margin: 0 auto; /* Центрируем контейнер на странице */
     display: flex;
-    height: 500px;
+    height: 450px;
+    margin-top: 600px;
 }
 
 .left-image {
@@ -46,84 +54,42 @@ body {
     overflow: hidden; /* Добавляем overflow: hidden; */
     border: 2px solid transparent;
     border-radius: 50px;
-    text-align: center; /* Центрируем изображение */
+    width: 100%;
 }
 
-.logo-img img{
-    max-width: 100%; /* Изображение будет занимать максимальную ширину контейнера */
-    height: auto; /* Сохраняем пропорции изображения */
+.left-image img{
+    height: 100%;
 }
 .right-images {
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
     overflow: hidden; /* Добавляем overflow: hidden; */
-    border: 2px solid transparent;
-    border-radius: 50px;
-    display: inline-block;
-    
+
 }
 .right-images img {
+    width: calc(50% - 10px);
     margin: 5px;
-    max-width: 100%; /* Изображение будет занимать максимальную ширину контейнера */
-    width: auto;
-    min-height: 20%;
-}
-
-.slider-container {
-    flex: 1;
-    overflow: hidden; /* Добавляем overflow: hidden; */
     border: 2px solid transparent;
-    border-radius: 50px;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
+    border-radius: 25px;
 }
   
-.slider-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-.hide {
-    opacity: 0;
+.overview{
+    width: 98%; /* Разделение на два контейнера */
+    background-color: var(--main-bg-color);
+    color: var(--gray-color);
+    
 }
-  
-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-  
-#prevBtn {
-    left: 0px;
-    width: 50%;
-    height: 100%;
-    background: transparent;
-}
-  
-#nextBtn {
-    right: 0px;
-    width: 50%;
-    height: 100%;
-    background: transparent;
-}
-
-.left-image img {
+.item{
     margin: 5px;
-    max-width: 100%; /* Изображение будет занимать максимальную ширину контейнера */
-    height: auto; /* Сохраняем пропорции изображения */
+    display: flex;
+    position: relative;
+    left: 0; /* Перемещение влево на 20px */
+    margin-left: 15px;
 }
 
 .icon-img{
-    width: 3%;
+    width: 25px;
     height: auto;
     margin-left: 20px;
 }
@@ -136,19 +102,27 @@ button {
 }
 
 .text-box {
-    width: 90%; /* Разделение на два контейнера */
-    background-color: var(--white-bg-color);
+    width: 88%; /* Разделение на два контейнера */
+    background-color: var(--main-bg-color);
     color: var(--gray-color);
     padding: 20px;
     box-sizing: border-box;
-    border: 2px solid var(--white-orange-color);
-    border-radius: 50px;
-    margin-right: 1%;
-    box-shadow: 0px 0px 3px var(--white-orange-color); /* Горизонтальное смещение, вертикальное смещение, размытие, цвет */
 }
 
+.overview h2,
 .text-box h2 {
-    margin-bottom: 10px;
+    font-family: "Sans pro Regular";
+}
+
+
+.text-box p{
+    font-family: "Sans pro Light";
+    
+}
+.overview p{
+margin-left: 10px;
+margin-top: 1px;
+font-family: "Sans pro Light";
 }
 
 .image-box{
@@ -168,8 +142,54 @@ button {
     object-fit: cover;
 }
 
+.line {
+    border: 1px solid var(--white-bg-color); /* Толщина 1px, стиль solid */
+    height: 5px;
+    width: 94%;
+}
+
+.spaces{
+    margin-top: 30px;
+    background-color: var(--white-bg-color);
+    width: 100%;
+    
+}
+
+.spaces h2{
+    color: var(--gray-color);
+    margin-left: 50px;
+    margin-top: 10px;
+    font-family: "Sans pro 400";
+    
+}
+
+
+.space-img{
+    height: 53.7%;
+    width: auto;
+    margin: 7px;
+    border-radius: 25px;
+}
+
+.space-img img{
+    height: 100%;
+    border-radius: 25px;
+    margin-top: 5px;
+}
+.container-space{
+    background-color: var(--main-bg-color);
+    height: 300px;
+    width: 300px;
+    margin: 30px;
+    border-radius: 25px;
+}
+
 @media only screen and (max-width: 1300px) {
     .right-images{
         display: none;
+    }
+    .left-image img {
+        height: 180%;
+        margin-top: -20%;
     }
 }
