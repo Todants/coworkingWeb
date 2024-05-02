@@ -7,6 +7,15 @@
 {% endblock %}
 
 {% block content %}
+<div id="overlay" class="overlay"></div>
+<div class="book-window" id="book-window">
+    <h1 style="color: aliceblue;">Время</h1>
+    <h1 style="color: aliceblue;">место которое уже выбрано</h1>
+    <h1 style="color: aliceblue;">ФИО - тоже выбрано беретяс из профилья</h1>
+    <button class="close" id="closePopup">&times;</button>
+    <p>Это всплывающее окно!</p>
+</div>
+
 <div class="container">
     <div class="left-image">
         <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
@@ -39,10 +48,50 @@
         </div>
     </div>
 </div>
-<div class="spaces">
-    <h2>Spaces</h2>
-    <div class="container-space">
-        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+<div class="spaces-h1">
+<h2 style="margin-left: 50px;">Spaces</h2>
+    <div class="spaces">
+        
+        <div class="container-space">
+            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <button type="submit" id="openPopup" class="BookBtn">Confirm</button>
+        </div>
+        <div class="container-space">
+            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <button type="submit" class="BookBtn">Confirm</button>
+        </div>
+        <div class="container-space">
+            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <button type="submit" class="BookBtn">Confirm</button>
+        </div>
+        <div class="container-space">
+            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <button type="submit" class="BookBtn">Confirm</button>
+        </div>
+        <div class="container-space">
+            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <h4>4 человека</h4>
+            <button type="submit" class="BookBtn">Confirm</button>
+        </div>
     </div>
 </div>
 <div class="1container">
@@ -52,5 +101,17 @@
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
 </div>
-   
+
+<script>
+    btnopen = document.getElementById("openPopup")
+    btnopen.addEventListener('click', function() {
+    document.getElementById('book-window').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+    });
+
+    document.getElementById('closePopup').addEventListener('click', function() {
+    document.getElementById('book-window').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    });
+</script>
 {% endblock %}

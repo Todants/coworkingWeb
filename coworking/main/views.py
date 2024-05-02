@@ -21,7 +21,7 @@ def index(request):
         else:
             print("Разлогинило")
             logout(request)
-    return render(request, 'main/base.html')
+    return render(request, 'main/book.html')
 
 
 def login_view(request):

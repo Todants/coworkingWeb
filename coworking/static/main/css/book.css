@@ -1,0 +1,111 @@
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;
+    --soliders: black;
+    --light-orange-color: #e89468;
+}
+@font-face {
+    font-family: "Sans pro Regular";
+    src: url("/static/main/fonts/SourceSansPro-SemiBold.ttf");
+  }
+@font-face {
+    font-family: "Sans pro Light";
+    src: url("/static/main/fonts/SourceSansPro-Light.ttf");
+  }
+@font-face {
+    font-family: "Sans pro 400";
+    src: url("/static/main/fonts/SourceSansPro-Regular.ttf");
+  }
+
+.spaces{
+    background-color: var(--main-bg-color);
+    width: 96%;  
+    height: 1500px;
+    top: 0;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Позволяет контейнерам переходить на новую строку */
+}
+
+.main-text{
+    font-family: "Sans pro Regular";
+    color: var(--gray-color);
+    margin-top: 100px;
+}
+.container-space{
+    margin: 10px;
+    height: 350px;
+    width: 440px;
+  
+    /* Расположение элементов в столбец */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottom-containers {
+    /* Ширина 100%, чтобы занимать всю ширину контейнера */
+    width: 100%;
+    /* Расположение элементов в строку */
+    display: flex;
+    justify-content: space-between; /* Равное распределение по горизонтали */
+  }
+
+.about-container{
+    width: 60%;
+    margin: 15px;
+    margin-left: 20px;
+}
+
+.about-container h2{
+    color: var(--gray-color);
+    font-family: "Sans pro Regular";
+    margin-top: -2px;
+}
+
+.detailsBtn{
+    margin: 20px;
+    color: var(--gray-color);
+    border: 2px solid var(--white-orange-color);
+    padding: 10px 20px;
+    background: var(--white-orange-color);
+    font-family: "Sans pro Regular";
+    cursor: pointer;
+    
+    border-radius: 50px;
+    transition: .75s;
+    text-decoration: none;
+}
+
+.space-img{
+    height: 240px;
+    width: auto;
+    
+    margin-left: 5px;
+    border-radius: 25px;
+}
+
+.space-img img{
+    height: 100%;
+    border-radius: 25px;
+    margin-top: 5px;
+}
+
+.score{
+    height: 20px;
+    width: auto;
+    display: flex;
+}
+
+.heart-icon img{
+    height: 20px;
+}
+
+.score h4{
+    color: var(--gray-color);
+    font-family: "Sans pro Regular";
+    margin-left: 10px;
+
+}
