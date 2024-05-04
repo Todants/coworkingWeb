@@ -1,11 +1,95 @@
-{% extends 'main/base.html' %}
-{% load static %}
 
-{% block styles %}
-<link rel="stylesheet" href="{% static 'main/css/contacts.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
-+ посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> Профиль </title>
+	<link rel="stylesheet" href="profile.css">
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+</head>
+<body>
 
-{% block content %}
-    <!--Ярик, сюда пиши html Код который в профиле будет-->
-{% endblock %}
+<div class="wrapper">
+    <div class="left">
+        <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
+        alt="user" width="150">
+        <h4>Некий Пользователь</h4>
+        <p>Пользователь</p>
+        <div class="Info">
+        <span>email </span>
+          <input type="Email" required="required" placeholder="адрес электронной почты" value="anonim@mail.ru" maxlength="22" disabled>
+        </div>
+        <span>phone </span>
+        <div class="Info">
+          <input type="tel" required="required" placeholder="номер телефона" value="+7(987)788-87-78" maxlength="11" disabled>
+        </div>
+        <div class="text-field__counter_phone"></div>
+        <span> Birthday </span>
+        <div class="Info">
+          <input type="date" required="required" placeholder="дата рождения" value="19.11.2011" maxlength="10" disabled>
+        </div>
+        <span> Password </span>
+        <div class="Info">
+          <input type="Password" required="required" placeholder="пароль" value="vadimzakharov" maxlength="20" disabled>
+        </div>
+        <button class="btn"> Log Out </button>
+    </div>
+    <div class="right">
+        <div class="projects">
+            <h3>Ближайшие бронирования</h3>
+            <div class="projects_data">
+                 <div class="data">
+                  <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+      alt="user" width="250" height="100">
+                  <p>Адрес коворкинга</p>
+                  <h4> Название коворкинга</h4>
+                 </div>
+                 <div class="data">
+                  <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+       alt="user" width="250" height="100">
+                  <p>Адрес коворкинга</p>
+                  <h4> Название коворкинга</h4>
+              </div>
+              <div class="data">
+                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+     alt="user" width="250" height="100">
+                <p>Адрес коворкинга</p>
+                <h4> Название коворкинга</h4>
+            </div>
+            </div>
+        </div>
+      
+      <div class="projects">
+            <h3>Прошедшие бронирования</h3>
+            <div class="projects_data">
+                 <div class="data">
+                    <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+        alt="user" width="250" height="100">
+                    <p>Адрес коворкинга</p>
+                    <h4> Название коворкинга</h4>
+                 </div>
+                 <div class="data">
+                   <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+        alt="user" width="250" height="100">
+                    <p>Адрес коворкинга</p>
+                    <h4> Название коворкинга</h4>
+              </div>
+              <div class="data">
+                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+     alt="user" width="250" height="100">
+                <p>Адрес коворкинга</p>
+                <h4> Название коворкинга</h4>
+            </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+  <!--<div class="user-img">
+    <img src="user.jpg" id="photo">
+    <input type="file" id="file">
+    <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
+  </div> -->
+<script src="profile.js"></script> 
+</body>
+</html>
