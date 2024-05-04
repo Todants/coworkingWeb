@@ -4,15 +4,15 @@ from django.http import JsonResponse
 from datetime import datetime
 
 
-def header_insert(request):
-    user_info = request.session.get('user_info', [])
-    if user_info:
-        authorize_check = 'main/base_logged_in.html'
-    else:
-        authorize_check = 'main/base.html'
-    if len(user_info) == 3 and user_info[2] !=
-    original_result[2]['authorize_check'] = authorize_check
-    return original_result
+# def header_insert(request):
+#     user_info = request.session.get('user_info', [])
+#     if user_info:
+#         authorize_check = 'main/base_logged_in.html'
+#     else:
+#         authorize_check = 'main/base.html'
+#     if len(user_info) == 3 and user_info[2] !=
+#     original_result[2]['authorize_check'] = authorize_check
+#     return original_result
 
 
 def index(request):
