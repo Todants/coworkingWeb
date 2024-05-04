@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends authorize_check %}
 {% load static %}
 
 {% block styles %}
@@ -59,14 +59,6 @@
             <h4>4 человека</h4>
             <h4>4 человека</h4>
             <button type="submit" id="openPopup" class="BookBtn">Confirm</button>
-        </div>
-        <div class="container-space">
-            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">Зал для конференций</h2>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <button type="submit" class="BookBtn">Confirm</button>
         </div>
         <div class="container-space">
             <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>

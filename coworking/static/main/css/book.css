@@ -21,7 +21,8 @@
 
 .spaces{
     background-color: var(--main-bg-color);
-    width: 96%;  
+    width: 94%;
+    margin-left: 3%;  
     height: 1500px;
     top: 0;
     margin-top: 10px;

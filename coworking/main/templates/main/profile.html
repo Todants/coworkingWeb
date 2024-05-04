@@ -1,20 +1,17 @@
-{% extends 'main/base.html' %}
+{% extends authorize_check %}
 {% load static %}
 
 {% block styles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title> Профиль </title>
-	<link rel="stylesheet" href="profile.css">
-	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-</head>
+<title> Профиль </title>
+<link rel="stylesheet" href="profile.css">
+
+  <link rel="stylesheet" href="{% static 'main/css/profile.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
+  + посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
+
+{% endblock %}
+
 
 {% block content %}
-
-<body>
-
 <div class="wrapper">
     <div class="left">
         <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
@@ -91,11 +88,10 @@
       
     </div>
 </div>
-{% endblock %}
   <!--<div class="user-img">
     <img src="user.jpg" id="photo">
     <input type="file" id="file">
     <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
   </div> -->
-</body>
-</html>
+<script src="profile.js"></script> 
+{% endblock %}

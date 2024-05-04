@@ -43,7 +43,8 @@ body {
     width: 96%; /* Пример: установите желаемую ширину в процентах или пикселях */
     margin: 0 auto; /* Центрируем контейнер на странице */
     display: flex;
-    height: 550px;
+    height: 60%;
+    max-height: 550px;
     margin-top: 100px;
 }
 
