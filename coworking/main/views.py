@@ -4,38 +4,22 @@ from django.http import JsonResponse
 from datetime import datetime
 
 
-def header_insert(request):
+def index(request):
+    request.session['user_info'] = []
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    if len(user_info) == 3 and user_info[2] !=
-    original_result[2]['authorize_check'] = authorize_check
-    return original_result
-
-
-def index(request):
-    # request.session['user_info'] = []
-    user_info = request.session.get('user_info', [])
-    if user_info:
-        user_email = user_info[0]
-        user_data = None
-        if Users.objects.filter(email=user_email).exists():
-            user_data = Users.objects.get(email=user_email)
-        elif Businesses.objects.filter(email=user_email).exists():
-            user_data = Businesses.objects.get(email=user_email)
-
-        if user_data:
-            print("Email:", user_email)
-            return render(request, 'main/base_logged_in.html')
-        else:
-            print("Разлогинило")
-            request.session['user_info'] = []
-    return render(request, 'main/base.html')
+    return render(request, 'main/base.html', {'authorize_check': authorize_check})
 
 
 def login_view(request):
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
     if request.POST:
 
         email = request.POST.get('email')
@@ -53,11 +37,16 @@ def login_view(request):
         else:
             return JsonResponse({'error': {'unlog': 'unlog'}}, status=400)
 
-    return render(request, 'main/login.html')
+    return render(request, 'main/login.html', {'authorize_check': authorize_check})
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
+    return render(request, 'main/about.html', {'authorize_check': authorize_check})
 
 
 def contacts(request):
@@ -65,16 +54,25 @@ def contacts(request):
     if user_info:
         authorize_check = 'main/base_logged_in.html'
     else:
-        request.session = None
         authorize_check = 'main/base.html'
     return [request, 'main/contacts.html', {'authorize_check': authorize_check}]
 
 
 def profile(request):
-    return render(request, 'main/profile.html')
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
+    return render(request, 'main/profile.html', {'authorize_check': authorize_check})
 
 
 def registration(request):
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
     if request.POST:
         form_type = request.POST.get('form_type_btn')
         if form_type == 'company':
@@ -158,12 +156,22 @@ def registration(request):
             request.session['user_info'] = [email, password]
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
-    return render(request, 'main/registration.html')
+    return render(request, 'main/registration.html', {'authorize_check': authorize_check})
 
 
 def temp(request):
-    return render(request, 'main/registration.html')
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
+    return render(request, 'main/registration.html', {'authorize_check': authorize_check})
 
 
 def coworking(request):
-    return render(request, 'main/temp_coworking.html')
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
+    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check})
