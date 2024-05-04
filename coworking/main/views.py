@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Businesses, Users
+from .models import Businesses, Users, Services
 from django.http import JsonResponse
 from datetime import datetime
 
@@ -162,6 +162,11 @@ def coworking(request):
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
+        if Businesses.objects.filter(email=user_info[0]).exists():
+            pass
     else:
         authorize_check = 'main/base.html'
-    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check})
+    
+    spaces = Services.objects.filter(id_coworking=1)
+    print(spaces)
+    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces})
