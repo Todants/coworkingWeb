@@ -11,7 +11,7 @@ def index(request):
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    return render(request, 'main/base.html', {'authorize_check': authorize_check})
+    return render(request, 'main/book.html', {'authorize_check': authorize_check})
 
 
 def login_view(request):
