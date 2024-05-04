@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def index(request):
-    request.session['user_info'] = []
+    # request.session['user_info'] = []
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
@@ -15,11 +15,6 @@ def index(request):
 
 
 def login_view(request):
-    user_info = request.session.get('user_info', [])
-    if user_info:
-        authorize_check = 'main/base_logged_in.html'
-    else:
-        authorize_check = 'main/base.html'
     if request.POST:
 
         email = request.POST.get('email')
@@ -37,7 +32,7 @@ def login_view(request):
         else:
             return JsonResponse({'error': {'unlog': 'unlog'}}, status=400)
 
-    return render(request, 'main/login.html', {'authorize_check': authorize_check})
+    return render(request, 'main/login.html')
 
 
 def about(request):
@@ -55,7 +50,7 @@ def contacts(request):
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    return [request, 'main/contacts.html', {'authorize_check': authorize_check}]
+    return render(request, 'main/contacts.html', {'authorize_check': authorize_check})
 
 
 def profile(request):
@@ -68,11 +63,6 @@ def profile(request):
 
 
 def registration(request):
-    user_info = request.session.get('user_info', [])
-    if user_info:
-        authorize_check = 'main/base_logged_in.html'
-    else:
-        authorize_check = 'main/base.html'
     if request.POST:
         form_type = request.POST.get('form_type_btn')
         if form_type == 'company':
@@ -156,7 +146,7 @@ def registration(request):
             request.session['user_info'] = [email, password]
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
-    return render(request, 'main/registration.html', {'authorize_check': authorize_check})
+    return render(request, 'main/registration.html')
 
 
 def temp(request):
