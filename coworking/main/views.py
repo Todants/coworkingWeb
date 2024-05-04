@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-    if request.user.is_authenticated:
-        user_email = request.user.email
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        user_email = user_info[0]
         user_data = None
         if Users.objects.filter(email=user_email).exists():
             user_data = Users.objects.get(email=user_email)
@@ -16,12 +17,12 @@ def index(request):
             user_data = Businesses.objects.get(email=user_email)
 
         if user_data:
-            print("Email:", user_data.email)
+            print("Email:", user_email)
             return render(request, 'main/base_logged_in.html')
         else:
             print("Разлогинило")
-            logout(request)
-    return render(request, 'main/book.html')
+            request.session['user_info'] = []
+    return render(request, 'main/base.html')
 
 
 def login_view(request):
@@ -30,13 +31,17 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=email, password=password)
+        user_data = None
+        if Users.objects.filter(email=user_email, password=password).exists():
+            user_data = Users.objects.get(email=user_email)
+        elif Businesses.objects.filter(email=user_email, password=password).exists():
+            user_data = Businesses.objects.get(email=user_email)
 
-        if user is not None:
-            login(request, user)
+        if user_data:
+            request.session['user_info'] = [email, password]
             return JsonResponse({'success': 'User created successfully'}, status=201)
         else:
-            return JsonResponse({'error': {'cum': 'cum'}}, status=400)
+            return JsonResponse({'error': {'unlog': 'unlog'}}, status=400)
 
     return render(request, 'main/login.html')
 
@@ -92,10 +97,7 @@ def registration(request):
                 password=password1,
                 phone_number=phone_number
             )
-            User.objects.create_user(username=email, email=email, password=password1)
-            user = authenticate(username=email, password=password1)
-            if user is not None:
-                login(request, user)
+            request.session['user_info'] = [email, password1]
 
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
@@ -137,10 +139,7 @@ def registration(request):
                 phone_number=phone_number,
                 date_of_birth=date_of_birth
             )
-            User.objects.create_user(username=email, email=email, password=password)
-            user = authenticate(username=email, password=password)
-            if user is not None:
-                login(request, user)
+            request.session['user_info'] = [email, password]
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
     return render(request, 'main/registration.html')
