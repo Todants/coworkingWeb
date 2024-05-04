@@ -39,13 +39,14 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#login_form').submit(function(event) {
                 event.preventDefault();
                 var formData = $(this).serialize();
                 $.ajax({
-                    url: '{% url "login" %}',
+                    url: '{% url "login_view" %}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
@@ -53,7 +54,7 @@
                     },
                     error: function(xhr, status, error) {
                         var errors = response.error;
-                        if (errors.cum) {
+                        if (errors.unlog) {
                             $('#error-password').show();
                         } else {
                             $('#error-password').hide();

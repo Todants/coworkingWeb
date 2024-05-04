@@ -2,11 +2,21 @@ from django.shortcuts import render
 from .models import Businesses, Users
 from django.http import JsonResponse
 from datetime import datetime
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+
+
+def header_insert(request):
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        authorize_check = 'main/base.html'
+    if len(user_info) == 3 and user_info[2] !=
+    original_result[2]['authorize_check'] = authorize_check
+    return original_result
 
 
 def index(request):
+    # request.session['user_info'] = []
     user_info = request.session.get('user_info', [])
     if user_info:
         user_email = user_info[0]
@@ -32,10 +42,10 @@ def login_view(request):
         password = request.POST.get('password')
 
         user_data = None
-        if Users.objects.filter(email=user_email, password=password).exists():
-            user_data = Users.objects.get(email=user_email)
-        elif Businesses.objects.filter(email=user_email, password=password).exists():
-            user_data = Businesses.objects.get(email=user_email)
+        if Users.objects.filter(email=email, password=password).exists():
+            user_data = Users.objects.get(email=email)
+        elif Businesses.objects.filter(email=email, password=password).exists():
+            user_data = Businesses.objects.get(email=email)
 
         if user_data:
             request.session['user_info'] = [email, password]
@@ -51,7 +61,13 @@ def about(request):
 
 
 def contacts(request):
-    return render(request, 'main/contacts.html')
+    user_info = request.session.get('user_info', [])
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+    else:
+        request.session = None
+        authorize_check = 'main/base.html'
+    return [request, 'main/contacts.html', {'authorize_check': authorize_check}]
 
 
 def profile(request):
