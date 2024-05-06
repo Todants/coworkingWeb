@@ -52,14 +52,17 @@
 <h2 style="margin-left: 50px;">Spaces</h2>
     <div class="spaces">
         
+        {% for item in spaces %}
         <div class="container-space">
-            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+            <div class="space-img" ><img src={{item.img}} alt="Right Image 1"></div>
             <h2 style="margin-left: 10px;">Зал для конференций</h2>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
+            <h4>{{item.price}}</h4>
+            <h4>{{item.type}}</h4>
+            <h4>{{item.num_of_seats}} человека</h4>
             <button type="submit" id="openPopup" class="BookBtn">Confirm</button>
         </div>
+        {% endfor %}
+               <!--
         <div class="container-space">
             <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
             <h2 style="margin-left: 10px;">Зал для конференций</h2>
@@ -83,7 +86,7 @@
             <h4>4 человека</h4>
             <h4>4 человека</h4>
             <button type="submit" class="BookBtn">Confirm</button>
-        </div>
+        </div>-->
     </div>
 </div>
 <div class="1container">

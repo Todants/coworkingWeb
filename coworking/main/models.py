@@ -33,9 +33,10 @@ class Businesses(models.Model):
 
 class CoworkingSpaces(models.Model):
     id_company = models.BigIntegerField(null=False)
-    description = models.CharField(max_length=50, blank=False, null=False)
+    description = models.CharField(max_length=500, blank=False, null=False)
     date_start = models.TimeField(null=False)
     date_end = models.TimeField(null=False)
+    rating = models.BigIntegerField(null=False, default=0)
 
 
 class Images(models.Model):
@@ -57,3 +58,4 @@ class Services(models.Model):
     price = models.BigIntegerField(null=False)
     type = models.CharField(max_length=50, blank=False, null=False)
     num_of_seats = models.BigIntegerField(null=True)
+    img = models.FileField(upload_to='upldfile/', null=True, blank=True)
