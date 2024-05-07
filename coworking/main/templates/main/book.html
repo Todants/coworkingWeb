@@ -10,59 +10,22 @@
 
 <h1 class="main-text">Коворкинги Санкт-Петербугра</h1>
 <div class="spaces">
-    
+
+    {% for key, value in coworkings.items %}
     <div class="container-space">
         <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
         <div class="bottom-containers">
             <div class="about-container">
-                <h2 class="name">АленкаWorking</h2>
+                <h2 class="name">{{ value.name }}</h2>
                 <div class="score">
                     <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
-                    <h4>4.84</h4>
+                    <h4>{{ value.rating }}</h4>
                 </div>
             </div>
-            <a class="detailsBtn" href="coworking">Подробнее</a>
+            <a class="detailsBtn" href="coworking/{{ key }}">Подробнее</a>
         </div>
     </div>
-    <div class="container-space">
-        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-        <div class="bottom-containers">
-            <div class="about-container">
-                <h2 class="name">АленкаWorking</h2>
-                <div class="score">
-                    <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
-                    <h4>4.84</h4>
-                </div>
-            </div>
-            <a class="detailsBtn">Подробнее</a>
-        </div>
-    </div>
-    <div class="container-space">
-        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-        <div class="bottom-containers">
-            <div class="about-container">
-                <h2 class="name">АленкаWorking</h2>
-                <div class="score">
-                    <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
-                    <h4>4.84</h4>
-                </div>
-            </div>
-            <a class="detailsBtn">Подробнее</a>
-        </div>
-    </div>
-    <div class="container-space">
-        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-        <div class="bottom-containers">
-            <div class="about-container">
-                <h2 class="name">АленкаWorking</h2>
-                <div class="score">
-                    <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
-                    <h4>4.84</h4>
-                </div>
-            </div>
-            <a class="detailsBtn">Подробнее</a>
-        </div>
-    </div>
+    {% endfor %}
 
 
 </div>

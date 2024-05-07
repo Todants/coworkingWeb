@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Businesses, Users, Services
+from .models import Businesses, Users, Services, CoworkingSpaces
 from django.http import JsonResponse
 from datetime import datetime
 
@@ -11,7 +11,13 @@ def index(request):
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    return render(request, 'main/book.html', {'authorize_check': authorize_check})
+
+    cowork = {}
+    coworkings = CoworkingSpaces.objects.all()
+    for i in coworkings:
+        cowork[i.id] = {'name': Businesses.objects.get(id=i.id).company_name, 'rating': i.rating}
+    print(cowork)
+    return render(request, 'main/book.html', {'authorize_check': authorize_check, 'coworkings': cowork})
 
 
 def login_view(request):
@@ -158,7 +164,7 @@ def temp(request):
     return render(request, 'main/registration.html', {'authorize_check': authorize_check})
 
 
-def coworking(request):
+def coworking(request, cowork_id):
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
@@ -167,6 +173,5 @@ def coworking(request):
     else:
         authorize_check = 'main/base.html'
     
-    spaces = Services.objects.filter(id_coworking=1)
-    print(spaces)
+    spaces = Services.objects.filter(id_coworking=cowork_id)
     return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces})
