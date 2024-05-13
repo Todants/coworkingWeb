@@ -14,15 +14,14 @@
     <header>
 
         <nav class="navigation">
-            <a class ="logo" href="book"> cO7working </a>
-            <a class="aStyle" href="book"> Бронь </a>
-            <a class="aStyle" href="about"> О нас </a>
-            <a class="aStyle" href="contacts"> Обратная связь</a>
+            <a class ="logo" href="{% url 'book' %}"> cO7working </a>
+            <a class="aStyle" href="{% url 'about' %}"> О нас </a>
+            <a class="aStyle" href="{% url 'contacts' %}"> Обратная связь</a>
             <input type="place" placeholder="Search coworking place">
         </nav>
 
         <div class="leftnav">
-            <a class="CrcProfile" href="profile">
+            <a class="CrcProfile" href="{% url 'profile' %}">
                 <img src="{% static 'main/img/yarik.jpg' %}" class="btnPrf" width="120" height="120">
             </a>
         </div>

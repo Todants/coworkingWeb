@@ -12,16 +12,15 @@
     <header>
 
         <nav class="navigation">
-            <a class ="logo" href="book"> cO7working </a>
-            <a class="aStyle" href="temp"> Бронь </a>
-            <a class="aStyle" href="about"> О нас </a>
-            <a class="aStyle" href="contacts"> Обратная связь</a>
+            <a class ="logo" href="{% url 'book' %}"> cO7working </a>
+            <a class="aStyle" href="{% url 'about' %}"> О нас </a>
+            <a class="aStyle" href="{% url 'contacts' %}"> Обратная связь</a>
             <input type="place" placeholder="Search coworking place">
         </nav>
 
         <div class="leftnav">
-            <a class="btnReg" href="registration">Регистрация</a>
-            <a class="btnLogin" href="login">Войти</a>
+            <a class="btnReg" href="{% url 'registration' %}">Регистрация</a>
+            <a class="btnLogin" href="{% url 'login_view' %}">Войти</a>
         </div>
 
     </header>
