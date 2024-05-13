@@ -44,6 +44,9 @@ class Images(models.Model):
     id_coworking = models.BigIntegerField(null=False)
     file = models.FileField(upload_to='upldfile/')
 
+    def __str__(self):
+        return f'{self.id} , {self.id_coworking} ,{self.file} '
+
 
 class Bookings(models.Model):
     id = models.BigIntegerField(primary_key=True)
