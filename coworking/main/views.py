@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Businesses, Users, Services, CoworkingSpaces
+from .models import Businesses, Users, Services, CoworkingSpaces, Images
 from django.http import JsonResponse
 from datetime import datetime
 
@@ -174,4 +174,5 @@ def coworking(request, cowork_id):
         authorize_check = 'main/base.html'
     
     spaces = Services.objects.filter(id_coworking=cowork_id)
-    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces})
+    images = Images.objects.filter(id_coworking=cowork_id)
+    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces, 'images': images})
