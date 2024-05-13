@@ -4,7 +4,6 @@ from django.db import models
 class Users(models.Model):
     objects = models.Manager()
 
-    id = models.BigIntegerField(primary_key=True)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
@@ -19,7 +18,6 @@ class Users(models.Model):
 class Businesses(models.Model):
     objects = models.Manager()
 
-    id = models.BigIntegerField(primary_key=True)
     company_name = models.CharField(max_length=50, blank=False, null=False)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
