@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
 
+:root {
+  --main-bg-color: #161616;
+  --white-orange-color: #d94d04;
+  --white-bg-color: #2e2e2e;
+  --gray-color: #f9f9f7;
+  --soliders: black;
+  --light-orange-color: #e89468;
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -205,8 +214,8 @@ body{
 }
 
 .wrapper .projects .projects_data .data{
-  background: #d94d04;
-  padding: 65px 65px;
+  background: var(--white-bg-color);
+  padding: 20px 65px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   border-top-right-radius: 15px;

@@ -18,13 +18,17 @@
 
 <div class="container">
     <div class="left-image">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
+        <img src="{{big_img.file.url}}" alt="Left Image">
     </div>
+
+    
+    
     <div class="right-images">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 2">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 3">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 4">
+        {% for item in small_img %}
+            <img src="{{item.file.url}}" alt="Right Image 1">
+        {% endfor %}
+
+
     </div>
     
 </div>
