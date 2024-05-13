@@ -8,7 +8,7 @@ urlpatterns = [
     path('contacts', views.contacts, name='contacts'),
     path('profile', views.profile, name='profile'),
     path('book', views.temp, name='book'),
-    path('coworking/<int:cowork_id>', views.coworking),
+    path('coworking/<int:cowork_id>', views.coworking, name='coworking'),
     path('registration', views.registration, name='registration'),
 
 ]
