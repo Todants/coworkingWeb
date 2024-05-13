@@ -175,4 +175,4 @@ def coworking(request, cowork_id):
     
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
-    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces, 'images': images})
+    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:]})
