@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.hashers import check_password
 
 
 class Users(models.Model):
@@ -15,9 +14,6 @@ class Users(models.Model):
 
     def __str__(self):
         return self.first_name
-
-    def check_password(self, password):
-        return check_password(password, self.password)
 
 
 class Businesses(models.Model):

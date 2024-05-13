@@ -54,7 +54,7 @@
         
         {% for item in spaces %}
         <div class="container-space">
-            <div class="space-img" ><img src={{item.img}} alt="Right Image 1"></div>
+            <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
             <h2 style="margin-left: 10px;">Зал для конференций</h2>
             <h4>{{item.price}}</h4>
             <h4>{{item.type}}</h4>
