@@ -4,6 +4,7 @@ from django.db import models
 class Users(models.Model):
     objects = models.Manager()
 
+    id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
     first_name = models.CharField(max_length=50, blank=False, null=False)
@@ -18,6 +19,7 @@ class Users(models.Model):
 class Businesses(models.Model):
     objects = models.Manager()
 
+    id = models.AutoField(primary_key=True)
     company_name = models.CharField(max_length=50, blank=False, null=False)
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
@@ -28,7 +30,7 @@ class Businesses(models.Model):
 
 
 class CoworkingSpaces(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     id_company = models.BigIntegerField(null=False)
     coworking_name = models.CharField(max_length=50)
     description = models.CharField(max_length=500, blank=False, null=False)
@@ -41,7 +43,7 @@ class CoworkingSpaces(models.Model):
 
 
 class Images(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     id_coworking = models.BigIntegerField(null=False)
     file = models.FileField(upload_to='upldfile/')
 
@@ -50,7 +52,7 @@ class Images(models.Model):
 
 
 class Bookings(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     id_coworking = models.BigIntegerField(null=False)
     id_user = models.BigIntegerField(null=False)
     price = models.BigIntegerField(null=False)
@@ -60,7 +62,7 @@ class Bookings(models.Model):
 
 
 class Services(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     id_coworking = models.BigIntegerField(null=False)
     price = models.BigIntegerField(null=False)
     type = models.CharField(max_length=50, blank=False, null=False)

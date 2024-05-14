@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from .models import Businesses, Users, Services, CoworkingSpaces, Images
 from django.http import JsonResponse
 from datetime import datetime
@@ -63,8 +65,11 @@ def profile(request):
     if user_info:
         authorize_check = 'main/base_logged_in.html'
     else:
-        authorize_check = 'main/base.html'
-    return render(request, 'main/profile.html', {'authorize_check': authorize_check})
+        return redirect(reverse('registration'))
+
+    if Businesses.objects.filter(email=user_info[0]).exists():
+        return render(request, 'main/profile_business.html', {'authorize_check': authorize_check})
+    return render(request, 'main/profile_user.html', {'authorize_check': authorize_check})
 
 
 def registration(request):
@@ -171,7 +176,11 @@ def coworking(request, cowork_id):
             pass
     else:
         authorize_check = 'main/base.html'
-    
+
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
-    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:]})
+    cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
+
+    context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
+               'description': cowk.description, 'name_coworking': cowk.coworking_name}
+    return render(request, 'main/temp_coworking.html', context)
