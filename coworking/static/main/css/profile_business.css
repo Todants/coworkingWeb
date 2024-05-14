@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
 
-:root {
-  --main-bg-color: #161616;
-  --white-orange-color: #d94d04;
-  --white-bg-color: #2e2e2e;
-  --gray-color: #f9f9f7;
-  --soliders: black;
-  --light-orange-color: #e89468;
-}
-
 *{
   margin: 0;
   padding: 0;
@@ -25,10 +16,41 @@ body{
 }
 
 .wrapper{
-  width: 1150px;
+  width: 80%;
   height: 750px;
   display: flex;
 }
+
+.projects .projects_data a{
+  position: top;
+  font-size: 7em;
+  color: white;
+  text-decoration: none;
+  border: 4px solid white;
+  margin-bottom: 80px;
+  border-radius: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.btn_three {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #161616;
+  outline: none;
+  transition: 2s ease-in-out;
+}
+
+
+.btn_three:hover {
+  transition: 2s ease-in-out;
+  background: #161616;
+}
+
+
+
 
 .wrapper .left{
   padding-top: 20px;
@@ -46,7 +68,6 @@ body{
 
 .wrapper .left .info .toggle{
   display: inline;
-  margin-right: 1000px;
 }
 
 .wrapper .left .btn{
@@ -207,15 +228,15 @@ body{
 
 
 
-.wrapper .right .projects_data .data h4{
+.wrapper .right .projects_data .data {
   font-size: 15px;
   color: white;
   text-align: center;
 }
 
 .wrapper .projects .projects_data .data{
-  background: var(--white-bg-color);
-  padding: 20px 65px;
+  background: #d94d04;
+  padding: 65px 65px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -237,6 +258,7 @@ body{
   margin-bottom: 45px;
 }
 
+
 .wrapper .right .info,
 .wrapper .right .projects{
   color: white;
@@ -251,6 +273,51 @@ body{
 .right .projects{
   margin-left: 55px;
 }
+
+table {
+  border-collapse: collapse;
+  border: 2px solid #d94d04;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-weight: bold;
+}
+
+thead,
+tfoot {
+  background-color: #d94d04;
+}
+
+th,
+td {
+  border: 1px solid #d94d04;
+  padding: 8px 10px;
+}
+
+td:last-of-type {
+  text-align: center;
+}
+
+tbody > tr:nth-of-type(even) {
+  background-color: #d94d04;
+}
+
+tfoot th {
+  text-align: right;
+
+}
+
+tfoot td {
+  font-weight: bold;
+}
+
 
 
 .projects_data::-webkit-scrollbar{
@@ -283,6 +350,11 @@ body{
 
 .wrapper .right .projects_data .data h4{
   color: white;
+}
+
+.wrapper .left h4{
+  text-align: center;
+  margin-right: 80px;
 }
 
 .wrapper .right.projects_data .data {
