@@ -7,31 +7,28 @@
 {% endblock %}
 
 {% block content %}
-<div id="overlay" class="overlay"></div>
-<div class="book-window" id="book-window">
-    <h1 style="color: aliceblue;">Время</h1>
-    <h1 style="color: aliceblue;">место которое уже выбрано</h1>
-    <h1 style="color: aliceblue;">ФИО - тоже выбрано беретяс из профилья</h1>
-    <button class="close" id="closePopup">&times;</button>
-    <p>Это всплывающее окно!</p>
-</div>
+
 
 <div class="container">
     <div class="left-image">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Left Image">
+        <img src="{{big_img.file.url}}" alt="Left Image">
     </div>
+
+    
+    
     <div class="right-images">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 1">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 2">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 3">
-        <img src="{% static 'main/img/main-image.jpg' %}" alt="Right Image 4">
+        {% for item in small_img %}
+            <img src="{{item.file.url}}" alt="Right Image 1">
+        {% endfor %}
+
+
     </div>
     
 </div>
 <div class="text-container">
     <div class="text-box">
-        <h2>Andplace</h2>
-        <p>Andplace — это смарт-офисы премиум-класса в центре Петербурга. Уютные и светлые пространства с панорамными окнами оснащены всем необходимым для работы в команде или в одиночку.</p>
+        <h2>{{name_coworking}}</h2>
+        <p>{{description}}</p>
     </div>
 </div>
 <hr class="line">
@@ -53,11 +50,23 @@
     <div class="spaces">
         
         {% for item in spaces %}
+        <div id="overlay" class="overlay"></div>
+        <div class="book-window" id="book-window">
+            <button class="close" id="closePopup">&times;</button>
+            <h1 style="margin-top: -10px;">{{item.type}}</h1>
+            <h4>{{item.num_of_seats}} человека</h4>
+            <h1 style="color: aliceblue;">ФИО - тоже выбрано беретяс из профилья</h1>
+            <h1 style="color: aliceblue;">место которое уже выбрано</h1>
+            <div class="container-space" style="height: 224px; width: 93%;">
+                <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+            </div>
+            
+
+        </div>
         <div class="container-space">
-            <div class="space-img" ><img src={{item.img}} alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">Зал для конференций</h2>
+            <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">{{item.type}}</h2>
             <h4>{{item.price}}</h4>
-            <h4>{{item.type}}</h4>
             <h4>{{item.num_of_seats}} человека</h4>
             <button type="submit" id="openPopup" class="BookBtn">Confirm</button>
         </div>
