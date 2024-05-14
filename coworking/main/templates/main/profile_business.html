@@ -36,7 +36,11 @@
           <input type="Password" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="пароль" value="vadimzakharov" maxlength="20" disabled>
           <button class="toggle" id="toggle3"> &#9998; </button>
         </div>
-        <button class="btn"> Log Out </button>
+        <form action="/login" method="post" id="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="btn">Log Out</button>
+            <input type="hidden" name="logout" value="true">
+        </form>
     </div>
     <div class="right">
         <div class="projects">

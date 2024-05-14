@@ -7,7 +7,6 @@ from datetime import datetime
 
 
 def index(request):
-    # request.session['user_info'] = []
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
@@ -22,7 +21,11 @@ def index(request):
 
 
 def login_view(request):
-    if request.POST:
+
+    if request.method == 'POST' and request.POST.get('logout') == 'true':
+        request.session['user_info'] = []
+        return redirect(reverse('login_view'))
+    elif request.POST:
 
         email = request.POST.get('email')
         password = request.POST.get('password')
