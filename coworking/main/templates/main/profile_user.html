@@ -22,22 +22,22 @@
   <div class="left">
       <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
       alt="user" width="150">
-      <h4>Некий Пользователь</h4>
+      <h4>{{username}}</h4> <!---->
       <p>Пользователь</p>
       <div class="Info">
       <span>email </span>
-        <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="адрес электронной почты" value="anonim@mail.ru" maxlength="22" disabled>
+        <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="адрес электронной почты" value="{{email}}" maxlength="22" disabled>
         <button class="toggle" id="toggle1"> &#9998; </button>
       </div>
       <span>phone </span>
       <div class="Info">
-        <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="номер телефона" value="+7-987-788-87-78" maxlength="16" disabled>
+        <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="номер телефона" value="{{phone}}" maxlength="16" disabled>
         <button class="toggle" id="toggle2"> &#9998; </button>
       </div>
       <div class="text-field__counter_phone"></div>
       <span> Birthday </span>
       <div class="Info">
-        <input type="date" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="дата рождения" value="19.11.2011" maxlength="10" disabled>
+        <input type="date" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="дата рождения" value="{{date_of_birth}}" maxlength="10" disabled>
         <button class="toggle" id="toggle3"> &#9998; </button>
       </div>
       <span> Password </span>
@@ -56,11 +56,12 @@
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
           <div class="projects_data">
+            {% for item in next_info %} <!--тут крч ближайшие бронирования-->
                <div class="data" id="data" onclick="location.href='https://youtube.com';">
                 <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
     alt="user" width="250" height="100">
-                <p>Адрес коворкинга</p>
-                <h4> Название коворкинга</h4>
+                <p>{{item.adress}}</p>
+                <h4> {{item.coworking_name}} </h4>
                 <div class="recent">
                   <div class="time">
                     <h4> 18:00 </h4>
@@ -70,6 +71,7 @@
                   </div>
                 </div>
                </div>
+            {% endfor %}
                <div class="data" id="data" onclick="location.href='https://youtube.com';" >
                 <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
      alt="user" width="250" height="100">
@@ -104,11 +106,12 @@
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
           <div class="projects_data">
+            {% for item in last_info %} <!--тут крч прошедшие бронирования-->
                <div class="data" id="data" onclick="location.href='https://youtube.com';">
                   <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
       alt="user" width="250" height="100">
-                  <p>Адрес коворкинга</p>
-                  <h4> Название коворкинга</h4>
+                  <p>{{item.adress}}</p>
+                  <h4>{{item.coworking_name}}</h4>
                   <div class="previous">
                     <div class="date">
                       <h4> 27.04.2023 </h4>
@@ -118,6 +121,7 @@
                     </div>
                   </div>
                </div>
+            {% endfor %}
                <div class="data" id="data" onclick="location.href='https://youtube.com';">
                  <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
       alt="user" width="250" height="100">
