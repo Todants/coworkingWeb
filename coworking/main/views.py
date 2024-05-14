@@ -16,7 +16,6 @@ def index(request):
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
         cowork[i.id] = {'name': Businesses.objects.get(id=i.id).company_name, 'rating': i.rating}
-    print(cowork)
     return render(request, 'main/book.html', {'authorize_check': authorize_check, 'coworkings': cowork})
 
 
