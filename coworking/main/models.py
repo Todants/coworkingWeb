@@ -30,6 +30,7 @@ class Businesses(models.Model):
 class CoworkingSpaces(models.Model):
     id = models.BigIntegerField(primary_key=True)
     id_company = models.BigIntegerField(null=False)
+    coworking_name = models.CharField(max_length=50)
     description = models.CharField(max_length=500, blank=False, null=False)
     date_start = models.TimeField(null=False)
     date_end = models.TimeField(null=False)
