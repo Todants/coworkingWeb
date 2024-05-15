@@ -97,11 +97,11 @@ def profile(request):
         user_profile = Users.objects.filter(email=user_info[0]).first() or Businesses.objects.filter(email=user_info[0]).first()
 
         if user_profile:
-            if email:
+            if email and not(Users.objects.filter(email=email).exists() or Businesses.objects.filter(email=email).exists()):
                 user_profile.email = email
                 user_info[0] = email
                 request.session['user_info'] = user_info
-            if phone:
+            if phone and not(Users.objects.filter(phone_number=phone).exists() or Businesses.objects.filter(phone_number=phone).exists()):
                 user_profile.phone_number = phone
             if birthday:
                 user_profile.date_of_birth = birthday
