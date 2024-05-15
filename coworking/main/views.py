@@ -39,7 +39,7 @@ def login_view(request):
             user_data = Businesses.objects.get(email=email)
 
         if user_data:
-            request.session['user_info'] = [email, password]
+            request.session['user_info'] = [email]
             return JsonResponse({'success': 'User created successfully'}, status=201)
         else:
             return JsonResponse({'error': {'unlog': 'unlog'}}, status=400)
@@ -70,8 +70,28 @@ def profile(request):
     if not user_info:
         return redirect(reverse('registration'))
 
-    acc = Businesses.objects.filter(email=user_info[0]).first()
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        birthday = request.POST.get('birthday')
+        password = request.POST.get('password')
 
+        user_profile = Users.objects.filter(email=user_info[0]).first() or Businesses.objects.filter(email=user_info[0]).first()
+
+        if user_profile:
+            if email:
+                user_profile.email = email
+                user_info[0] = email
+                request.session['user_info'] = user_info
+            if phone:
+                user_profile.phone_number = phone
+            if birthday:
+                user_profile.date_of_birth = birthday
+            if password:
+                user_profile.password = password
+            user_profile.save()
+
+    acc = Businesses.objects.filter(email=user_info[0]).first()
     if not (acc):
         acc = Users.objects.filter(email=user_info[0]).first()
         name = f'{acc.first_name} {acc.last_name}'
@@ -127,7 +147,7 @@ def registration(request):
                 password=password1,
                 phone_number=phone_number
             )
-            request.session['user_info'] = [email, password1]
+            request.session['user_info'] = [email]
 
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
@@ -169,7 +189,7 @@ def registration(request):
                 phone_number=phone_number,
                 date_of_birth=date_of_birth
             )
-            request.session['user_info'] = [email, password]
+            request.session['user_info'] = [email]
             return JsonResponse({'success': 'User created successfully'}, status=201)
 
     return render(request, 'main/registration.html')
