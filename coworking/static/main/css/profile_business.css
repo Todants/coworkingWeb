@@ -17,7 +17,7 @@ body{
 
 .wrapper{
   width: 80%;
-  height: 750px;
+  height: 80%;
   display: flex;
 }
 
@@ -49,12 +49,9 @@ body{
   background: #161616;
 }
 
-
-
-
 .wrapper .left{
   padding-top: 20px;
-  width: 100%;
+  width: 80%;
   background:#161616;
   text-align: relative;
   font-size: 28px;
@@ -95,7 +92,7 @@ body{
   color: white;
 }
 
-.wrapper .left .toggle{
+.wrapper .left{
   color: #d94d04;
   background-color: #161616;
   border: transparent;
@@ -136,12 +133,22 @@ body{
 }
 
 .wrapper .left .Info {
-  display: inline;
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper .left .info .toggle{
   position: inline;
-  display: inline;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper .left .toggle{
+  color: #d94d04;
+  background-color: #161616;
+  border: transparent;
+  display: flex;
+  flex-direction: column;
 }
 
 .Info input{
@@ -152,7 +159,6 @@ body{
   border-radius: 25px;
   outline: none;
   font-size: 1em;
-  margin-right: 40px;
 }
 
 .wrapper .left span{
