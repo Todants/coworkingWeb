@@ -11,6 +11,7 @@ class Users(models.Model):
     last_name = models.CharField(max_length=50, blank=False, null=False)
     phone_number = models.CharField(max_length=50)
     date_of_birth = models.DateField(null=False)
+    img = models.ImageField(upload_to='upldfile/', default='upldfile/base_avatar.jpg')
 
     def __str__(self):
         return self.first_name
@@ -24,6 +25,7 @@ class Businesses(models.Model):
     email = models.CharField(max_length=50, blank=False, null=False)
     password = models.CharField(max_length=50, blank=False, null=False)
     phone_number = models.CharField(max_length=50)
+    img = models.ImageField(upload_to='upldfile/', default='upldfile/base_avatar.jpg')
 
     def __str__(self):
         return f'{self.company_name} , {self.email} ,{self.password} ,{self.phone_number}'

@@ -1,3 +1,7 @@
+import os
+
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
@@ -13,12 +17,16 @@ def index(request):
     else:
         authorize_check = 'main/base.html'
 
+    acc = Businesses.objects.filter(email=user_info[0]).first()
+    if not (acc):
+        acc = Users.objects.filter(email=user_info[0]).first()
+
     cowork = {}
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
         cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating}
 
-    context = {'authorize_check': authorize_check, 'coworkings': cowork}
+    context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img}
 
     return render(request, 'main/book.html', context)
 
@@ -53,7 +61,12 @@ def about(request):
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    return render(request, 'main/about.html', {'authorize_check': authorize_check})
+
+    acc = Businesses.objects.filter(email=user_info[0]).first()
+    if not (acc):
+        acc = Users.objects.filter(email=user_info[0]).first()
+
+    return render(request, 'main/about.html', {'authorize_check': authorize_check, 'avatar': acc.img})
 
 
 def contacts(request):
@@ -62,7 +75,12 @@ def contacts(request):
         authorize_check = 'main/base_logged_in.html'
     else:
         authorize_check = 'main/base.html'
-    return render(request, 'main/contacts.html', {'authorize_check': authorize_check})
+
+    acc = Businesses.objects.filter(email=user_info[0]).first()
+    if not (acc):
+        acc = Users.objects.filter(email=user_info[0]).first()
+
+    return render(request, 'main/contacts.html', {'authorize_check': authorize_check, 'avatar': acc.img})
 
 
 def profile(request):
@@ -91,6 +109,18 @@ def profile(request):
                 user_profile.password = password
             user_profile.save()
 
+            if 'avatar' in request.FILES:
+                if user_profile.img.name != 'upldfile/base_avatar.jpg':
+                    old_avatar_path = os.path.join(settings.MEDIA_ROOT, user_profile.img.name)
+                    if os.path.exists(old_avatar_path):
+                        os.remove(old_avatar_path)
+
+                avatar = request.FILES['avatar']
+                fs = FileSystemStorage()
+                filename = fs.save('upldfile/' + avatar.name, avatar)
+                user_profile.img = 'upldfile/' + avatar.name
+                user_profile.save()
+
     acc = Businesses.objects.filter(email=user_info[0]).first()
     if not (acc):
         acc = Users.objects.filter(email=user_info[0]).first()
@@ -100,8 +130,8 @@ def profile(request):
         birthday = None
         name = acc.company_name
 
-    context = {'email': acc.email, 'phone': acc.phone_number,
-               'password': acc.password, 'name': name, 'birthday': birthday}
+    context = {'email': acc.email, 'phone': acc.phone_number, 'password': acc.password, 'name': name,
+               'birthday': birthday, 'avatar': acc.img}
 
     if Businesses.objects.filter(email=user_info[0]).exists():
         return render(request, 'main/profile_business.html', context)
@@ -195,15 +225,6 @@ def registration(request):
     return render(request, 'main/registration.html')
 
 
-def temp(request):
-    user_info = request.session.get('user_info', [])
-    if user_info:
-        authorize_check = 'main/base_logged_in.html'
-    else:
-        authorize_check = 'main/base.html'
-    return render(request, 'main/registration.html', {'authorize_check': authorize_check})
-
-
 def coworking(request, cowork_id):
     user_info = request.session.get('user_info', [])
     if user_info:
@@ -213,10 +234,15 @@ def coworking(request, cowork_id):
     else:
         authorize_check = 'main/base.html'
 
+    acc = Businesses.objects.filter(email=user_info[0]).first()
+    if not (acc):
+        acc = Users.objects.filter(email=user_info[0]).first()
+
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
-               'description': cowk.description, 'name_coworking': cowk.coworking_name }
+               'description': cowk.description, 'name_coworking': cowk.coworking_name, 'avatar': acc.img}
+
     return render(request, 'main/temp_coworking.html', context)

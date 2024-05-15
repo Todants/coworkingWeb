@@ -20,8 +20,12 @@
 {% block content %}
 <div class="wrapper">
   <div class="left">
-      <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
-      alt="user" width="150">
+
+      <form id="profileForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
+            <input type="file" id="avatarInput" name="avatar" style="display:none;">
+        </form>
       <h4>{{name}}</h4>
 
       <form method="POST" id="email-form">
@@ -169,12 +173,15 @@
     
   </div>
 </div>
-<!--<div class="user-img">
-  <img src="user.jpg" id="photo">
-  <input type="file" id="file">
-  <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
-</div> -->
+
 <script>
+    document.getElementById('avatar').addEventListener('click', function() {
+        document.getElementById('avatarInput').click();
+   });
+
+   document.getElementById('avatarInput').addEventListener('change', function() {
+       document.getElementById('profileForm').submit();
+   });
   function toggleInputState(inputField, toggleButton, formId) {
       const isDisabled = inputField.disabled;
       inputField.disabled = !isDisabled;
