@@ -1,4 +1,4 @@
-{% extends authorize_check %}
+{% extends 'main/base_logged_in.html' %}
 {% load static %}
 
 {% block styles %}
@@ -22,31 +22,29 @@
   <div class="left">
       <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
       alt="user" width="150">
-      <h4>{{username}}</h4> <!---->
-      <p>Пользователь</p>
+      <h4>{{name}}</h4>
       <div class="Info">
       <span>email </span>
-        <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="адрес электронной почты" value="{{email}}" maxlength="22" disabled>
+        <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
         <button class="toggle" id="toggle1"> &#9998; </button>
       </div>
       <span>phone </span>
       <div class="Info">
-        <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="номер телефона" value="{{phone}}" maxlength="16" disabled>
+        <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
         <button class="toggle" id="toggle2"> &#9998; </button>
       </div>
       <div class="text-field__counter_phone"></div>
       <span> Birthday </span>
       <div class="Info">
-        <input type="date" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="дата рождения" value="{{date_of_birth}}" maxlength="10" disabled>
+        <input type="date" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
         <button class="toggle" id="toggle3"> &#9998; </button>
       </div>
       <span> Password </span>
       <div class="Info">
-        <input type="Password" required="required" class ="editinginputs4" id="editingtoggle4" placeholder="пароль" value="vadimzakharov" maxlength="20" disabled>
+        <input type="Password" required="required" class ="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
         <button class="toggle" id="toggle4"> &#9998; </button>
       </div>
-      <button class="btn"> Log Out </button>
-      <form action="/login" method="post" id="logout-form">
+      <form action="{% url 'login_view' %}" method="post" id="logout-form">
           {% csrf_token %}
           <button type="submit" class="btn">Log Out</button>
           <input type="hidden" name="logout" value="true">
