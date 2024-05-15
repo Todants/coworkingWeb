@@ -51,24 +51,34 @@
         
         {% for item in spaces %}
         <div id="overlay" class="overlay"></div>
+
         <div class="book-window" id="book-window">
             <button class="close" id="closePopup">&times;</button>
-            <h1 style="margin-top: -10px;">{{item.type}}</h1>
+            <h1 style="margin-top: -40px;">{{item.type}}</h1>
             <h4>{{item.num_of_seats}} человека</h4>
-            <h1 style="color: aliceblue;">ФИО - тоже выбрано беретяс из профилья</h1>
-            <h1 style="color: aliceblue;">место которое уже выбрано</h1>
-            <div class="container-space" style="height: 224px; width: 93%;">
-                <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+            <h3 style="color: aliceblue;">Бронь на имя: {{}}</h3>
+            <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
+                <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                <div class="accept-book" id="accept-book" style="display: none;">
+                    <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
+                    <h4 style="margin-left: 160px;">Вы можете закрыть это окно</h4>
+                </div>
+                
+                <div class="right-box" id="norm-book" style="width: 520px;">
+                    <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 170px; width: 98%; margin-left: 10px;">Подтвердить бронирование</button>
+                </div>
             </div>
             
 
         </div>
+
+
         <div class="container-space">
             <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
             <h2 style="margin-left: 10px;">{{item.type}}</h2>
             <h4>{{item.price}}</h4>
             <h4>{{item.num_of_seats}} человека</h4>
-            <button type="submit" id="openPopup" class="BookBtn">Confirm</button>
+            <button type="submit" id="openPopup" class="BookBtn">Забронировать</button>
         </div>
         {% endfor %}
                <!--
@@ -117,5 +127,12 @@
     document.getElementById('book-window').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
     });
+
+    btnaccept = document.getElementById("accept-book-btn")
+    btnaccept.addEventListener('click', function() {
+    document.getElementById('accept-book').style.display = 'block';
+    document.getElementById('norm-book').style.display = 'none';
+    });
+
 </script>
 {% endblock %}

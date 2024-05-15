@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from .models import Businesses, Users, Services, CoworkingSpaces, Images
 from django.http import JsonResponse
 from datetime import datetime
 
 
 def index(request):
-    # request.session['user_info'] = []
     user_info = request.session.get('user_info', [])
     if user_info:
         authorize_check = 'main/base_logged_in.html'
@@ -15,12 +16,18 @@ def index(request):
     cowork = {}
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
-        cowork[i.id] = {'name': Businesses.objects.get(id=i.id).company_name, 'rating': i.rating}
-    return render(request, 'main/book.html', {'authorize_check': authorize_check, 'coworkings': cowork})
+        cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating}
+
+    context = {'authorize_check': authorize_check, 'coworkings': cowork}
+
+    return render(request, 'main/book.html', context)
 
 
 def login_view(request):
-    if request.POST:
+    if request.method == 'POST' and request.POST.get('logout') == 'true':
+        request.session['user_info'] = []
+        return redirect(reverse('login_view'))
+    elif request.POST:
 
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -60,11 +67,25 @@ def contacts(request):
 
 def profile(request):
     user_info = request.session.get('user_info', [])
-    if user_info:
-        authorize_check = 'main/base_logged_in.html'
+    if not user_info:
+        return redirect(reverse('registration'))
+
+    acc = Businesses.objects.filter(email=user_info[0]).first()
+
+    if not (acc):
+        acc = Users.objects.filter(email=user_info[0]).first()
+        name = f'{acc.first_name} {acc.last_name}'
+        birthday = str(acc.date_of_birth)
     else:
-        authorize_check = 'main/base.html'
-    return render(request, 'main/profile.html', {'authorize_check': authorize_check})
+        birthday = None
+        name = acc.company_name
+
+    context = {'email': acc.email, 'phone': acc.phone_number,
+               'password': acc.password, 'name': name, 'birthday': birthday}
+
+    if Businesses.objects.filter(email=user_info[0]).exists():
+        return render(request, 'main/profile_business.html', context)
+    return render(request, 'main/profile_user.html', context)
 
 
 def registration(request):
@@ -171,7 +192,11 @@ def coworking(request, cowork_id):
             pass
     else:
         authorize_check = 'main/base.html'
-    
+
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
-    return render(request, 'main/temp_coworking.html', {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:]})
+    cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
+
+    context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
+               'description': cowk.description, 'name_coworking': cowk.coworking_name }
+    return render(request, 'main/temp_coworking.html', context)
