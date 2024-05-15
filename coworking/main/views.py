@@ -19,12 +19,11 @@ def index(request):
         cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating}
 
     context = {'authorize_check': authorize_check, 'coworkings': cowork}
-    
+
     return render(request, 'main/book.html', context)
 
 
 def login_view(request):
-
     if request.method == 'POST' and request.POST.get('logout') == 'true':
         request.session['user_info'] = []
         return redirect(reverse('login_view'))
@@ -72,8 +71,8 @@ def profile(request):
         return redirect(reverse('registration'))
 
     acc = Businesses.objects.filter(email=user_info[0]).first()
-    
-    if not(acc):
+
+    if not (acc):
         acc = Users.objects.filter(email=user_info[0]).first()
         name = f'{acc.first_name} {acc.last_name}'
         birthday = str(acc.date_of_birth)
@@ -81,13 +80,10 @@ def profile(request):
         birthday = None
         name = acc.company_name
 
-    
-
-    context = { 'email': acc.email, 'phone': acc.phone_number, 
+    context = {'email': acc.email, 'phone': acc.phone_number,
                'password': acc.password, 'name': name, 'birthday': birthday}
 
     if Businesses.objects.filter(email=user_info[0]).exists():
-        
         return render(request, 'main/profile_business.html', context)
     return render(request, 'main/profile_user.html', context)
 
@@ -202,5 +198,5 @@ def coworking(request, cowork_id):
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
-               'description': cowk.description, 'name_coworking': cowk.coworking_name}
+               'description': cowk.description, 'name_coworking': cowk.coworking_name }
     return render(request, 'main/temp_coworking.html', context)

@@ -23,27 +23,43 @@
       <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
       alt="user" width="150">
       <h4>{{name}}</h4>
-      <div class="Info">
-      <span>email </span>
-        <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
-        <button class="toggle" id="toggle1"> &#9998; </button>
-      </div>
-      <span>phone </span>
-      <div class="Info">
-        <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
-        <button class="toggle" id="toggle2"> &#9998; </button>
-      </div>
-      <div class="text-field__counter_phone"></div>
-      <span> Birthday </span>
-      <div class="Info">
-        <input type="date" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
-        <button class="toggle" id="toggle3"> &#9998; </button>
-      </div>
-      <span> Password </span>
-      <div class="Info">
-        <input type="Password" required="required" class ="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
-        <button class="toggle" id="toggle4"> &#9998; </button>
-      </div>
+
+      <form method="POST" id="email-form">
+        {% csrf_token %}
+        <div class="Info">
+          <span>Email</span>
+          <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
+          <button type="button" class="toggle" id="toggle1"> &#9998; </button>
+        </div>
+      </form>
+
+      <form method="POST" id="phone-form">
+        {% csrf_token %}
+        <div class="Info">
+          <span>Phone</span>
+          <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
+          <button type="button" class="toggle" id="toggle2"> &#9998; </button>
+        </div>
+      </form>
+
+      <form method="POST" id="birthday-form">
+        {% csrf_token %}
+        <div class="Info">
+          <span>Birthday</span>
+          <input type="date" name="birthday" required="required" class="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
+          <button type="button" class="toggle" id="toggle3"> &#9998; </button>
+        </div>
+      </form>
+
+      <form method="POST" id="password-form">
+        {% csrf_token %}
+        <div class="Info">
+          <span>Password</span>
+          <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
+          <button type="button" class="toggle" id="toggle4"> &#9998; </button>
+        </div>
+      </form>
+
       <form action="{% url 'login_view' %}" method="post" id="logout-form">
           {% csrf_token %}
           <button type="submit" class="btn">Log Out</button>
@@ -159,97 +175,38 @@
   <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
 </div> -->
 <script>
-  // Get references to the input field and the toggle button
-  const inputField1 = document.getElementById('editingtoggle1');
-  const toggleButton1 = document.getElementById('toggle1');
+  function toggleInputState(inputField, toggleButton, formId) {
+      const isDisabled = inputField.disabled;
+      inputField.disabled = !isDisabled;
 
-  // Function to toggle the disabled state and update the button text
-  function toggleInputState1() {
-      // Check if the input field is currently disabled
-      const isDisabled1 = inputField1.disabled;
+      if (isDisabled) {
+          inputField.classList.remove('disabled');
+          toggleButton.textContent = '✎';
+          inputField.focus();
+      } else {
+          inputField.classList.add('disabled');
+          toggleButton.textContent = '✎';
 
-      // Toggle the disabled attribute
-      inputField1.disabled = !isDisabled1;
-
-      // Update the CSS class for styling
-      if (isDisabled1) {
-          inputField1.classList.remove('disabled');
-          toggleButton1.textContent = '✎'; // Change button text to "Disable"
-      } else
-      {
-        inputField1.classList.add('disabled');
-        toggleButton1.textContent = '✎'; // Change button text to "Enable"
+          // Send form data to server
+          document.getElementById(formId).submit();
       }
   }
 
-  const inputField2 = document.getElementById('editingtoggle2');
-  const toggleButton2 = document.getElementById('toggle2');
+  document.getElementById('toggle1').addEventListener('click', function() {
+      toggleInputState(document.getElementById('editingtoggle1'), this, 'email-form');
+  });
 
-  function toggleInputState2() {
-      // Check if the input field is currently disabled
-      const isDisabled2 = inputField2.disabled;
+  document.getElementById('toggle2').addEventListener('click', function() {
+      toggleInputState(document.getElementById('editingtoggle2'), this, 'phone-form');
+  });
 
-      // Toggle the disabled attribute
-      inputField2.disabled = !isDisabled2;
+  document.getElementById('toggle3').addEventListener('click', function() {
+      toggleInputState(document.getElementById('editingtoggle3'), this, 'birthday-form');
+  });
 
-      // Update the CSS class for styling
-      if (isDisabled2) {
-          inputField2.classList.remove('disabled');
-          toggleButton2.textContent = '✎'; // Change button text to "Disable"
-      } else
-      {
-        inputField2.classList.add('disabled');
-        toggleButton2.textContent = '✎'; // Change button text to "Enable"
-      }
-  }
-
-  const inputField3 = document.getElementById('editingtoggle3');
-  const toggleButton3 = document.getElementById('toggle3');
-
-  function toggleInputState3() {
-      // Check if the input field is currently disabled
-      const isDisabled3 = inputField3.disabled;
-
-      // Toggle the disabled attribute
-      inputField3.disabled = !isDisabled3;
-
-      // Update the CSS class for styling
-      if (isDisabled3) {
-          inputField3.classList.remove('disabled');
-          toggleButton3.textContent = '✎'; // Change button text to "Disable"
-      } else
-      {
-        inputField3.classList.add('disabled');
-        toggleButton3.textContent = '✎'; // Change button text to "Enable"
-      }
-  }
-
-  const inputField4 = document.getElementById('editingtoggle4');
-  const toggleButton4 = document.getElementById('toggle4');
-
-  function toggleInputState4() {
-      // Check if the input field is currently disabled
-      const isDisabled4 = inputField4.disabled;
-
-      // Toggle the disabled attribute
-      inputField4.disabled = !isDisabled4;
-
-      // Update the CSS class for styling
-      if (isDisabled4) {
-          inputField4.classList.remove('disabled');
-          toggleButton4.textContent = '✎'; // Change button text to "Disable"
-      } else
-      {
-        inputField4.classList.add('disabled');
-        toggleButton4.textContent = '✎'; // Change button text to "Enable"
-      }
-  }
-
-  // Add a click event listener to the toggle button
-  toggleButton1.addEventListener('click', toggleInputState1);
-  toggleButton2.addEventListener('click', toggleInputState2);
-  toggleButton3.addEventListener('click', toggleInputState3);
-  toggleButton4.addEventListener('click', toggleInputState4);
+  document.getElementById('toggle4').addEventListener('click', function() {
+      toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
+  });
 </script>
 
 {% endblock %}
