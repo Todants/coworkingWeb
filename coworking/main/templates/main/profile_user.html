@@ -1,5 +1,6 @@
 {% extends 'main/base_logged_in.html' %}
 {% load static %}
+{% load tz %}
 
 {% block styles %}
 <title> Профиль </title>
@@ -70,118 +71,49 @@
           <input type="hidden" name="logout" value="true">
       </form>
   </div>
+
   <div class="right">
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
           <div class="projects_data">
-            {% for item in next_info %} <!--тут крч ближайшие бронирования-->
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-    alt="user" width="250" height="100">
-                <p>{{item.adress}}</p>
-                <h4> {{item.coworking_name}} </h4>
+            {% for value in next_book %}
+               <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+                <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
+                <p>{{value.address}}</p>
+                <h4>{{value.cowork_name}}</h4>
                 <div class="recent">
                   <div class="time">
-                    <h4> 18:00 </h4>
+                    <h4>{{value.time_start}}</h4>
                   </div>
                   <div class="price">
-                    <h4> 1400 rub </h4>
+                    <h4>{{value.price}} руб.</h4>
                   </div>
                 </div>
                </div>
             {% endfor %}
-            <div class="data" id="data" onclick="location.href='https://youtube.com';" >
-              <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-   alt="user" width="250" height="100">
-              <p>Адрес коворкинга</p>
-              <h4> Название коворкинга</h4>
-              <div class="recent">
-                <div class="time">
-                  <h4> 18:00</h4>
-                </div>
-                <div class="price">
-                  <h4> 1400 rub</h4>
-                </div>
-              </div>
-          </div>
-               <div class="data" id="data" onclick="location.href='https://youtube.com';" >
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-     alt="user" width="250" height="100">
-                <p>Адрес коворкинга</p>
-                <h4> Название коворкинга</h4>
-                <div class="recent">
-                  <div class="time">
-                    <h4> 18:00</h4>
-                  </div>
-                  <div class="price">
-                    <h4> 1400 rub</h4>
-                  </div>
-                </div>
-            </div>
-            <div class="data" id="data" onclick="location.href='https://youtube.com';">
-              <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-   alt="user" width="250" height="100">
-              <p>Адрес коворкинга</p>
-              <h4> Название коворкинга</h4>
-              <div class="recent">
-                <div class="time">
-                  <h4> 18:00 </h4>
-                </div>
-                <div class="price">
-                  <h4> 1400 rub</h4>
-                </div>
-              </div>
-          </div>
+
           </div>
       </div>
     
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
           <div class="projects_data">
-            {% for item in last_info %} <!--тут крч прошедшие бронирования-->
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                  <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-      alt="user" width="250" height="100">
-                  <p>{{item.adress}}</p>
-                  <h4>{{item.coworking_name}}</h4>
+            {% for value in prev_book %}
+               <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+                  <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
+                  <p>{{value.address}}</p>
+                  <h4>{{value.cowork_name}}</h4>
                   <div class="previous">
                     <div class="date">
-                      <h4> 27.04.2023 </h4>
+                      <h4>{{value.time_start}}</h4>
                     </div>
                     <div class="time">
-                      <h4> 18:00 </h4>
+                      <h4>Тут сделай оценку</h4>
                     </div>
                   </div>
                </div>
             {% endfor %}
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                 <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-      alt="user" width="250" height="100">
-                  <p>Адрес коворкинга</p>
-                  <h4> Название коворкинга</h4>
-                  <div class="previous">
-                    <div class="date">
-                      <h4> 27.04.2023</h4>
-                    </div>
-                    <div class="time">
-                      <h4> 18:00 </h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="data" id="data" onclick="location.href='https://youtube.com';">
-              <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-   alt="user" width="250" height="100">
-              <p>Адрес коворкинга</p>
-              <h4> Название коворкинга</h4>
-              <div class="previous">
-                <div class="date">
-                  <h4> 27.04.2023 </h4>
-                </div>
-                <div class="time">
-                  <h4> 18:00 </h4>
-                </div>
-              </div>
-          </div>
+
           </div>
       </div>
     

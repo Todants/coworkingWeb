@@ -4,8 +4,9 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import Businesses, Users, Services, CoworkingSpaces, Images
+from .models import Businesses, Users, Services, CoworkingSpaces, Images, Bookings
 from django.http import JsonResponse
 from datetime import datetime
 
@@ -125,17 +126,39 @@ def profile(request):
                 user_profile.img = 'upldfile/' + avatar.name
                 user_profile.save()
 
+    next_book, prev_book = None, None
     acc = Businesses.objects.filter(email=user_info[0]).first()
     if not acc:
         acc = Users.objects.filter(email=user_info[0]).first()
         name = f'{acc.first_name} {acc.last_name}'
         birthday = str(acc.date_of_birth)
+
+        next_book = []
+        nb = Bookings.objects.filter(date_start__gt=timezone.now()).values('id_coworking', 'date_start', 'price')
+        for book in nb:
+            next_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
+                              'address': 'Заглушка для адреса', 'key': book['id_coworking'],
+                              'time_start': timezone.localtime(book['date_start']).strftime('%d.%m.%Y - %H:%M'),
+                              'cowork_name': CoworkingSpaces.objects.filter(id=book['id_coworking']).values(
+                                  'coworking_name').first()['coworking_name'], 'price': book['price']
+                              })
+
+        prev_book = []
+        nb = Bookings.objects.filter(date_start__lt=timezone.now()).values('id_coworking', 'date_start')
+        for book in nb:
+            prev_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
+                              'address': 'Заглушка для адреса', 'key': book['id_coworking'],
+                              'time_start': timezone.localtime(book['date_start']).strftime('%d.%m.%Y - %H:%M'),
+                              'cowork_name': CoworkingSpaces.objects.filter(id=book['id_coworking']).values(
+                                  'coworking_name').first()['coworking_name']
+                              })
+
     else:
         birthday = None
         name = acc.company_name
 
     context = {'email': acc.email, 'phone': acc.phone_number, 'password': acc.password, 'name': name,
-               'birthday': birthday, 'avatar': acc.img}
+               'birthday': birthday, 'avatar': acc.img, 'next_book': next_book, 'prev_book': prev_book}
 
     if Businesses.objects.filter(email=user_info[0]).exists():
         return render(request, 'main/profile_business.html', context)
