@@ -21,7 +21,6 @@ def index(request):
     else:
         authorize_check = 'main/base.html'
 
-    
     cowork = {}
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:

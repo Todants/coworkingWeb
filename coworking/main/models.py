@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Users(models.Model):
-    objects = models.Manager()
 
     id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=50, blank=False, null=False)
@@ -18,7 +17,6 @@ class Users(models.Model):
 
 
 class Businesses(models.Model):
-    objects = models.Manager()
 
     id = models.AutoField(primary_key=True)
     company_name = models.CharField(max_length=50, blank=False, null=False)
