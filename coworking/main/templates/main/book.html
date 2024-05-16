@@ -13,7 +13,7 @@
 
     {% for key, value in coworkings.items %}
     <div class="container-space">
-        <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
+        <div class="space-img" ><img src="{{value.image.url}}" alt="Right Image 1"></div>
         <div class="bottom-containers">
             <div class="about-container">
                 <h2 class="name">{{ value.name }}</h2>

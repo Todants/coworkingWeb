@@ -12,21 +12,23 @@ from datetime import datetime
 
 def index(request):
     user_info = request.session.get('user_info', [])
+    acc = None
     if user_info:
         authorize_check = 'main/base_logged_in.html'
+        acc = Businesses.objects.filter(email=user_info[0]).first()
+        if not (acc):
+            acc = Users.objects.filter(email=user_info[0]).first()
     else:
         authorize_check = 'main/base.html'
 
-    acc = Businesses.objects.filter(email=user_info[0]).first()
-    if not (acc):
-        acc = Users.objects.filter(email=user_info[0]).first()
-
+    
     cowork = {}
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
-        cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating}
+        images = Images.objects.filter(id_coworking=i.id)
+        cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating, 'image': images[0].file}
 
-    context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img}
+    context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img if acc else None}
 
     return render(request, 'main/book.html', context)
 
@@ -227,22 +229,24 @@ def registration(request):
 
 def coworking(request, cowork_id):
     user_info = request.session.get('user_info', [])
+    acc = None
     if user_info:
         authorize_check = 'main/base_logged_in.html'
+        acc = Businesses.objects.filter(email=user_info[0]).first()
+        if not (acc):
+            acc = Users.objects.filter(email=user_info[0]).first()
         if Businesses.objects.filter(email=user_info[0]).exists():
             pass
     else:
         authorize_check = 'main/base.html'
 
-    acc = Businesses.objects.filter(email=user_info[0]).first()
-    if not (acc):
-        acc = Users.objects.filter(email=user_info[0]).first()
+    
 
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
-               'description': cowk.description, 'name_coworking': cowk.coworking_name, 'avatar': acc.img}
+               'description': cowk.description, 'name_coworking': cowk.coworking_name, 'avatar': acc.img if acc else None}
 
     return render(request, 'main/temp_coworking.html', context)

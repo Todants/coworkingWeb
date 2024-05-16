@@ -21,43 +21,43 @@
         <form id="profileForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
-            <input type="file" id="avatarInput" name="avatar" style="display:none;">
+            <input  accept=".png" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
+
         <h4>{{ name }}</h4>
 
-          <form method="POST" id="email-form">
-            {% csrf_token %}
-            <div class="Info">
-              <span>Email</span>
-              <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
-              <button type="button" class="toggle" id="toggle1"> &#9998; </button>
-            </div>
-          </form>
+        <form method="POST" id="email-form">
+        {% csrf_token %}
+        <span>Email</span>
+        <div class="Info">
+          <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
+          <button type="button" class="toggle" id="toggle1"> &#9998; </button>
+        </div>
+      </form>
 
-          <form method="POST" id="phone-form">
-            {% csrf_token %}
-            <div class="Info">
-              <span>Phone</span>
-              <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
-              <button type="button" class="toggle" id="toggle2"> &#9998; </button>
-            </div>
-          </form>
+      <form method="POST" id="phone-form">
+        {% csrf_token %}
+        <span>Phone</span>
+        <div class="Info">
+          <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
+          <button type="button" class="toggle" id="toggle2"> &#9998; </button>
+        </div>
+      </form>
 
-          <form method="POST" id="password-form">
-            {% csrf_token %}
-            <div class="Info">
-              <span>Password</span>
-              <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
-              <button type="button" class="toggle" id="toggle4"> &#9998; </button>
-            </div>
-          </form>
-
-        <form action="{% url 'login_view' %}" method="post" id="logout-form">
-            {% csrf_token %}
-            <button type="submit" class="btn">Log Out</button>
-            <input type="hidden" name="logout" value="true">
-        </form>
-
+      <form method="POST" id="password-form">
+        {% csrf_token %}
+        <span>Password</span>
+        <div class="Info">
+          <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
+          <button type="button" class="toggle" id="toggle4"> &#9998; </button>
+        </div>
+      </form>
+        
+      <form action="{% url 'login_view' %}" method="post" id="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="btn">Log Out</button>
+        <input type="hidden" name="logout" value="true">
+    </form>
     </div>
     <div class="right">
         <div class="projects">
@@ -125,7 +125,7 @@
               </table>
             </div>
         </div>
-
+      
       <div class="projects">
             <h3> Ваши коворкинги </h3>
             <div class="projects_data">
@@ -133,7 +133,7 @@
                     <a href="#" width="250" class="btn_three" onclick="location.href='https://youtube.com';"> + </a>
                  </div>
                  <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                   <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg"
+                   <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
         alt="user" width="250" height="100">
                     <p>Адрес коворкинга</p>
                     <h4> Название коворкинга</h4>
@@ -147,7 +147,7 @@
                     </div>
               </div>
               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg"
+                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
      alt="user" width="250" height="100">
                 <p>Адрес коворкинга</p>
                 <h4> Название коворкинга</h4>
@@ -162,51 +162,50 @@
             </div>
             </div>
         </div>
-
+      
     </div>
 </div>
-
 <script>
-   document.getElementById('avatar').addEventListener('click', function() {
-        document.getElementById('avatarInput').click();
-   });
+  document.getElementById('avatar').addEventListener('click', function() {
+      document.getElementById('avatarInput').click();
+ });
 
-   document.getElementById('avatarInput').addEventListener('change', function() {
-       document.getElementById('profileForm').submit();
-   });
+ document.getElementById('avatarInput').addEventListener('change', function() {
+     document.getElementById('profileForm').submit();
+ });
+function toggleInputState(inputField, toggleButton, formId) {
+    const isDisabled = inputField.disabled;
+    inputField.disabled = !isDisabled;
 
-  function toggleInputState(inputField, toggleButton, formId) {
-      const isDisabled = inputField.disabled;
-      inputField.disabled = !isDisabled;
+    if (isDisabled) {
+        inputField.classList.remove('disabled');
+        toggleButton.textContent = '✎';
+        inputField.focus();
+    } else {
+        inputField.classList.add('disabled');
+        toggleButton.textContent = '✎';
 
-      if (isDisabled) {
-          inputField.classList.remove('disabled');
-          toggleButton.textContent = '✎';
-          inputField.focus();
-      } else {
-          inputField.classList.add('disabled');
-          toggleButton.textContent = '✎';
+        // Send form data to server
+        document.getElementById(formId).submit();
+    }
+}
 
-          // Send form data to server
-          document.getElementById(formId).submit();
-      }
-  }
+document.getElementById('toggle1').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle1'), this, 'email-form');
+});
 
-  document.getElementById('toggle1').addEventListener('click', function() {
-      toggleInputState(document.getElementById('editingtoggle1'), this, 'email-form');
-  });
+document.getElementById('toggle2').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle2'), this, 'phone-form');
+});
 
-  document.getElementById('toggle2').addEventListener('click', function() {
-      toggleInputState(document.getElementById('editingtoggle2'), this, 'phone-form');
-  });
+document.getElementById('toggle3').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle3'), this, 'birthday-form');
+});
 
-  document.getElementById('toggle3').addEventListener('click', function() {
-      toggleInputState(document.getElementById('editingtoggle3'), this, 'birthday-form');
-  });
-
-  document.getElementById('toggle4').addEventListener('click', function() {
-      toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
-  });
+document.getElementById('toggle4').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
+});
 </script>
+
 
 {% endblock %}

@@ -40,12 +40,12 @@ body{
   background: transparent;
   border: 1px solid #161616;
   outline: none;
-  transition: 2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 
 .btn_three:hover {
-  transition: 2s ease-in-out;
+  transition: 0.2s ease-in-out;
   background: #161616;
 }
 
@@ -116,19 +116,19 @@ body{
 }
 
 .wrapper .left .editinginputs1{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs2{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs3{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs4{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -147,8 +147,9 @@ body{
   color: #d94d04;
   background-color: #161616;
   border: transparent;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
+  vertical-align: middle;
 }
 
 .Info input{
