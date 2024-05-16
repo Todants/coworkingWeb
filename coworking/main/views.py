@@ -16,7 +16,7 @@ def index(request):
     if user_info:
         authorize_check = 'main/base_logged_in.html'
         acc = Businesses.objects.filter(email=user_info[0]).first()
-        if not (acc):
+        if not acc:
             acc = Users.objects.filter(email=user_info[0]).first()
     else:
         authorize_check = 'main/base.html'
@@ -58,28 +58,28 @@ def login_view(request):
 
 def about(request):
     user_info = request.session.get('user_info', [])
+    acc = None
     if user_info:
         authorize_check = 'main/base_logged_in.html'
+        acc = Businesses.objects.filter(email=user_info[0]).first()
+        if not acc:
+            acc = Users.objects.filter(email=user_info[0]).first()
     else:
         authorize_check = 'main/base.html'
 
-    acc = Businesses.objects.filter(email=user_info[0]).first()
-    if not (acc):
-        acc = Users.objects.filter(email=user_info[0]).first()
-
-    return render(request, 'main/about.html', {'authorize_check': authorize_check, 'avatar': acc.img})
+    return render(request, 'main/about.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
 
 
 def contacts(request):
     user_info = request.session.get('user_info', [])
+    acc = None
     if user_info:
         authorize_check = 'main/base_logged_in.html'
+        acc = Businesses.objects.filter(email=user_info[0]).first()
+        if not acc:
+            acc = Users.objects.filter(email=user_info[0]).first()
     else:
         authorize_check = 'main/base.html'
-
-    acc = Businesses.objects.filter(email=user_info[0]).first()
-    if not (acc):
-        acc = Users.objects.filter(email=user_info[0]).first()
 
     return render(request, 'main/contacts.html', {'authorize_check': authorize_check, 'avatar': acc.img})
 
@@ -95,14 +95,17 @@ def profile(request):
         birthday = request.POST.get('birthday')
         password = request.POST.get('password')
 
-        user_profile = Users.objects.filter(email=user_info[0]).first() or Businesses.objects.filter(email=user_info[0]).first()
+        user_profile = Users.objects.filter(email=user_info[0]).first() or Businesses.objects.filter(
+            email=user_info[0]).first()
 
         if user_profile:
-            if email and not(Users.objects.filter(email=email).exists() or Businesses.objects.filter(email=email).exists()):
+            if email and not (
+                    Users.objects.filter(email=email).exists() or Businesses.objects.filter(email=email).exists()):
                 user_profile.email = email
                 user_info[0] = email
                 request.session['user_info'] = user_info
-            if phone and not(Users.objects.filter(phone_number=phone).exists() or Businesses.objects.filter(phone_number=phone).exists()):
+            if phone and not (Users.objects.filter(phone_number=phone).exists() or Businesses.objects.filter(
+                    phone_number=phone).exists()):
                 user_profile.phone_number = phone
             if birthday:
                 user_profile.date_of_birth = birthday
@@ -123,7 +126,7 @@ def profile(request):
                 user_profile.save()
 
     acc = Businesses.objects.filter(email=user_info[0]).first()
-    if not (acc):
+    if not acc:
         acc = Users.objects.filter(email=user_info[0]).first()
         name = f'{acc.first_name} {acc.last_name}'
         birthday = str(acc.date_of_birth)
@@ -232,20 +235,19 @@ def coworking(request, cowork_id):
     if user_info:
         authorize_check = 'main/base_logged_in.html'
         acc = Businesses.objects.filter(email=user_info[0]).first()
-        if not (acc):
+        if not acc:
             acc = Users.objects.filter(email=user_info[0]).first()
         if Businesses.objects.filter(email=user_info[0]).exists():
             pass
     else:
         authorize_check = 'main/base.html'
 
-    
-
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
-               'description': cowk.description, 'name_coworking': cowk.coworking_name, 'avatar': acc.img if acc else None}
+               'description': cowk.description, 'name_coworking': cowk.coworking_name,
+               'avatar': acc.img if acc else None}
 
     return render(request, 'main/temp_coworking.html', context)
