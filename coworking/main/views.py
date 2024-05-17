@@ -70,6 +70,19 @@ def about(request):
 
     return render(request, 'main/about.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
 
+def create_coworking(request):
+    user_info = request.session.get('user_info', [])
+    acc = None
+    if user_info:
+        authorize_check = 'main/base_logged_in.html'
+        acc = Businesses.objects.filter(email=user_info[0]).first()
+        if not acc:
+            acc = Users.objects.filter(email=user_info[0]).first()
+    else:
+        authorize_check = 'main/base.html'
+
+    return render(request, 'main/create_coworking.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
+
 
 def contacts(request):
     user_info = request.session.get('user_info', [])

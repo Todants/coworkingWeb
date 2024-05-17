@@ -166,6 +166,8 @@
     </div>
 </div>
 <script>
+
+
   document.getElementById('avatar').addEventListener('click', function() {
       document.getElementById('avatarInput').click();
  });
@@ -173,6 +175,8 @@
  document.getElementById('avatarInput').addEventListener('change', function() {
      document.getElementById('profileForm').submit();
  });
+
+
 function toggleInputState(inputField, toggleButton, formId) {
     const isDisabled = inputField.disabled;
     inputField.disabled = !isDisabled;

@@ -1,0 +1,116 @@
+{% extends 'main/base_logged_in.html' %}
+{% load static %}
+
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'main/css/coworking.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
++ посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
+<link rel="stylesheet" href="{% static 'main/css/create_coworking.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
+    + посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<!--тут нахожится всплывающее окошко-->
+<form id="profileForm" action="your-server-endpoint" method="post" enctype="multipart/form-data">
+<div class="container">
+    <div class="left-image">
+        <div>
+            <input type="file" id="avatarInput1" name="avatar1" accept="image/*">
+            <img id="preview1" alt="Preview Image 1">
+        </div>
+    </div>
+
+    
+    <div class="right-images">
+
+        <div class="photos">
+            <input type="file" id="avatarInput2"  accept="image/*">
+            <img id="preview2" >
+        </div>
+        <div class="photos">
+
+            <input type="file" id="avatarInput3" name="avatar3" accept="image/*">
+            <img id="preview3" alt="Preview Image 3">
+        </div>
+        <div class="photos">
+
+            <input type="file" id="avatarInput4" name="avatar4" accept="image/*">
+            <img id="preview4" alt="Preview Image 4">
+        </div>
+        <div class="photos">
+
+            <input type="file" id="avatarInput5" name="avatar5" accept="image/*">
+            <img id="preview5" alt="Preview Image 5">
+        </div>
+
+
+    </div>
+    
+</div>
+<div class="text-container">
+    <div class="text-box">
+        <h2>Название вашего коворкинга</h2>
+        <div>
+            <input type="text" id="text1" name="text1">
+        </div>
+        <p>Описание</p>
+        <div>
+            <input type="text" id="text2" name="text2">
+        </div>
+        <p>Адрес</p>
+        <div>
+            <input type="text" id="text3" name="text3">
+        </div>
+    </div>
+</div>
+<hr class="line">
+<div class="text-container">
+    <div class="overview">
+        <h2 style="margin-left: 20px;">Условия работы</h2>
+        <div class="item">
+            <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
+            <p>Высокоскоростной интернет</p>
+        </div>
+        <div class="item">
+            <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
+            <p>Бесплатный обед</p>
+        </div>
+    </div>
+</div>
+<button type="submit">Submit</button>
+</form>
+
+<script>
+    // Массивы с идентификаторами элементов
+const inputIds = ['avatarInput1', 'avatarInput2', 'avatarInput3', 'avatarInput4', 'avatarInput5'];
+const previewIds = ['preview1', 'preview2', 'preview3', 'preview4', 'preview5'];
+
+// Функция для добавления событий
+function addEventListeners(inputId, previewId) {
+    document.getElementById(inputId).addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById(previewId);
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Привязка событий ко всем элементам
+for (let i = 0; i < inputIds.length; i++) {
+    addEventListeners(inputIds[i], previewIds[i]);
+}
+</script>
+
+{% endblock %}
+
