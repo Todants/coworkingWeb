@@ -13,41 +13,39 @@
 {% block content %}
 
 
-
-
 <!--тут нахожится всплывающее окошко-->
-<form id="profileForm" action="your-server-endpoint" method="post" enctype="multipart/form-data">
+<form id="profileForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 <div class="container">
+
     <div class="left-image">
         <div>
-            <input type="file" id="avatarInput1" name="avatar1" accept="image/*">
-            <img id="preview1" alt="Preview Image 1">
+            <img id="preview1" src="{% static 'main/img/pict1_template.jpg' %}" alt="Preview Image 1" style="cursor:pointer;">
+            <input type="file" id="avatarInput1" name="avatar1" accept="image/*" style="display:none;" required>
         </div>
     </div>
 
-    
     <div class="right-images">
 
         <div class="photos">
-            <input type="file" id="avatarInput2"  accept="image/*">
-            <img id="preview2" >
+            <input type="file" id="avatarInput2" name="avatar2"  accept="image/*" style="display:none;" required>
+            <img id="preview2" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 2" style="cursor:pointer;">
         </div>
         <div class="photos">
 
-            <input type="file" id="avatarInput3" name="avatar3" accept="image/*">
-            <img id="preview3" alt="Preview Image 3">
+            <input type="file" id="avatarInput3" name="avatar3" accept="image/*" style="display:none;" required>
+            <img id="preview3" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 3" style="cursor:pointer;">
         </div>
         <div class="photos">
 
-            <input type="file" id="avatarInput4" name="avatar4" accept="image/*">
-            <img id="preview4" alt="Preview Image 4">
+            <input type="file" id="avatarInput4" name="avatar4" accept="image/*" style="display:none;" required>
+            <img id="preview4" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 4" style="cursor:pointer;">
         </div>
         <div class="photos">
 
-            <input type="file" id="avatarInput5" name="avatar5" accept="image/*">
-            <img id="preview5" alt="Preview Image 5">
+            <input type="file" id="avatarInput5" name="avatar5" accept="image/*" style="display:none;" required>
+            <img id="preview5" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 5" style="cursor:pointer;">
         </div>
-
 
     </div>
     
@@ -56,15 +54,15 @@
     <div class="text-box">
         <h2>Название вашего коворкинга</h2>
         <div>
-            <input type="text" id="text1" name="text1">
+            <input type="text" id="text1" name="text1" required>
         </div>
         <p>Описание</p>
         <div>
-            <input type="text" id="text2" name="text2">
+            <input type="text" id="text2" name="text2" required>
         </div>
         <p>Адрес</p>
         <div>
-            <input type="text" id="text3" name="text3">
+            <input type="text" id="text3" name="text3" required>
         </div>
     </div>
 </div>
@@ -86,6 +84,22 @@
 </form>
 
 <script>
+document.getElementById('preview1').addEventListener('click', function() {
+      document.getElementById('avatarInput1').click();
+ });
+ document.getElementById('preview2').addEventListener('click', function() {
+      document.getElementById('avatarInput2').click();
+ });
+ document.getElementById('preview3').addEventListener('click', function() {
+      document.getElementById('avatarInput3').click();
+ });
+ document.getElementById('preview4').addEventListener('click', function() {
+      document.getElementById('avatarInput4').click();
+ });
+ document.getElementById('preview5').addEventListener('click', function() {
+      document.getElementById('avatarInput5').click();
+ });
+
     // Массивы с идентификаторами элементов
 const inputIds = ['avatarInput1', 'avatarInput2', 'avatarInput3', 'avatarInput4', 'avatarInput5'];
 const previewIds = ['preview1', 'preview2', 'preview3', 'preview4', 'preview5'];

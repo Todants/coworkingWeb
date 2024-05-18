@@ -21,7 +21,7 @@
         <form id="profileForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
-            <input  accept=".png" type="file" id="avatarInput" name="avatar" style="display:none;">
+            <input  accept="image/*" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
 
         <h4>{{ name }}</h4>
@@ -129,11 +129,14 @@
       <div class="projects">
             <h3> Ваши коворкинги </h3>
             <div class="projects_data">
+
                  <div class="data" id="data">
-                    <a href="#" width="250" class="btn_three" onclick="location.href='https://youtube.com';"> + </a>
+                    <a href="#" width="250" class="btn_three" onclick="location.href='create_coworking';"> + </a>
                  </div>
+
                  <div class="data" id="data" onclick="location.href='https://youtube.com';">
                    <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+        alt="user" width="250" height="100">
         alt="user" width="250" height="100">
                     <p>Адрес коворкинга</p>
                     <h4> Название коворкинга</h4>

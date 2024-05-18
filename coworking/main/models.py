@@ -35,9 +35,10 @@ class CoworkingSpaces(models.Model):
     id_company = models.ForeignKey(Businesses, on_delete=models.CASCADE, to_field='id')
     coworking_name = models.CharField(max_length=50)
     description = models.CharField(max_length=500, blank=False, null=False)
-    date_start = models.TimeField(null=False)
-    date_end = models.TimeField(null=False)
+    date_start = models.TimeField(null=False, default='10:00:00')
+    date_end = models.TimeField(null=False, default='22:00:00')
     rating = models.FloatField(null=False, default=0)
+    address = models.CharField(max_length=500, blank=False, null=True)
 
     def __str__(self):
         return f'{self.id_company} , {self.description} ,{self.date_start} ,{self.date_end}, {self.rating}'

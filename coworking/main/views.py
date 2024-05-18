@@ -70,18 +70,37 @@ def about(request):
 
     return render(request, 'main/about.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
 
+
 def create_coworking(request):
     user_info = request.session.get('user_info', [])
-    acc = None
+
     if user_info:
-        authorize_check = 'main/base_logged_in.html'
         acc = Businesses.objects.filter(email=user_info[0]).first()
         if not acc:
-            acc = Users.objects.filter(email=user_info[0]).first()
+            return redirect(reverse('profile'))
     else:
-        authorize_check = 'main/base.html'
+        return redirect(reverse('login_view'))
+    if request.POST:
+        com_name = request.POST.get('text1')
+        description = request.POST.get('text2')
+        address = request.POST.get('text3')
+        files = request.FILES.getlist('file')
+        avatar_fields = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5']
 
-    return render(request, 'main/create_coworking.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
+        temp_co = CoworkingSpaces.objects.create(
+            id_company=acc,
+            coworking_name=com_name,
+            description=description,
+            address=address
+        )
+        print(temp_co)
+        for field in avatar_fields:
+            if field in request.FILES:
+                Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+
+        return redirect(reverse('profile'))
+
+    return render(request, 'main/create_coworking.html', {'avatar': acc.img})
 
 
 def contacts(request):
@@ -101,7 +120,7 @@ def contacts(request):
 def profile(request):
     user_info = request.session.get('user_info', [])
     if not user_info:
-        return redirect(reverse('registration'))
+        return redirect(reverse('login_view'))
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -282,6 +301,8 @@ def coworking(request, cowork_id):
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
+    print(acc.id, type(acc.id))
+    print(cowk.id_company, type(cowk.id_company))
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name,
                'avatar': acc.img if acc else None}
