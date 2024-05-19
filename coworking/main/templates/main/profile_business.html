@@ -17,29 +17,47 @@
 {% block content %}
 <div class="wrapper">
     <div class="left">
-        <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
-        alt="user" width="150">
-        <h4>{{name}}</h4>
-        <div class="Info">
-        <span>email </span>
-          <input type="Email" required="required" class ="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
-          <button class="toggle" id="toggle1"> &#9998; </button>
-        </div>
-        <span>phone </span>
-        <div class="Info">
-          <input type="tel" required="required" class ="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
-          <button class="toggle" id="toggle2"> &#9998; </button>
-        </div>
-        <span> Password </span>
-        <div class="Info">
-          <input type="Password" required="required" class ="editinginputs3" id="editingtoggle3" placeholder="пароль" value="vadimzakharov" maxlength="20" disabled>
-          <button class="toggle" id="toggle3"> &#9998; </button>
-        </div>
-        <form action="{% url 'login_view' %}" method="post" id="logout-form">
+
+        <form id="profileForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <button type="submit" class="btn">Log Out</button>
-            <input type="hidden" name="logout" value="true">
+            <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
+            <input  accept="image/*" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
+
+        <h4>{{ name }}</h4>
+
+        <form method="POST" id="email-form">
+        {% csrf_token %}
+        <span>Email</span>
+        <div class="Info">
+          <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
+          <button type="button" class="toggle" id="toggle1"> &#9998; </button>
+        </div>
+      </form>
+
+      <form method="POST" id="phone-form">
+        {% csrf_token %}
+        <span>Phone</span>
+        <div class="Info">
+          <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
+          <button type="button" class="toggle" id="toggle2"> &#9998; </button>
+        </div>
+      </form>
+
+      <form method="POST" id="password-form">
+        {% csrf_token %}
+        <span>Password</span>
+        <div class="Info">
+          <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
+          <button type="button" class="toggle" id="toggle4"> &#9998; </button>
+        </div>
+      </form>
+        
+      <form action="{% url 'login_view' %}" method="post" id="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="btn">Log Out</button>
+        <input type="hidden" name="logout" value="true">
+    </form>
     </div>
     <div class="right">
         <div class="projects">
@@ -111,11 +129,14 @@
       <div class="projects">
             <h3> Ваши коворкинги </h3>
             <div class="projects_data">
+
                  <div class="data" id="data">
-                    <a href="#" width="250" class="btn_three" onclick="location.href='https://youtube.com';"> + </a>
+                    <a href="#" width="250" class="btn_three" onclick="location.href='create_coworking';"> + </a>
                  </div>
+
                  <div class="data" id="data" onclick="location.href='https://youtube.com';">
                    <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
+        alt="user" width="250" height="100">
         alt="user" width="250" height="100">
                     <p>Адрес коворкинга</p>
                     <h4> Название коворкинга</h4>
@@ -147,102 +168,51 @@
       
     </div>
 </div>
-  <!--<div class="user-img">
-    <img src="user.jpg" id="photo">
-    <input type="file" id="file">
-    <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
-  </div> -->
-  <script>
-    // Get references to the input field and the toggle button
-    const inputField1 = document.getElementById('editingtoggle1');
-    const toggleButton1 = document.getElementById('toggle1');
+<script>
 
-    // Function to toggle the disabled state and update the button text
-    function toggleInputState1() {
-        // Check if the input field is currently disabled
-        const isDisabled1 = inputField1.disabled;
 
-        // Toggle the disabled attribute
-        inputField1.disabled = !isDisabled1;
+  document.getElementById('avatar').addEventListener('click', function() {
+      document.getElementById('avatarInput').click();
+ });
 
-        // Update the CSS class for styling
-        if (isDisabled1) {
-            inputField1.classList.remove('disabled');
-            toggleButton1.textContent = '✎'; // Change button text to "Disable"
-        } else
-        {
-          inputField1.classList.add('disabled');
-          toggleButton1.textContent = '✎'; // Change button text to "Enable"
-        }
+ document.getElementById('avatarInput').addEventListener('change', function() {
+     document.getElementById('profileForm').submit();
+ });
+
+
+function toggleInputState(inputField, toggleButton, formId) {
+    const isDisabled = inputField.disabled;
+    inputField.disabled = !isDisabled;
+
+    if (isDisabled) {
+        inputField.classList.remove('disabled');
+        toggleButton.textContent = '✎';
+        inputField.focus();
+    } else {
+        inputField.classList.add('disabled');
+        toggleButton.textContent = '✎';
+
+        // Send form data to server
+        document.getElementById(formId).submit();
     }
+}
 
-    const inputField2 = document.getElementById('editingtoggle2');
-    const toggleButton2 = document.getElementById('toggle2');
+document.getElementById('toggle1').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle1'), this, 'email-form');
+});
 
-    function toggleInputState2() {
-        // Check if the input field is currently disabled
-        const isDisabled2 = inputField2.disabled;
+document.getElementById('toggle2').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle2'), this, 'phone-form');
+});
 
-        // Toggle the disabled attribute
-        inputField2.disabled = !isDisabled2;
+document.getElementById('toggle3').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle3'), this, 'birthday-form');
+});
 
-        // Update the CSS class for styling
-        if (isDisabled2) {
-            inputField2.classList.remove('disabled');
-            toggleButton2.textContent = '✎'; // Change button text to "Disable"
-        } else
-        {
-          inputField2.classList.add('disabled');
-          toggleButton2.textContent = '✎'; // Change button text to "Enable"
-        }
-    }
-
-    const inputField3 = document.getElementById('editingtoggle3');
-    const toggleButton3 = document.getElementById('toggle3');
-
-    function toggleInputState3() {
-        // Check if the input field is currently disabled
-        const isDisabled3 = inputField3.disabled;
-
-        // Toggle the disabled attribute
-        inputField3.disabled = !isDisabled3;
-
-        // Update the CSS class for styling
-        if (isDisabled3) {
-            inputField3.classList.remove('disabled');
-            toggleButton3.textContent = '✎'; // Change button text to "Disable"
-        } else
-        {
-          inputField3.classList.add('disabled');
-          toggleButton3.textContent = '✎'; // Change button text to "Enable"
-        }
-    }
-
-    const inputField4 = document.getElementById('editingtoggle4');
-    const toggleButton4 = document.getElementById('toggle4');
-
-    function toggleInputState4() {
-        // Check if the input field is currently disabled
-        const isDisabled4 = inputField4.disabled;
-
-        // Toggle the disabled attribute
-        inputField4.disabled = !isDisabled4;
-
-        // Update the CSS class for styling
-        if (isDisabled4) {
-            inputField4.classList.remove('disabled');
-            toggleButton4.textContent = '✎'; // Change button text to "Disable"
-        } else
-        {
-          inputField4.classList.add('disabled');
-          toggleButton4.textContent = '✎'; // Change button text to "Enable"
-        }
-    }
-
-    // Add a click event listener to the toggle button
-    toggleButton1.addEventListener('click', toggleInputState1);
-    toggleButton2.addEventListener('click', toggleInputState2);
-    toggleButton3.addEventListener('click', toggleInputState3);
-    toggleButton4.addEventListener('click', toggleInputState4);
+document.getElementById('toggle4').addEventListener('click', function() {
+    toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
+});
 </script>
+
+
 {% endblock %}

@@ -10,4 +10,5 @@ urlpatterns = [
     path('book', views.index, name='book'),
     path('coworking/<int:cowork_id>', views.coworking, name='coworking'),
     path('registration', views.registration, name='registration'),
+    path('create_coworking', views.create_coworking, name='create_coworking'),
 ]

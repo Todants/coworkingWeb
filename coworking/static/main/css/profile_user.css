@@ -78,8 +78,9 @@ body{
   color: #d94d04;
   background-color: #161616;
   border: transparent;
-  position: left;
-  display: inline;
+  display: inline-block;
+  flex-direction: column;
+  vertical-align: middle;
 }
 
 
@@ -98,29 +99,31 @@ body{
 }
 
 .wrapper .left .editinginputs1{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs2{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs3{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .wrapper .left .editinginputs4{
-  width: 340px;
+  width: 100%;
   margin-bottom: 10px;
 }
 
 .wrapper .left .Info {
-  display: inline;
+  display: flex;
+  flex-direction: column;
 }
 
 .wrapper .left .info .toggle{
   position: inline;
-  display: inline;
+  display: flex;
+  flex-direction: column;
 }
 
 .Info input{

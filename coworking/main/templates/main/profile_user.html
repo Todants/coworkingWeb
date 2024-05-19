@@ -1,5 +1,6 @@
 {% extends 'main/base_logged_in.html' %}
 {% load static %}
+{% load tz %}
 
 {% block styles %}
 <title> Профиль </title>
@@ -18,16 +19,20 @@
 
 
 {% block content %}
-<div class="wrapper">
+<div class="wrapper" style="margin-top: 200px;">
   <div class="left">
-      <img src="https://h-o-m-e.org/wp-content/uploads/2022/04/Blank-Profile-Picture-1.jpg" 
-      alt="user" width="150">
+
+      <form id="profileForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
+            <input accept=".png, .jpg" type="file" id="avatarInput" name="avatar" style="display:none;">
+        </form>
       <h4>{{name}}</h4>
 
       <form method="POST" id="email-form">
         {% csrf_token %}
+        <span>Email</span>
         <div class="Info">
-          <span>Email</span>
           <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
           <button type="button" class="toggle" id="toggle1"> &#9998; </button>
         </div>
@@ -35,8 +40,8 @@
 
       <form method="POST" id="phone-form">
         {% csrf_token %}
+        <span>Phone</span>
         <div class="Info">
-          <span>Phone</span>
           <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
           <button type="button" class="toggle" id="toggle2"> &#9998; </button>
         </div>
@@ -44,17 +49,17 @@
 
       <form method="POST" id="birthday-form">
         {% csrf_token %}
+        <span>Birthday</span>
         <div class="Info">
-          <span>Birthday</span>
-          <input type="date" name="birthday" required="required" class="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
+          <input type="dat" name="birthday" required="required" class="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
           <button type="button" class="toggle" id="toggle3"> &#9998; </button>
         </div>
       </form>
 
       <form method="POST" id="password-form">
         {% csrf_token %}
+        <span>Password</span>
         <div class="Info">
-          <span>Password</span>
           <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
           <button type="button" class="toggle" id="toggle4"> &#9998; </button>
         </div>
@@ -66,115 +71,63 @@
           <input type="hidden" name="logout" value="true">
       </form>
   </div>
+
   <div class="right">
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
           <div class="projects_data">
-            {% for item in next_info %} <!--тут крч ближайшие бронирования-->
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-    alt="user" width="250" height="100">
-                <p>{{item.adress}}</p>
-                <h4> {{item.coworking_name}} </h4>
+            {% for value in next_book %}
+               <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+                <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
+                <p>{{value.address}}</p>
+                <h4>{{value.cowork_name}}</h4>
                 <div class="recent">
                   <div class="time">
-                    <h4> 18:00 </h4>
+                    <h4>{{value.time_start}}</h4>
                   </div>
                   <div class="price">
-                    <h4> 1400 rub </h4>
+                    <h4>{{value.price}} руб.</h4>
                   </div>
                 </div>
                </div>
             {% endfor %}
-               <div class="data" id="data" onclick="location.href='https://youtube.com';" >
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-     alt="user" width="250" height="100">
-                <p>Адрес коворкинга</p>
-                <h4> Название коворкинга</h4>
-                <div class="recent">
-                  <div class="time">
-                    <h4> 18:00</h4>
-                  </div>
-                  <div class="price">
-                    <h4> 1400 rub</h4>
-                  </div>
-                </div>
-            </div>
-            <div class="data" id="data" onclick="location.href='https://youtube.com';">
-              <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-   alt="user" width="250" height="100">
-              <p>Адрес коворкинга</p>
-              <h4> Название коворкинга</h4>
-              <div class="recent">
-                <div class="time">
-                  <h4> 18:00 </h4>
-                </div>
-                <div class="price">
-                  <h4> 1400 rub</h4>
-                </div>
-              </div>
-          </div>
+
           </div>
       </div>
     
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
           <div class="projects_data">
-            {% for item in last_info %} <!--тут крч прошедшие бронирования-->
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                  <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-      alt="user" width="250" height="100">
-                  <p>{{item.adress}}</p>
-                  <h4>{{item.coworking_name}}</h4>
+            {% for value in prev_book %}
+               <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+                  <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
+                  <p>{{value.address}}</p>
+                  <h4>{{value.cowork_name}}</h4>
                   <div class="previous">
                     <div class="date">
-                      <h4> 27.04.2023 </h4>
+                      <h4>{{value.time_start}}</h4>
                     </div>
                     <div class="time">
-                      <h4> 18:00 </h4>
+                      <h4>Тут сделай оценку</h4>
                     </div>
                   </div>
                </div>
             {% endfor %}
-               <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                 <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-      alt="user" width="250" height="100">
-                  <p>Адрес коворкинга</p>
-                  <h4> Название коворкинга</h4>
-                  <div class="previous">
-                    <div class="date">
-                      <h4> 27.04.2023</h4>
-                    </div>
-                    <div class="time">
-                      <h4> 18:00 </h4>
-                    </div>
-                  </div>
-            </div>
-            <div class="data" id="data" onclick="location.href='https://youtube.com';">
-              <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-   alt="user" width="250" height="100">
-              <p>Адрес коворкинга</p>
-              <h4> Название коворкинга</h4>
-              <div class="previous">
-                <div class="date">
-                  <h4> 27.04.2023 </h4>
-                </div>
-                <div class="time">
-                  <h4> 18:00 </h4>
-                </div>
-              </div>
-          </div>
+
           </div>
       </div>
     
   </div>
 </div>
-<!--<div class="user-img">
-  <img src="user.jpg" id="photo">
-  <input type="file" id="file">
-  <label for="file" id="uploadbtn"<i class="fas fa-camera"></i>></label>
-</div> -->
+
 <script>
+    document.getElementById('avatar').addEventListener('click', function() {
+        document.getElementById('avatarInput').click();
+   });
+
+   document.getElementById('avatarInput').addEventListener('change', function() {
+       document.getElementById('profileForm').submit();
+   });
   function toggleInputState(inputField, toggleButton, formId) {
       const isDisabled = inputField.disabled;
       inputField.disabled = !isDisabled;
