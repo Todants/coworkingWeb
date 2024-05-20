@@ -301,8 +301,6 @@ def coworking(request, cowork_id):
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
-    print(acc.id, type(acc.id))
-    print(cowk.id_company, type(cowk.id_company))
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name,
                'avatar': acc.img if acc else None}
