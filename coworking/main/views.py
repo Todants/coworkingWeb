@@ -114,7 +114,7 @@ def contacts(request):
     else:
         authorize_check = 'main/base.html'
 
-    return render(request, 'main/contacts.html', {'authorize_check': authorize_check, 'avatar': acc.img})
+    return render(request, 'main/contacts.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
 
 
 def profile(request):
