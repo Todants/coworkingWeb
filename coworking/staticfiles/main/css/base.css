@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@font-face {
+    font-family: "Sans pro Regular";
+    src: url("/static/main/fonts/SourceSansPro-SemiBold.ttf");
+  }
+@font-face {
+    font-family: "Sans pro Light";
+    src: url("/static/main/fonts/SourceSansPro-Light.ttf");
+  }
+@font-face {
+    font-family: "Sans pro 400";
+    src: url("/static/main/fonts/SourceSansPro-Regular.ttf");
+  }
+
+
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;   
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font: S;
+}
+
+body {
+    background-color: var(--main-bg-color);
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    height: 100vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    background-color: var(--white-bg-color);
+    color: var(--white-bg-color);
+    justify-content: space-between;
+}
+
+
+.logo {
+    font-size: 2em;
+    color: var(--gray-color);
+    user-select: none;
+    font-family: "Sans pro Regular";
+    font-weight:400 ;
+    text-decoration: none;
+    position: relative;
+    
+}   
+.navigation{
+    position: relative;
+    width: 80%;
+    
+}
+
+.navigation .aStyle {
+    position: relative;
+    font-size: 1.1em;
+    color: var(--gray-color);
+    text-decoration: none;
+    font-weight:500;
+    margin-left: 40px;
+    font-family: "Sans pro Light";
+    
+    
+}
+
+
+.navigation .aStyle:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    transform-origin: right;
+    background: var(--white-orange-color);
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .75s;
+}
+
+.navigation .aStyle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+.leftnav .btnLogin {
+    color: var(--white-orange-color);
+    border: 2px solid var(--white-orange-color);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background: transparent;
+    font-family: "Sans pro Regular";
+    
+
+    outline: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size:1.1em;
+    
+    font-weight: 500;
+    margin-left: 20px;
+    transition: .75s;
+    
+}
+
+.leftnav .btnLogin:hover{ /* Кнопка регистрации/входа */
+    background: var(--white-orange-color);
+    color: var(--main-bg-color);
+}
+
+.leftnav{
+    display: inline-flex;
+    position:relative;
+    right: 0;
+
+}
+
+.leftnav .btnReg {
+    color: var(--gray-color);
+    border: 2px solid var(--gray-color);
+    padding:  10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background: transparent;
+    font-family: "Sans pro 400";
+    
+
+    outline: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size:1.1em;
+    
+    font-weight: 500;
+    margin-left: 20px;
+    transition: .75s;
+    
+}
+
+.leftnav .btnReg:hover{ /* Кнопка регистрации/входа */
+    background: var(--gray-color);
+    color: var(--main-bg-color);
+}
+
+.leftnav .btnPrf{
+    border-radius: 100px; /* Радиус скругления */
+    box-shadow: 0 0 0 0 green, 0 0 13px #333; /* Параметры теней */
+    display: block;
+    width: 60px;
+    height: 60px;
+    transition: .75s; 
+}
+
+.leftnav .btnPrf:hover{
+    box-shadow: 0 0 0 black, 0 0 13px var(--white-orange-color); /* Параметры теней */   
+}
+
+.navigation input {
+    background-color: var(--main-bg-color);
+    border: none;
+    color: var(--gray-color);
+    height: 40px;
+    border-radius: 50px;
+    margin-left: 50px;
+    padding: 10px 30px;
+    width: 40%;
+}
+
+@media only screen and (max-width: 1310px) {
+    .navigation input{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .aStyle{
+        display: none;
+    }
+}

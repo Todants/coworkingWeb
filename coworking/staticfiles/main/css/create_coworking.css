@@ -1,0 +1,15 @@
+form{
+    width: 100%;
+}
+
+.photos{
+    width: 50%;
+}
+
+.right-images img{
+    width: 95%;
+}
+
+.left-image img {
+    height: 48%;
+  }
