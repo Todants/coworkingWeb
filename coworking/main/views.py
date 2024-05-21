@@ -114,7 +114,8 @@ def contacts(request):
     else:
         authorize_check = 'main/base.html'
 
-    return render(request, 'main/contacts.html', {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
+    return render(request, 'main/contacts.html',
+                  {'authorize_check': authorize_check, 'avatar': acc.img if acc else None})
 
 
 def profile(request):
@@ -158,7 +159,7 @@ def profile(request):
                 user_profile.img = 'upldfile/' + avatar.name
                 user_profile.save()
 
-    next_book, prev_book = None, None
+    next_book, prev_book, cowork_list = None, None, None
     acc = Businesses.objects.filter(email=user_info[0]).first()
     if not acc:
         acc = Users.objects.filter(email=user_info[0]).first()
@@ -166,7 +167,8 @@ def profile(request):
         birthday = str(acc.date_of_birth)
 
         next_book = []
-        nb = Bookings.objects.filter(date_start__gt=timezone.now()).values('id_coworking', 'date_start', 'price')
+        nb = Bookings.objects.filter(date_start__gt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
+                                                                                           'price')
         for book in nb:
             next_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
@@ -176,7 +178,7 @@ def profile(request):
                               })
 
         prev_book = []
-        nb = Bookings.objects.filter(date_start__lt=timezone.now()).values('id_coworking', 'date_start')
+        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start')
         for book in nb:
             prev_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
@@ -184,13 +186,22 @@ def profile(request):
                               'time_start': timezone.localtime(book['date_start']).strftime('%d.%m.%Y - %H:%M'),
                               'cowork_name': CoworkingSpaces.objects.get(id=book['id_coworking']).coworking_name
                               })
-
     else:
         birthday = None
         name = acc.company_name
 
+        cowork_list = []
+        nb = CoworkingSpaces.objects.filter(id_company=acc).values('id', 'date_start', 'address', 'coworking_name', 'date_end')
+        for book in nb:
+            cowork_list.append({'image': Images.objects.filter(id_coworking=book['id']).first(),
+                                'address': book['address'], 'key': book['id'], 'cowork_name': book['coworking_name'],
+                                'time_start': str(book['date_start'])[:5], 'time_end': str(book['date_end'])[:5],
+                                'serv': Services.objects.filter(id_coworking=book['id']).count()
+                                })
+
     context = {'email': acc.email, 'phone': acc.phone_number, 'password': acc.password, 'name': name,
-               'birthday': birthday, 'avatar': acc.img, 'next_book': next_book, 'prev_book': prev_book}
+               'birthday': birthday, 'avatar': acc.img, 'next_book': next_book, 'prev_book': prev_book,
+               'cowork_list': cowork_list}
 
     if Businesses.objects.filter(email=user_info[0]).exists():
         return render(request, 'main/profile_business.html', context)

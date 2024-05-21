@@ -133,36 +133,22 @@
                  <div class="data" id="data">
                     <a href="#" width="250" class="btn_three" onclick="location.href='create_coworking';"> + </a>
                  </div>
-
-                 <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                   <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-        alt="user" width="250" height="100">
-        alt="user" width="250" height="100">
-                    <p>Адрес коворкинга</p>
-                    <h4> Название коворкинга</h4>
-                    <div class="previous">
-                      <div class="date">
-                        <h4> 1400rub</h4>
-                      </div>
-                      <div class="time">
-                        <h4> 18:00 27.04.2024 </h4>
-                      </div>
-                    </div>
-              </div>
-              <div class="data" id="data" onclick="location.href='https://youtube.com';">
-                <img src="https://thearchitecturedesigns.com/wp-content/uploads/2023/02/Community-Spaces-4.jpeg" 
-     alt="user" width="250" height="100">
-                <p>Адрес коворкинга</p>
-                <h4> Название коворкинга</h4>
+                {% for value in cowork_list %}
+                <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+                <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
+                <p>{{value.address}}</p>
+                <h4>{{value.cowork_name}}</h4>
                 <div class="previous">
                   <div class="date">
-                    <h4> 1400rub </h4>
+                    <h4>{{value.time_start}} - {{value.time_end}}</h4>
                   </div>
                   <div class="time">
-                    <h4> 18:00 27.04.2023 </h4>
+                    <h4>Услуг: {{value.serv}} </h4>
                   </div>
                 </div>
-            </div>
+               </div>
+                {% endfor %}
+
             </div>
         </div>
       
@@ -213,6 +199,5 @@ document.getElementById('toggle4').addEventListener('click', function() {
     toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
 });
 </script>
-
 
 {% endblock %}
