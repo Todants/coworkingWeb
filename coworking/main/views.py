@@ -37,8 +37,7 @@ def login_view(request):
     if request.method == 'POST' and request.POST.get('logout') == 'true':
         request.session['user_info'] = []
         return redirect(reverse('login_view'))
-    elif request.POST:
-
+    elif request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -50,9 +49,10 @@ def login_view(request):
 
         if user_data:
             request.session['user_info'] = [email]
-            return JsonResponse({'success': 'User created successfully'}, status=201)
+            return JsonResponse({'success': 'User logged in successfully'}, status=200)
         else:
-            return JsonResponse({'error': {'unlog': 'unlog'}}, status=400)
+            tempD = {'password': 'password'}
+            return JsonResponse({'error': tempD}, status=400)
 
     return render(request, 'main/login.html')
 
@@ -306,3 +306,7 @@ def coworking(request, cowork_id):
                'avatar': acc.img if acc else None}
 
     return render(request, 'main/temp_coworking.html', context)
+
+
+def rating(request):
+    return render(request, 'main/rating.html')

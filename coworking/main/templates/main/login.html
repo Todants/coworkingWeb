@@ -2,47 +2,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Бронь </title>
+    <title>Авторизация</title>
     <meta charset="UTF-8">
-    <meta name="viewsport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/login.css' %}">
 
-
-    <title> c07working </title>
 </head>
 <body>
     <header style="background-color: transparent;">
-
-        <a class ="logo" href="/"> cO7working </a>
-
-
+        <a class="logo" href="/">cO7working</a>
     </header>
     <div class="container" id="container">
         <div class="toggle-container">
             <img src="{% static 'main/img/table.png' %}" alt="">
         </div>
         <div class="form-container sign-in">
-            <form id="login_form" method="POST">
+            <form id="registration_form2" method="POST">
                 {% csrf_token %}
-                <h1> Войти </h1>
+                <h1>Войти</h1>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
 
-                <input type="email" name="email" placeholder="Email">
+                <div id="error-password-user" style="display: none;">Invalid login or password</div>
 
-                <input type="password" name="password" placeholder="Password">
-                <div id="error-password" style="display: none;">Invalid email or password</div>
-                <h4 id="error" style="display: none;">Неверный логин или пароль</h4>
                 <button type="submit" class="btnLogin">Войти</button>
                 <a href="{% url 'registration' %}">Создать аккаунт</a>
             </form>
-        </div>
 
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#login_form').submit(function(event) {
+            $('#registration_form2').submit(function(event) {
                 event.preventDefault();
                 var formData = $(this).serialize();
                 $.ajax({
@@ -53,11 +47,11 @@
                         window.location.href = "profile";
                     },
                     error: function(xhr, status, error) {
-                        var errors = response.error;
-                        if (errors.unlog) {
-                            document.getElementById('error').style.display = 'block';
+                        var errors = JSON.parse(xhr.responseText).error;
+                        if (errors.password) {
+                            $('#error-password-user').show();
                         } else {
-                            document.getElementById('error').style.display = 'none';
+                            $('#error-password-user').hide();
                         }
                     }
                 });
@@ -66,4 +60,3 @@
     </script>
 </body>
 </html>
-
