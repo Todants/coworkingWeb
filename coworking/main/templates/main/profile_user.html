@@ -19,17 +19,17 @@
 
 
 {% block content %}
-<div class="wrapper" style="margin-top: 200px;">
+<div class="wrapper" style="margin-top: 100px;">
   <div class="left">
 
-      <form id="profileForm" method="POST" enctype="multipart/form-data">
+      <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 100%;">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
             <input accept=".png, .jpg" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
-      <h4>{{name}}</h4>
+      <h4 style="margin-left: 20%; width: 100%;">{{name}}</h4>
 
-      <form method="POST" id="email-form">
+      <form method="POST" id="email-form" style="margin-top: 10px; width: 100%;">
         {% csrf_token %}
         <span>Email</span>
         <div class="Info">
@@ -38,34 +38,34 @@
         </div>
       </form>
 
-      <form method="POST" id="phone-form">
+      <form method="POST" id="phone-form" style="width: 100%;" >
         {% csrf_token %}
         <span>Phone</span>
         <div class="Info">
-          <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
+          <input type="tel" name="phone" required="required" class="editinginputs1" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
           <button type="button" class="toggle" id="toggle2"> &#9998; </button>
         </div>
       </form>
 
-      <form method="POST" id="birthday-form">
+      <form method="POST" id="birthday-form"  style="width: 100%;">
         {% csrf_token %}
         <span>Birthday</span>
         <div class="Info">
-          <input type="dat" name="birthday" required="required" class="editinginputs3" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
+          <input type="dat" name="birthday" required="required" class="editinginputs1" id="editingtoggle3" placeholder="{{birthday}}" value="{{birthday}}" maxlength="10" disabled>
           <button type="button" class="toggle" id="toggle3"> &#9998; </button>
         </div>
       </form>
 
-      <form method="POST" id="password-form">
+      <form method="POST" id="password-form"  style="width: 100%;">
         {% csrf_token %}
         <span>Password</span>
         <div class="Info">
-          <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
+          <input type="password" name="password" required="required" class="editinginputs1" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
           <button type="button" class="toggle" id="toggle4"> &#9998; </button>
         </div>
       </form>
 
-      <form action="{% url 'login_view' %}" method="post" id="logout-form">
+      <form action="{% url 'login_view' %}" method="post" id="logout-form" style="width: 100%;">
           {% csrf_token %}
           <button type="submit" class="btn">Log Out</button>
           <input type="hidden" name="logout" value="true">
@@ -75,7 +75,12 @@
   <div class="right">
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
+          {% if not next_book %}
           <div class="projects_data">
+            <div class="value-empty">
+              <h1>Пусто</h1>
+            </div>
+          {% endif %}
             {% for value in next_book %}
                <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
                 <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
@@ -97,6 +102,12 @@
     
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
+          {% if not prev_book %}
+          <div class="projects_data">
+            <div class="value-empty">
+              <h1>Пусто</h1>
+            </div>
+          {% endif %}
           <div class="projects_data">
             {% for value in prev_book %}
                <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">

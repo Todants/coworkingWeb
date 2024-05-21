@@ -1,0 +1,103 @@
+:root {
+    --main-bg-color: #161616;
+    --white-orange-color: #d94d04;
+    --white-bg-color: #2e2e2e;
+    --gray-color: #f9f9f7;
+    --soliders: black;
+}
+
+
+.container{
+    position: relative ;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    width: 90%;
+   
+}
+
+.container .card{
+    position: relative;
+    width: 180px;
+    height: 270px;
+    background: var(--white-orange-color);
+    margin-right: 2%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.container .card .content{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.5s;
+}
+
+.container .card:hover .content{
+    opacity: 1;
+    transform: translateY(-30px);
+}
+
+.container .card .content .imgBx{
+    position: relative;
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 10px solid var(--soliders);
+}
+
+.container .card .content .imgBx img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container .card .content .contentBx h3 {
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    margin: 20px 0 10px;
+    line-height: 1.1em;
+}
+
+.container .card .content .contentBx p{
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+section::before{
+    content: '';
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(white, var(--white-orange-color));
+    clip-path: circle(30% at right 70%);
+}
+
+section::before{
+    content: '';
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(var(--white-orange-color), white);
+    clip-path: circle(20% at 10% 10%);
+}

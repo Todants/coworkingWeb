@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)iqhsqhv1wt*v+h@i(ug)&*2u5d5-fpi#ysgx16du9r8+d&ifn'
+SECRET_KEY = 'django-insecure-)iqhsqhv1wt*v+h@i(ug)&*2u5hbgfgd5-fpi#ysgx16du9r8+d&ifn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -78,11 +78,10 @@ WSGI_APPLICATION = 'coworking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        #'PASSWORD': '79522793154',
-        'HOST': 'localhost',
+        'NAME': 'tester',
+        'USER': 'mynewuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '188.225.42.91',
         'PORT': '5432',
     }
 }
@@ -122,6 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
