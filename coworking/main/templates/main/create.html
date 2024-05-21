@@ -1,15 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="{% static 'main/css/create.css' %}">
   <title> Создание коворкинга </title>
   <body>
     <div class="wrapper">
       <div class="gallery">
-        <img class="image-grid-col-2 image-grid-row-2" src="2.jpg">
-          <img src="2.jpg">
-          <img src="2.jpg">
-          <img src="2.jpg">
-          <img src="2.jpg">
+        <img class="image-grid-col-2 image-grid-row-2" src="{% static 'main/img/2.jpg' %}">
+          <img src="{% static 'main/img/2.jpg' %}">
+          <img src="{% static 'main/img/2.jpg' %}">
+          <img src="{% static 'main/img/2.jpg' %}">
+          <img src="{% static 'main/img/2.jpg' %}">
       </div>
       <div class="info">
           <span> Название коворкинга </span>

@@ -320,4 +320,4 @@ def coworking(request, cowork_id):
 
 
 def rating(request):
-    return render(request, 'main/rating.html')
+    return render(request, 'main/create.html')
