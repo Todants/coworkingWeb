@@ -60,7 +60,6 @@ body{
   padding: 12px 20px;
   min-width: 200px;
   margin-top: 15px;
-  margin-left: 20%;
   cursor: pointer;
   transition: color 0.4s linear;
   position: relative;
@@ -134,7 +133,6 @@ body{
 
 .wrapper .left img{
   clip-path: circle();
-  margin-left: 25%;
 }
 
 .wrapper .left p{
