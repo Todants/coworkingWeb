@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="rating.css">
+	<title> Оценивание</title>
+</head>
+<body>
+
+	<div class="wrapper">
+		<h3> Оцените коворкинг. </h3>
+		<form action="#">
+			<div class="rating">
+				<input type="number" name="rating" hidden>
+				<i class='bx bx-star star' style="--i: 0;"></i>
+				<i class='bx bx-star star' style="--i: 1;"></i>
+				<i class='bx bx-star star' style="--i: 2;"></i>
+				<i class='bx bx-star star' style="--i: 3;"></i>
+				<i class='bx bx-star star' style="--i: 4;"></i>
+			</div>
+			<textarea name="opinion" cols="30" rows="5" placeholder="Ваше мнение..."></textarea>
+			<div class="btn-group">
+				<button type="submit" class="btn submit"> Отправить </button>
+				<button class="btn cancel"> Отменить </button>
+			</div>
+		</form>
+	</div>
+	<script src="rating.js"></script>
+</body>
+</html>
