@@ -153,9 +153,9 @@ body{
 }
 
 .wrapper .right .projects_data .data .previous{
-  padding: 15px 15px;
-  display: inline;
-  position: inline;
+  margin-top: 15px;
+  padding-top: 15px;
+
 }
 
 .wrapper .right .projects_data .data .recent .time{
@@ -178,15 +178,6 @@ body{
   box-sizing: border-box;
 }
 
-.wrapper .right .projects_data .data .previous .time{
-  padding: 5px 5px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border: medium solid white;
-  box-sizing: border-box;
-}
 
 .wrapper .right .projects_data .data .previous .date{
   padding: 5px 5px;
@@ -208,7 +199,7 @@ body{
 
 .wrapper .projects .projects_data .data{
   background: var(--white-bg-color);
-  padding: 20px 65px;
+  padding: 20px 30px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -237,6 +228,7 @@ body{
 }
 
 .wrapper .right .projects .projects_data{
+  margin-top: 10px;
   overflow-y: auto;
   display: flex;
 }
@@ -327,6 +319,52 @@ body{
   margin-top: 100px;
   background-color: rgb(173,172,172, 0.801);
   box-shadow: 2px 4px 4px rgb(0, 0, 0, 0.604);
+}
+
+.wrapper-rating {
+	background: var(--white);
+	max-width: 576px;
+	width: 100%;
+	border-radius: .75rem;
+	box-shadow: var(--shadow);
+	text-align: center;
+}
+.wrapper-rating  h3 {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	color: white;
+}
+.rating {
+  font-size: 2rem;
+  
+}
+.rating .star {
+	cursor: pointer;
+}
+.rating .star.active {
+	opacity: 0;
+	animation: animate .5s calc(var(--i) * .1s) ease-in-out forwards;
+}
+
+@keyframes animate {
+	0% {
+		opacity: 0;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.2);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+
+.rating .star:hover {
+	transform: scale(1.1);
 }
 
 

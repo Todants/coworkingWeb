@@ -9,16 +9,18 @@
 }
 
 body{
-   background-color: #161616;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  background-color: #161616;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .wrapper{
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 750px;
   display: flex;
+  margin-top: 100px;
 }
 
 .projects .projects_data a{
@@ -50,12 +52,14 @@ body{
 }
 
 .wrapper .left{
-  padding-top: 20px;
-  width: 80%;
+  width: 100%;
   background:#161616;
-  text-align: relative;
   font-size: 28px;
   color: white;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .wrapper .left p{
@@ -92,13 +96,6 @@ body{
   color: white;
 }
 
-.wrapper .left{
-  color: #d94d04;
-  background-color: #161616;
-  border: transparent;
-  position: left;
-  display: inline;
-}
 
 
 .wrapper .left .btn:before{
@@ -134,13 +131,13 @@ body{
 
 .wrapper .left .Info {
   display: flex;
-  flex-direction: column;
 }
 
 .wrapper .left .info .toggle{
   position: inline;
   display: flex;
   flex-direction: column;
+ 
 }
 
 .wrapper .left .toggle{
@@ -150,6 +147,7 @@ body{
   display: inline-block;
   flex-direction: column;
   vertical-align: middle;
+  width: 60px;
 }
 
 .Info input{
@@ -168,7 +166,6 @@ body{
 
 .wrapper .left img{
   clip-path: circle();
-  margin-left: 75px;
 }
 
 .wrapper .left p{
@@ -273,6 +270,7 @@ body{
 }
 
 .wrapper .right .projects .projects_data{
+  margin-top: 10px;
   overflow-y: auto;
   display: flex;
 }
@@ -352,7 +350,7 @@ tfoot td {
 }
 
 .wrapper .right .projects_data .data{
-  width: 45%;
+  width: 270px;
 }
 
 .wrapper .right .projects_data .data h4{
@@ -361,7 +359,7 @@ tfoot td {
 
 .wrapper .left h4{
   text-align: center;
-  margin-right: 80px;
+  margin-top: 20px;
 }
 
 .wrapper .right.projects_data .data {

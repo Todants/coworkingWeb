@@ -18,15 +18,15 @@
 <div class="wrapper">
     <div class="left">
 
-        <form id="profileForm" method="POST" enctype="multipart/form-data">
+        <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 90%; justify-content: center; display: flex;">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
             <input  accept="image/*" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
-
-        <h4>{{ name }}</h4>
-
-        <form method="POST" id="email-form">
+        <div class="name-box" style="width: 90%; justify-content: center; display: flex;    align-items: center;">
+          <h4>{{ name }}</h4>
+        </div>
+        <form method="POST" id="email-form" style="margin-top: 10px; width: 100%;">
         {% csrf_token %}
         <span>Email</span>
         <div class="Info">
@@ -35,7 +35,7 @@
         </div>
       </form>
 
-      <form method="POST" id="phone-form">
+      <form method="POST" id="phone-form" style="width: 100%;">
         {% csrf_token %}
         <span>Phone</span>
         <div class="Info">
@@ -44,7 +44,7 @@
         </div>
       </form>
 
-      <form method="POST" id="password-form">
+      <form method="POST" id="password-form" style="width: 100%;">
         {% csrf_token %}
         <span>Password</span>
         <div class="Info">
@@ -53,7 +53,7 @@
         </div>
       </form>
         
-      <form action="{% url 'login_view' %}" method="post" id="logout-form">
+      <form action="{% url 'login_view' %}" method="post" id="logout-form" style="width: 80%; justify-content: center; display: flex; height: 8%;"  >
         {% csrf_token %}
         <button type="submit" class="btn">Log Out</button>
         <input type="hidden" name="logout" value="true">

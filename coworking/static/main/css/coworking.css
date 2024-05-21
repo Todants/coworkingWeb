@@ -237,8 +237,8 @@ font-family: "Sans pro Light";
     padding: 20px;
     background-color: rgb(36, 36, 36);
     border-radius: 5px;
-    height: 42%;
-    width: 50%;
+    height: 400px;
+    width: 900px;
     border-radius: 50px;
     z-index: 9999; /* Помещаем всплывающее окно выше */
 

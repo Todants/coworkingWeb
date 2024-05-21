@@ -5,6 +5,7 @@
 {% block styles %}
 <title> Профиль </title>
 <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
   <link rel="stylesheet" href="{% static 'main/css/profile_user.css' %}"> <!--Ярик, тут меняй css на профиль css который создашь
   + посмотри там другие css и скопируй из них переменные для цветов(они правда называются по-ублюдски но ты можешь поменять названия в своем css)-->
@@ -21,13 +22,12 @@
 {% block content %}
 <div class="wrapper" style="margin-top: 100px;">
   <div class="left">
-
       <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 80%; justify-content: center; display: flex;">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
             <input accept=".png, .jpg" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
-      <div class="name-box" style="width: 80%; justify-content: center; display: flex;    align-items: center;">
+      <div class="name-box" style="width: 80%; justify-content: center; display: flex; align-items: center;">
         <h4 >{{name}}</h4>
       </div>
 
@@ -112,19 +112,32 @@
           {% endif %}
           <div class="projects_data">
             {% for value in prev_book %}
-               <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
+               <div class="data" id="{{value.id}}">
                   <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
                   <p>{{value.address}}</p>
                   <h4>{{value.cowork_name}}</h4>
                   <div class="previous">
                     <div class="date">
                       <h4>{{value.time_start}}</h4>
-                    </div>
+                    </div>  
                     <div class="time">
-                      <h4>Тут сделай оценку</h4>
+                      <div class="wrapper-rating" style="padding-top: 20px;">
+                        <h4> Оцените коворкинг.</h4>
+                        <form action="#">
+                          <div class="rating">
+                            <input type="number" name="rating" hidden>
+                            <i class='bx bx-star star' style="--i: 0;"></i>
+                            <i class='bx bx-star star' style="--i: 1;"></i>
+                            <i class='bx bx-star star' style="--i: 2;"></i>
+                            <i class='bx bx-star star' style="--i: 3;"></i>
+                            <i class='bx bx-star star' style="--i: 4;"></i>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                </div>
+               
             {% endfor %}
 
           </div>
@@ -173,6 +186,41 @@
   document.getElementById('toggle4').addEventListener('click', function() {
       toggleInputState(document.getElementById('editingtoggle4'), this, 'password-form');
   });
+
+
+</script>
+
+<script>
+  let containers = document.querySelectorAll('.data')
+  containers.forEach(container => {
+
+    var allStar = container .querySelectorAll('.rating .star')
+    var ratingValue = container.querySelector('.rating input')
+    allStar.forEach((item, idx)=> {
+    item.addEventListener('click', function () {
+      let click = 0
+      ratingValue.value = idx + 1
+
+      allStar.forEach(i=> {
+        i.classList.replace('bxs-star', 'bx-star')
+        i.classList.remove('active')
+      })
+
+      for(let i=0; i<allStar.length; i++) {
+        if(i <= idx) {
+          allStar[i].classList.replace('bx-star', 'bxs-star')
+          allStar[i].classList.add('active')
+        } else {
+          allStar[i].style.setProperty('--i', click)
+          click++
+        }
+      }
+    })
+  })
+  });
+     
+
+
 </script>
 
 {% endblock %}
