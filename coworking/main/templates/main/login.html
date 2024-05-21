@@ -32,7 +32,7 @@
 
                 <input type="password" name="password" placeholder="Password">
                 <div id="error-password" style="display: none;">Invalid email or password</div>
-                <h4>Неверный логин или пароль</h4>
+                <h4 id="error" style="display: none;">Неверный логин или пароль</h4>
                 <button type="submit" class="btnLogin">Войти</button>
                 <a href="{% url 'registration' %}">Создать аккаунт</a>
             </form>
@@ -55,9 +55,9 @@
                     error: function(xhr, status, error) {
                         var errors = response.error;
                         if (errors.unlog) {
-                            $('#error-password').show();
+                            document.getElementById('error').style.display = 'block';
                         } else {
-                            $('#error-password').hide();
+                            document.getElementById('error').style.display = 'none';
                         }
                     }
                 });
