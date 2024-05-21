@@ -1,3 +1,4 @@
+import json
 import os
 
 from django.conf import settings
@@ -124,6 +125,15 @@ def profile(request):
         return redirect(reverse('login_view'))
 
     if request.method == 'POST':
+        data = json.loads(request.body)
+        if data:
+            rating_id = int(data.get('rating_id'))
+            rating = int(data.get('rating'))
+            print(rating_id, rating)
+            cowk = CoworkingSpaces.objects.get(id=rating_id)
+            cowk.rating = rating
+            cowk.save()
+
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         birthday = request.POST.get('birthday')

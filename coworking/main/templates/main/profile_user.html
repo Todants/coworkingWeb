@@ -112,7 +112,7 @@
           {% endif %}
           <div class="projects_data">
             {% for value in prev_book %}
-               <div class="data" id="{{value.id}}">
+               <div class="data">
                   <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
                   <p>{{value.address}}</p>
                   <h4>{{value.cowork_name}}</h4>
@@ -123,16 +123,16 @@
                     <div class="time">
                       <div class="wrapper-rating" style="padding-top: 20px;">
                         <h4> Оцените коворкинг.</h4>
-                        <form action="#">
-                          <div class="rating">
-                            <input type="number" name="rating" hidden>
-                            <i class='bx bx-star star' style="--i: 0;"></i>
-                            <i class='bx bx-star star' style="--i: 1;"></i>
-                            <i class='bx bx-star star' style="--i: 2;"></i>
-                            <i class='bx bx-star star' style="--i: 3;"></i>
-                            <i class='bx bx-star star' style="--i: 4;"></i>
-                          </div>
-                        </form>
+                            <form action="#">
+                                <div class="rating">
+                                    <input type="number" id="{{value.key}}" name="rating" hidden>
+                                    <i class='bx bx-star star' style="--i: 0;"></i>
+                                    <i class='bx bx-star star' style="--i: 1;"></i>
+                                    <i class='bx bx-star star' style="--i: 2;"></i>
+                                    <i class='bx bx-star star' style="--i: 3;"></i>
+                                    <i class='bx bx-star star' style="--i: 4;"></i>
+                                </div>
+                            </form>
                       </div>
                     </div>
                   </div>
@@ -221,6 +221,63 @@
      
 
 
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let containers = document.querySelectorAll('.data');
+    containers.forEach(container => {
+        var allStar = container.querySelectorAll('.rating .star');
+        var ratingInput = container.querySelector('.rating input');
+        allStar.forEach((item, idx) => {
+            item.addEventListener('click', function() {
+                let click = 0;
+                ratingInput.value = idx + 1;
+
+                allStar.forEach(i => {
+                    i.classList.replace('bxs-star', 'bx-star');
+                    i.classList.remove('active');
+                });
+
+                for (let i = 0; i < allStar.length; i++) {
+                    if (i <= idx) {
+                        allStar[i].classList.replace('bx-star', 'bxs-star');
+                        allStar[i].classList.add('active');
+                    } else {
+                        allStar[i].style.setProperty('--i', click);
+                        click++;
+                    }
+                }
+
+                // Отправить оценку на сервер
+                sendRating(ratingInput.id, ratingInput.value);
+            });
+        });
+    });
+
+    function sendRating(inputId, rating) {
+        fetch('profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                rating_id: inputId,
+                rating: rating
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Rating submitted successfully');
+            } else {
+                console.log('Error submitting rating');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
 </script>
 
 {% endblock %}

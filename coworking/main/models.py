@@ -61,6 +61,7 @@ class Bookings(models.Model):
     type = models.CharField(max_length=50, blank=False, null=False)
     date_start = models.DateTimeField(null=False)
     date_end = models.DateTimeField(null=False)
+    user_rating = models.BigIntegerField(default=0)
 
     def formatted_date_start(self):
         local_time = timezone.localtime(self.date_start)
