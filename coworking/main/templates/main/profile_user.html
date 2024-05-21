@@ -22,12 +22,14 @@
 <div class="wrapper" style="margin-top: 100px;">
   <div class="left">
 
-      <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 100%;">
+      <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 80%; justify-content: center; display: flex;">
             {% csrf_token %}
             <img src="{{ avatar.url }}" alt="user" width="150" id="avatar" style="cursor:pointer;">
             <input accept=".png, .jpg" type="file" id="avatarInput" name="avatar" style="display:none;">
         </form>
-      <h4 style="margin-left: 20%; width: 100%;">{{name}}</h4>
+      <div class="name-box" style="width: 80%; justify-content: center; display: flex;    align-items: center;">
+        <h4 >{{name}}</h4>
+      </div>
 
       <form method="POST" id="email-form" style="margin-top: 10px; width: 100%;">
         {% csrf_token %}
@@ -65,7 +67,7 @@
         </div>
       </form>
 
-      <form action="{% url 'login_view' %}" method="post" id="logout-form" style="width: 100%;">
+      <form action="{% url 'login_view' %}" method="post" id="logout-form" style="width: 80%; justify-content: center; display: flex; height: 8%;">
           {% csrf_token %}
           <button type="submit" class="btn">Log Out</button>
           <input type="hidden" name="logout" value="true">
