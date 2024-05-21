@@ -75,10 +75,12 @@
   <div class="right">
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
+          {% if not next_book %}
           <div class="projects_data">
             <div class="value-empty">
               <h1>Пусто</h1>
             </div>
+          {% endif %}
             {% for value in next_book %}
                <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
                 <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
@@ -100,10 +102,12 @@
     
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
+          {% if not prev_book %}
           <div class="projects_data">
             <div class="value-empty">
               <h1>Пусто</h1>
             </div>
+          {% endif %}
           <div class="projects_data">
             {% for value in prev_book %}
                <div class="data" id="data" onclick="location.href='coworking/{{ value.key }}';">
