@@ -13,9 +13,6 @@ class Users(models.Model):
     date_of_birth = models.DateField(null=False)
     img = models.ImageField(upload_to='upldfile/', default='upldfile/base_avatar.jpg')
 
-    def __str__(self):
-        return self.first_name
-
 
 class Businesses(models.Model):
 
@@ -37,11 +34,12 @@ class CoworkingSpaces(models.Model):
     description = models.CharField(max_length=500, blank=False, null=False)
     date_start = models.TimeField(null=False, default='10:00:00')
     date_end = models.TimeField(null=False, default='22:00:00')
-    rating = models.FloatField(null=False, default=0)
+    rating_count = models.BigIntegerField(null=False, default=0)
+    rating_sum = models.BigIntegerField(null=False, default=0)
     address = models.CharField(max_length=500, blank=False, null=True)
 
     def __str__(self):
-        return f'{self.id_company} , {self.description} ,{self.date_start} ,{self.date_end}, {self.rating}'
+        return f'{self.id_company} , {self.description} ,{self.date_start} ,{self.date_end}'
 
 
 class Images(models.Model):
@@ -61,6 +59,7 @@ class Bookings(models.Model):
     type = models.CharField(max_length=50, blank=False, null=False)
     date_start = models.DateTimeField(null=False)
     date_end = models.DateTimeField(null=False)
+    rating = models.BigIntegerField(null=False, default=0)
 
     def formatted_date_start(self):
         local_time = timezone.localtime(self.date_start)

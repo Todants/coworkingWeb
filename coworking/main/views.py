@@ -27,7 +27,8 @@ def index(request):
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
         images = Images.objects.filter(id_coworking=i.id)
-        cowork[i.id] = {'name': i.coworking_name, 'rating': i.rating, 'image': images[0].file}
+        cowork[i.id] = {'name': i.coworking_name, 'image': images[0].file,
+                        'rating': round(i.rating_sum/i.rating_count, 1) if i.rating_count > 0 else 0.0}
 
     context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img if acc else None}
 
@@ -127,11 +128,19 @@ def profile(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         if data:
-            rating_id = int(data.get('rating_id'))
-            rating = int(data.get('rating'))
-            print(rating_id, rating)
-            cowk = CoworkingSpaces.objects.get(id=rating_id)
-            cowk.rating = rating
+            book_id, cowk_id = map(int, data.get('rating_id').split())
+            rating_value = int(data.get('rating'))
+
+            book = Bookings.objects.get(id=book_id)
+            cowk = CoworkingSpaces.objects.get(id=cowk_id)
+            if book.rating > 0:
+                cowk.rating_sum += rating_value - book.rating
+            else:
+                cowk.rating_sum += rating_value
+                cowk.rating_count += 1
+
+            book.rating = rating_value
+            book.save()
             cowk.save()
 
         email = request.POST.get('email')
@@ -188,11 +197,11 @@ def profile(request):
                               })
 
         prev_book = []
-        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start')
+        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start', 'id', 'rating')
         for book in nb:
             prev_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
-                              'key': book['id_coworking'],
+                              'key': book['id_coworking'], 'id': book['id'], 'rating_book': book['rating'],
                               'time_start': timezone.localtime(book['date_start']).strftime('%d.%m.%Y - %H:%M'),
                               'cowork_name': CoworkingSpaces.objects.get(id=book['id_coworking']).coworking_name
                               })

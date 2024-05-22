@@ -122,10 +122,10 @@
                     </div>  
                     <div class="time">
                       <div class="wrapper-rating" style="padding-top: 20px;">
-                        <h4> Оцените коворкинг.</h4>
+                        <h4> Оцените этот раз</h4>
                             <form action="#">
                                 <div class="rating">
-                                    <input type="number" id="{{value.key}}" name="rating" hidden>
+                                    <input type="number" id="{{value.id}} {{value.key}}" name="rating" value="{{value.rating_book}}" hidden>
                                     <i class='bx bx-star star' style="--i: 0;"></i>
                                     <i class='bx bx-star star' style="--i: 1;"></i>
                                     <i class='bx bx-star star' style="--i: 2;"></i>
@@ -229,6 +229,19 @@ document.addEventListener('DOMContentLoaded', function() {
     containers.forEach(container => {
         var allStar = container.querySelectorAll('.rating .star');
         var ratingInput = container.querySelector('.rating input');
+
+        // Получаем начальное значение из атрибута value в input
+        let initialRating = parseInt(ratingInput.value, 10);
+        if (isNaN(initialRating)) {
+            initialRating = 0;
+        }
+
+        // Устанавливаем начальное значение звёзд
+        for (let i = 0; i < initialRating; i++) {
+            allStar[i].classList.replace('bx-star', 'bxs-star');
+            allStar[i].classList.add('active');
+        }
+
         allStar.forEach((item, idx) => {
             item.addEventListener('click', function() {
                 let click = 0;
