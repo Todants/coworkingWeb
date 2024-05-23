@@ -50,62 +50,49 @@
     <div class="spaces">
         
         {% for item in spaces %}
-        <div id="overlay" class="overlay"></div>
+        <div class="two_window">
+            <div id="overlay" class="overlay"></div>
 
-        <div class="book-window" id="book-window">
-            <button class="close" id="closePopup">&times;</button>
-            <h1 style="margin-top: -40px;">{{item.type}}</h1>
-            <h4>{{item.num_of_seats}} человека</h4>
-            <h3 style="color: aliceblue;">ФИО</h3>
-            <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
-                <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
-                <div class="accept-book" id="accept-book" style="display: none;">
-                    <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
-                    <h4 style="margin-left: 160px;">Вы можете закрыть это окно</h4>
-                </div>
-                
-                <div class="right-box" id="norm-book" style="width: 520px;">
-                    <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 170px; width: 98%; margin-left: 10px;">Подтвердить бронирование</button>
-                </div>
+            <div class="book-window" id="book-window">
+                <form id="book-service">
+                    <button class="close" id="closePopup">X</button>
+                    <h1 style="margin-top: -40px;">{{item.type}}</h1>
+                    <h4>{{item.num_of_seats}} человека</h4>
+                    <h3>ФИО</h3>
+                    <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
+                        <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                        <div class="accept-book" id="accept-book" style="display: none;">
+                            <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
+                            <h4 id="output" style="margin-left: 160px;">Вы можете закрыть это окно</h4>
+                        </div>
+                        
+                        <div class="right-box" id="norm-book" style="width: 520px; margin-left: 10px;">
+                            <div class="time-input">
+                                <div class="time-box">
+                                    <label for="date-input">Выберите дату:</label>
+                                    <input type="date" id="date-input" name="date-input" required>
+                                </div>
+                                <div class="time-box">
+                                    <label for="time-input">Выберите время:</label>
+                                    <input type="time" id="time-input" name="time-input" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 50px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            
-
-        </div>
 
 
-        <div class="container-space">
-            <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">{{item.type}}</h2>
-            <h4>{{item.price}}</h4>
-            <h4>{{item.num_of_seats}} человека</h4>
-            <button type="submit" id="openPopup" class="BookBtn">Забронировать</button>
+            <div class="container-space">
+                <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                <h2 style="margin-left: 10px;">{{item.type}}</h2>
+                <h4>{{item.price}}</h4>
+                <h4>{{item.num_of_seats}} человека</h4>
+                <button type="submit" id="openPopup" class="BookBtn">Забронировать</button>
+            </div>
         </div>
         {% endfor %}
-               <!--
-        <div class="container-space">
-            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">Зал для конференций</h2>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <button type="submit" class="BookBtn">Confirm</button>
-        </div>
-        <div class="container-space">
-            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">Зал для конференций</h2>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <button type="submit" class="BookBtn">Confirm</button>
-        </div>
-        <div class="container-space">
-            <div class="space-img" ><img src="{% static 'main/img/coworking2.jpg' %}" alt="Right Image 1"></div>
-            <h2 style="margin-left: 10px;">Зал для конференций</h2>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <h4>4 человека</h4>
-            <button type="submit" class="BookBtn">Confirm</button>
-        </div>-->
     </div>
 </div>
 <div class="1container">
@@ -117,22 +104,37 @@
 </div>
 
 <script>
-    btnopen = document.getElementById("openPopup")
-    btnopen.addEventListener('click', function() {
-    document.getElementById('book-window').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    });
+    servicess = document.querySelectorAll(".two_window")
 
-    document.getElementById('closePopup').addEventListener('click', function() {
-    document.getElementById('book-window').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
+    servicess.forEach(container => {
+        btnopen = container.querySelectorAll('.BookBtn')
+        btnopen = btnopen[1]
+        btnopen.addEventListener('click', function() {
+            container.querySelector('.book-window').style.display = 'block';
+            container.querySelector('.overlay').style.display = 'block';
+        });
+        container.querySelector('#closePopup').addEventListener('click', function() {
+        container.querySelector('#book-window').style.display = 'none';
+        container.querySelector('#overlay').style.display = 'none';
+        });
 
-    btnaccept = document.getElementById("accept-book-btn")
-    btnaccept.addEventListener('click', function() {
-    document.getElementById('accept-book').style.display = 'block';
-    document.getElementById('norm-book').style.display = 'none';
-    });
+        btnaccept = container.querySelector("#accept-book-btn")
+        btnaccept.addEventListener('click', function() {
+        dateInput = container.querySelector('#date-input').value;
+        timeInput = container.querySelector('#time-input').value;
+
+            if (dateInput && timeInput) {
+                dateTime = `${dateInput} ${timeInput}:00`;
+                container.querySelector('#output').innerText = `Выбранное время: ${dateTime}`;
+                container.querySelector('#accept-book').style.display = 'block';
+                container.querySelector('#norm-book').style.display = 'none';
+            } 
+        
+        
+        });
+        console.log(btnopen)
+    })
+
 
 </script>
 {% endblock %}
