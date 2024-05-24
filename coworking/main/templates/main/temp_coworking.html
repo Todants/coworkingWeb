@@ -27,7 +27,13 @@
 </div>
 <div class="text-container">
     <div class="text-box">
-        <h2>{{name_coworking}}</h2>
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <h2>{{name_coworking}}</h2>
+            <div class="score" style="margin-left: 20px;">
+                <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
+                <h4>{{ value.rating }}</h4>
+            </div>
+        </div>
         <p>{{description}}</p>
     </div>
 </div>
@@ -74,10 +80,19 @@
                                 </div>
                                 <div class="time-box">
                                     <label for="time-input">Выберите время:</label>
-                                    <input type="time" id="time-input" name="time-input" required>
+                                    <div class="ttt">
+                                        <div class= "tt" style="display: flex; flex-direction: row; justify-content: center;">
+                                        <p style="margin-right: 10px; margin-left: -20px; margin-top: 28px;">Начало</p>
+                                        <input type="time" id="time-input" name="time-input" required>
+                                    </div>
+                                        <div class= "tt" style="display: flex; flex-direction: row;margin-right: 17px; margin-top: -10px;">
+                                            <p style="margin-right: 10px; margin-left: -13  px; margin-top: 8px;">Конец</p>
+                                        <input type="time" id="time-input" name="time-input" style="margin-left: 10px; margin-top: 0px;" required>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 50px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+                            <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 3px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
                         </div>
                     </div>
                 </form>

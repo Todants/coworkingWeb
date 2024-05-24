@@ -326,3 +326,29 @@ display: flex;
 margin-top: 20px;
 
 }
+
+.ttt{
+    display: flex;
+    flex-direction: column; /* Расположение элементов в столбик */
+    align-items: center; /* Центрирование по горизонтали */
+}
+
+.tt p{
+    color: var(--gray-color);
+}
+.score{
+    height: 20px;
+    width: auto;
+    display: flex;
+}
+
+.heart-icon img{
+    height: 20px;
+}
+
+.score h4{
+    color: var(--gray-color);
+    font-family: "Sans pro Regular";
+    margin-left: 10px;
+
+}

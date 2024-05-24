@@ -15,20 +15,20 @@
     </header>
     
     <div class="container-wrapper">
-        <h1 class="heading">Choose Your Side</h1>
+        <h1 class="heading">Выберите сторону</h1>
 
         <div class="containers">
             
             <div class="container" id="container1">
-                <h2 class="container-text">Create Your Perfect Workplace.</h2>
+                <h2 class="container-text">Создать рабочее место.</h2>
                 <div class="imgbox">
                     <img src="{% static 'main/img/woodcutter.png' %}" alt="">
                 </div>
-                <button class="RegBtn" onclick="toggleContainer12()">Create</button>
+                <button class="RegBtn" onclick="toggleContainer12()">Далее</button>
             </div>
 
             <div class="container" id="container2"  style="display: none;" >
-                <h2 class="container-text">Create Your Perfect Workplace.</h2>
+                <h2 class="container-text">Создать рабочее место.</h2>
                 <form id="registration_form" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="form_type_btn" value="company">
@@ -46,20 +46,20 @@
                     <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
                     <div id="error-password" style="display: none;">Passwords don't match</div>
 
-                    <button type="submit" class="RegBtn">Confirm</button>
+                    <button type="submit" class="RegBtn">Подтвердить</button>
                 </form>
             </div>
             
             <div class="container" id="container3">
-                <h2 class="container-text">Find Yourself In Creative Space.</h2>
+                <h2 class="container-text">Найти рабочее место.</h2>
                 <div class="imgbox">
                     <img src="{% static 'main/img/spaceman.png' %}" alt="" style="margin-right: 8%;">
                 </div>
-                <button class="RegBtn" onclick="toggleContainer34()">Create</button>
+                <button class="RegBtn" onclick="toggleContainer34()">Далее</button>
             </div>
 
             <div class="container" id="container4"  style="display: none;" >
-                <h2 class="container-text">Find Yourself In Creative Space.</h2>
+                <h2 class="container-text">Найти рабочее место.</h2>
                 <form id="registration_form2" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="form_type_btn" value="user">
@@ -79,7 +79,7 @@
                     <input type="text" name="confirm_password2" placeholder="Confirm password" required>
                     <div id="error-password-user" style="display: none;">Passwords don't match</div>
 
-                    <button type="submit" class="RegBtn" name="form_type_btn" value="user">Confirm</button>
+                    <button type="submit" class="RegBtn" name="form_type_btn" value="user">Подтвердить</button>
                 </form>
                 
             </div>
