@@ -97,6 +97,7 @@ body {
 .price .right .element{
   display:flex;
   align-items: flex-start;
+  justify-content: space-between;
 }
 
 .price h4{
@@ -107,6 +108,15 @@ body {
 
 .price .right svg{
   margin-top: 7.5%;
+}
+
+.price .right input{
+  margin-top: 10%;
+  margin-left: 5%;
+}
+
+.price .right .custom-checkbox{
+  border: 3px solid #d94d04;
 }
 
 .price .left h1{
@@ -202,9 +212,68 @@ body {
   padding: 10px;
   border: 3px solid #d94d04;
   border-radius: 15px;
+  align-items: center;
+  margin-right: 5%;
+  margin-left: 5%;
+  text-align: center;
 }
 
 .box1:hover{
   transform: scale(1.15);
   border: 2px solid white;
 }
+
+
+.main {
+  display: block;
+  position: relative;
+  padding-left: 45px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.main input[type=checkbox] {
+  visibility: hidden;
+}
+
+.checkbox-container {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 35%;
+  background-color: transparent;
+  border: 2px solid white;
+  margin-left: 25%;
+  border-radius: 5px;
+}
+
+.main:hover input~.checkbox-container {
+  background-color: #d94d04;
+}
+
+.main input:active~.checkbox-container {
+  background-color: #d94d04;
+}
+
+.main input:checked~.checkbox-container {
+  background-color: #d94d04;
+}
+
+.checkbox-container::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.main input:checked~.checkbox-container::after {
+  display: block;
+}
+
+
