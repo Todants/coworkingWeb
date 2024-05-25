@@ -337,16 +337,16 @@ def coworking(request, cowork_id):
             current_date = datetime.now().date()
 
             if date_input_datetime < current_date:
-                return render(request, 'book.html', {'error': 'Дата не может быть в прошлом.'})
+                print('Ошибка 1')
             else:
-                return redirect('success')
+                print(2222)
 
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
-               'description': cowk.description, 'name_coworking': cowk.coworking_name,
+               'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
                'avatar': acc.img if acc else None}
 
     return render(request, 'main/temp_coworking.html', context)
