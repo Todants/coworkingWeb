@@ -60,7 +60,6 @@
             <div id="overlay" class="overlay"></div>
 
             <div class="book-window" id="book-window">
-                <form id="book-service">
                     <button class="close" id="closePopup">X</button>
                     <h1 style="margin-top: -40px;">{{item.type}}</h1>
                     <h4>{{item.num_of_seats}} человека</h4>
@@ -71,31 +70,34 @@
                             <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
                             <h4 id="output" style="margin-left: 160px;">Вы можете закрыть это окно</h4>
                         </div>
-                        
+
                         <div class="right-box" id="norm-book" style="width: 520px; margin-left: 10px;">
-                            <div class="time-input">
-                                <div class="time-box">
-                                    <label for="date-input">Выберите дату:</label>
-                                    <input type="date" id="date-input" name="date-input" required>
+                            <form id="book-service" method="POST">
+                                {% csrf_token %}
+                                <div class="time-input">
+                                    <div class="time-box">
+                                        <label for="date-input">Выберите дату:</label>
+                                        <input type="date" id="date-input" name="date-input" required>
+                                    </div>
+                                    <div class="time-box">
+                                        <label for="time-input">Выберите время:</label>
+                                        <div class="ttt">
+                                            <div class= "tt" style="display: flex; flex-direction: row; justify-content: center;">
+                                            <p style="margin-right: 10px; margin-left: -20px; margin-top: 28px;">Начало</p>
+                                            <input type="time" id="time-input" name="time-input" required>
+                                        </div>
+                                            <div class= "tt" style="display: flex; flex-direction: row;margin-right: 17px; margin-top: -10px;">
+                                                <p style="margin-right: 10px; margin-left: -13  px; margin-top: 8px;">Конец</p>
+                                            <input type="time" id="time-input2" name="time-input2" style="margin-left: 10px; margin-top: 0px;" required>
+                                        </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="time-box">
-                                    <label for="time-input">Выберите время:</label>
-                                    <div class="ttt">
-                                        <div class= "tt" style="display: flex; flex-direction: row; justify-content: center;">
-                                        <p style="margin-right: 10px; margin-left: -20px; margin-top: 28px;">Начало</p>
-                                        <input type="time" id="time-input" name="time-input" required>
-                                    </div>
-                                        <div class= "tt" style="display: flex; flex-direction: row;margin-right: 17px; margin-top: -10px;">
-                                            <p style="margin-right: 10px; margin-left: -13  px; margin-top: 8px;">Конец</p>
-                                        <input type="time" id="time-input" name="time-input" style="margin-left: 10px; margin-top: 0px;" required>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 3px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+                                <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 3px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+                            </form>
                         </div>
                     </div>
-                </form>
+
             </div>
 
 
@@ -118,6 +120,10 @@
         <img class="icon-img" src="{% static 'main/img/notebook.png' %}" alt="Right Image 1">
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+</script>
 <script>
     servicess = document.querySelectorAll(".two_window")
 
@@ -133,21 +139,31 @@
         container.querySelector('#overlay').style.display = 'none';
         });
 
-        btnaccept = container.querySelector("#accept-book-btn")
-        btnaccept.addEventListener('click', function() {
-        dateInput = container.querySelector('#date-input').value;
-        timeInput = container.querySelector('#time-input').value;
-
-            if (dateInput && timeInput) {
-                dateTime = `${dateInput} ${timeInput}:00`;
-                container.querySelector('#output').innerText = `Выбранное время: ${dateTime}`;
-                container.querySelector('#accept-book').style.display = 'block';
-                container.querySelector('#norm-book').style.display = 'none';
-            } 
-        
-        
+        $(document).ready(function() {
+            $('#book-service').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '{% url "coworking" %}',
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        dateTime = `${dateInput} ${timeInput}:00`;
+                        container.querySelector('#output').innerText = `Выбранное время: ${dateTime}`;
+                        container.querySelector('#accept-book').style.display = 'block';
+                        container.querySelector('#norm-book').style.display = 'none';
+                    },
+                    error: function(xhr, status, error) {
+                        var errors = JSON.parse(xhr.responseText).error;
+                        if (errors.password) {
+                            $('#error-password-user').show();
+                        } else {
+                            $('#error-password-user').hide();
+                        }
+                    }
+                });
+            });
         });
-        console.log(btnopen)
     })
 
 

@@ -315,6 +315,7 @@ def registration(request):
 
 
 def coworking(request, cowork_id):
+
     user_info = request.session.get('user_info', [])
     acc = None
     if user_info:
@@ -326,6 +327,19 @@ def coworking(request, cowork_id):
             pass
     else:
         authorize_check = 'main/base.html'
+
+    if request.POST:
+        date_input = request.POST.get('date-input')
+        time_start = request.POST.get('time-input')
+        time_end = request.POST.get('time-input2')
+        if date_input and time_start and time_end:
+            date_input_datetime = datetime.strptime(date_input, '%Y-%m-%d').date()
+            current_date = datetime.now().date()
+
+            if date_input_datetime < current_date:
+                return render(request, 'book.html', {'error': 'Дата не может быть в прошлом.'})
+            else:
+                return redirect('success')
 
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
