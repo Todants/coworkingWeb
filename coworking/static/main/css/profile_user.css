@@ -221,6 +221,36 @@ body{
   margin-bottom: 45px;
 }
 
+.wrapper .right .projects_data .data2 h4{
+  font-size: 15px;
+  color: white;
+  text-align: center;
+}
+
+.wrapper .projects .projects_data .data2{
+  background: var(--white-bg-color);
+  padding: 20px 30px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  text-align: center;
+  color: white;
+  margin-right: 50px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.wrapper .projects .projects_data .data2 img{
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 150px;
+  position: top relative;
+  margin-bottom: 45px;
+}
+
 .wrapper .right .info,
 .wrapper .right .projects{
   color: white;
@@ -247,6 +277,8 @@ body{
   width: 3px;
   background-color: #d94d04;
 }
+
+
 
 .wrapper .right .info h3,
 .wrapper .right .projects h3{
@@ -277,6 +309,27 @@ body{
   background-color: #d94d04;
   margin-right: 55px;
 }
+
+.wrapper .right .projects_data2{
+  display: flex;
+}
+
+.wrapper .right .projects_data .data2{
+  width: 280px;
+}
+
+.wrapper .right .projects_data .data2 h4{
+  color: white;
+}
+
+.wrapper .right.projects_data .data2 {
+  min-width: 35px;
+  height: 45px;
+  text-align: center;
+  background-color: #d94d04;
+  margin-right: 55px;
+}
+
 
 .right .value-empty{
   width: 100%;
