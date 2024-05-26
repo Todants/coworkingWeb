@@ -28,7 +28,7 @@ def index(request):
     for i in coworkings:
         images = Images.objects.filter(id_coworking=i.id)
         cowork[i.id] = {'name': i.coworking_name, 'image': images[0].file,
-                        'rating': round(i.rating_sum/i.rating_count, 1) if i.rating_count > 0 else 0.0}
+                        'rating': round(i.rating_sum / i.rating_count, 1) if i.rating_count > 0 else 0.0}
 
     context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img if acc else None}
 
@@ -196,7 +196,8 @@ def profile(request):
                               })
 
         prev_book = []
-        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start', 'id', 'rating')
+        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
+                                                                                           'id', 'rating')
         for book in nb:
             prev_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
@@ -209,7 +210,8 @@ def profile(request):
         name = acc.company_name
 
         cowork_list = []
-        nb = CoworkingSpaces.objects.filter(id_company=acc).values('id', 'date_start', 'address', 'coworking_name', 'date_end')
+        nb = CoworkingSpaces.objects.filter(id_company=acc).values('id', 'date_start', 'address', 'coworking_name',
+                                                                   'date_end')
         for book in nb:
             cowork_list.append({'image': Images.objects.filter(id_coworking=book['id']).first(),
                                 'address': book['address'], 'key': book['id'], 'cowork_name': book['coworking_name'],
@@ -314,7 +316,6 @@ def registration(request):
 
 
 def coworking(request, cowork_id):
-
     user_info = request.session.get('user_info', [])
     acc = None
     if user_info:
@@ -353,16 +354,23 @@ def coworking(request, cowork_id):
 
             if time_start_obj < coworking_space.date_start or time_end_obj > coworking_space.date_end:
                 return JsonResponse(
-                    {'error': {'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
+                    {'error': {
+                        'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
 
+            serv = CoworkingSpaces.objects.get(id_coworking=id_coworking, type=type_coworking)
+            datetime_start = datetime.combine(date_input_datetime, time_start_obj)
+            datetime_end = datetime.combine(date_input_datetime, time_end_obj)
+            booking_duration = datetime_end - datetime_start
+            booking_minutes = booking_duration.total_seconds() / 60
+
             temp_co = Bookings.objects.create(
-                id_coworking = ,
-                id_user = ,
-                price = ,
-                type = ,
-                date_start = ,
-                date_end = ,
+                id_coworking=id_coworking,
+                id_user=acc.id,
+                price=booking_minutes * serv.price / 60,
+                type=type_coworking,
+                date_start=time_start,
+                date_end=time_end,
             )
 
             return JsonResponse({'success': 'Form submitted successfully!'}, status=200)
@@ -374,7 +382,7 @@ def coworking(request, cowork_id):
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
                'avatar': acc.img if acc else None,
-               'rating': round(cowk.rating_sum/cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
+               'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
                }
 
     return render(request, 'main/temp_coworking.html', context)
