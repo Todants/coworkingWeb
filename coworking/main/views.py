@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.timezone import make_aware
 
 from .models import Businesses, Users, Services, CoworkingSpaces, Images, Bookings
 from django.http import JsonResponse
@@ -370,22 +371,43 @@ def coworking(request, cowork_id):
             booking_minutes = booking_duration.total_seconds() / 60
 
             conflicting_bookings = Bookings.objects.filter(
-                id_coworking=id_coworking & (
-                    Q(date_start__lt=date_start_obj, date_end__gt=date_start_obj) |
-                    Q(date_start__lt=date_end_obj, date_end__gt=date_end_obj)
-                )
+                type=type_coworking,
+                id_coworking=id_coworking,
+                id_user=acc.id
+            ).filter(
+                Q(date_start__lt=date_end_obj, date_end__gt=date_start_obj) |
+                Q(date_start__gt=date_start_obj, date_end__lt=date_end_obj) |
+                Q(date_start__lt=date_end_obj, date_end__gt=date_end_obj) |
+                Q(date_start=date_start_obj) |
+                Q(date_end=date_end_obj)
             ).count()
 
-            if conflicting_bookings >= 4:
-                pass
+            if conflicting_bookings >= 1:
+                return JsonResponse({'error': {'password': 'У вас уже есть бронь на данный промежуток времени'}},
+                                    status=400)
+
+            conflicting_bookings = Bookings.objects.filter(
+                type=type_coworking,
+                id_coworking=id_coworking,
+            ).filter(
+                Q(date_start__lt=date_end_obj, date_end__gt=date_start_obj) |
+                Q(date_start__gt=date_start_obj, date_end__lt=date_end_obj) |
+                Q(date_start__lt=date_end_obj, date_end__gt=date_end_obj) |
+                Q(date_start=date_start_obj) |
+                Q(date_end=date_end_obj)
+            ).count()
+
+            if conflicting_bookings >= serv.num_of_seats:
+                return JsonResponse({'error': {'password': 'На выбранный промежуток времени уже заняты все места'}},
+                                    status=400)
 
             temp_co = Bookings.objects.create(
                 id_coworking=coworking_space,
                 id_user=acc,
                 price=booking_minutes * serv.price / 60,
                 type=type_coworking,
-                date_start=date_start_obj,
-                date_end=date_end_obj,
+                date_start=make_aware(date_start_obj),
+                date_end=make_aware(date_end_obj),
             )
 
             return JsonResponse({'success': 'Form submitted successfully!'}, status=200)
