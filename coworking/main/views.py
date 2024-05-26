@@ -3,6 +3,7 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -79,9 +80,11 @@ def create_coworking(request):
     if user_info:
         acc = Businesses.objects.filter(email=user_info[0]).first()
         if not acc:
-            return redirect(reverse('profile'))
+            pass
+            #return redirect(reverse('profile'))
     else:
-        return redirect(reverse('login_view'))
+        pass
+        #return redirect(reverse('login_view'))
     if request.POST:
         com_name = request.POST.get('text1')
         description = request.POST.get('text2')
@@ -359,11 +362,22 @@ def coworking(request, cowork_id):
                     {'error': {
                         'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
+
             serv = Services.objects.filter(id_coworking=id_coworking, type=type_coworking).first()
             datetime_start = datetime.combine(date_input_datetime, time_start_obj)
             datetime_end = datetime.combine(date_input_datetime, time_end_obj)
             booking_duration = datetime_end - datetime_start
             booking_minutes = booking_duration.total_seconds() / 60
+
+            conflicting_bookings = Bookings.objects.filter(
+                id_coworking=id_coworking & (
+                    Q(date_start__lt=date_start_obj, date_end__gt=date_start_obj) |
+                    Q(date_start__lt=date_end_obj, date_end__gt=date_end_obj)
+                )
+            ).count()
+
+            if conflicting_bookings >= 4:
+                pass
 
             temp_co = Bookings.objects.create(
                 id_coworking=coworking_space,
