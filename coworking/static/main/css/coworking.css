@@ -190,7 +190,7 @@ font-family: "Sans pro Light";
 }
 .container-space{
     background-color: var(--main-bg-color);
-    height: 350px;
+    height: 320px;
     width: 300px;
     margin: 30px;
     border-radius: 25px;
@@ -237,7 +237,7 @@ font-family: "Sans pro Light";
     padding: 20px;
     background-color: rgb(36, 36, 36);
     border-radius: 5px;
-    height: 400px;
+    height: 390px;
     width: 900px;
     border-radius: 50px;
     z-index: 9999; /* Помещаем всплывающее окно выше */
@@ -251,7 +251,7 @@ font-family: "Sans pro Light";
 
 .book-window h4{
     margin-top: 2%;
-    margin-left: 1%;
+    margin-left: 2%;
     color: var(--gray-color);
     font-family: "Sans pro 400";
 
@@ -259,7 +259,7 @@ font-family: "Sans pro Light";
 
 .book-window h3{
     margin-top: 2%;
-    margin-left: 1%;
+    margin-left: 2%;
     color: var(--gray-color);
     font-family: "Sans pro 400";
 
@@ -352,4 +352,18 @@ margin-top: 10px;
     font-family: "Sans pro Regular";
     margin-left: 10px;
 
+}
+.left-box{
+    width: 50%;
+}
+
+.right-up-box{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-up-box h3{
+    margin: 0px;
 }

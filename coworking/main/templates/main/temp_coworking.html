@@ -33,6 +33,7 @@
             </div>
         </div>
         <p>{{description}}</p>
+        <p>График работы:&nbsp</p> <!---->
     </div>
 </div>
 <hr class="line">
@@ -61,8 +62,16 @@
             <div class="book-window" id="book-window">
                     <button class="close" id="closePopup">X</button>
                     <h1 style="margin-top: -40px;">{{item.type}}</h1>
-                    <h4>{{item.num_of_seats}} человека</h4>
-                    <h3>ФИО</h3>
+                    <div style=" display: flex;">
+                        <div class="left-box">
+                            <h3>Жека Кравченко</h3>        
+                            <h4>{{item.num_of_seats}} человека</h4>             
+                        </div>
+                        <div class="right-up-box">
+                            <h3>Цена за час:&nbsp</h3>
+                            <h3>1200 руб</h3><!---->
+                        </div>
+                    </div>
                     <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
                         <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
 
@@ -113,7 +122,8 @@
                 <h2 style="margin-left: 10px;">{{item.type}}</h2>
                 <h4>{{item.price}}</h4>
                 <h4>{{item.num_of_seats}} человека</h4>
-                <button type="submit" id="openPopup" class="BookBtn">Забронировать</button>
+                <h4>Цена за час:&nbsp 1200</h4>
+                <button type="submit" id="openPopup" class="BookBtn" style="margin-top: 10px;">Забронировать</button>
             </div>
         </div>
         {% endfor %}
