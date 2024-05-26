@@ -113,7 +113,7 @@
             </div>
           {% endif %}
             {% for value in prev_book %}
-               <div class="data">
+               <div class="data2">
                   <img src="{{value.image.file.url}}" alt="user" width="250" height="100">
                   <p>{{value.address}}</p>
                   <h4>{{value.cowork_name}}</h4>
@@ -121,7 +121,7 @@
                     <div class="date">
                       <h4>{{value.time_start}}</h4>
                     </div>  
-                    <div class="time">
+                    <div class="rating">
                       <div class="wrapper-rating" style="padding-top: 20px;">
                         <h4> Оцените этот раз</h4>
                             <form action="#">
@@ -192,7 +192,7 @@
 </script>
 
 <script>
-  let containers = document.querySelectorAll('.data')
+  let containers = document.querySelectorAll('.data2')
   containers.forEach(container => {
 
     var allStar = container .querySelectorAll('.rating .star')
@@ -219,14 +219,11 @@
     })
   })
   });
-     
-
-
 </script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    let containers = document.querySelectorAll('.data');
+    let containers = document.querySelectorAll('.data2');
     containers.forEach(container => {
         var allStar = container.querySelectorAll('.rating .star');
         var ratingInput = container.querySelector('.rating input');
@@ -234,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Получаем начальное значение из атрибута value в input
         let initialRating = parseInt(ratingInput.value, 10);
         if (isNaN(initialRating)) {
-            initialRating = 0;
+            initialRating = 2;
         }
 
         // Устанавливаем начальное значение звёзд

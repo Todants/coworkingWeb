@@ -343,6 +343,8 @@ def coworking(request, cowork_id):
             try:
                 time_start_obj = datetime.strptime(time_start, '%H:%M').time()
                 time_end_obj = datetime.strptime(time_end, '%H:%M').time()
+                date_start_obj = datetime.strptime(f"{date_input} {time_start}", '%Y-%m-%d %H:%M')
+                date_end_obj = datetime.strptime(f"{date_input} {time_end}", '%Y-%m-%d %H:%M')
             except ValueError:
                 return JsonResponse({'error': {'password': 'Неверный формат времени'}}, status=400)
 
@@ -357,20 +359,19 @@ def coworking(request, cowork_id):
                     {'error': {
                         'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
-
-            serv = CoworkingSpaces.objects.get(id_coworking=id_coworking, type=type_coworking)
+            serv = Services.objects.filter(id_coworking=id_coworking, type=type_coworking).first()
             datetime_start = datetime.combine(date_input_datetime, time_start_obj)
             datetime_end = datetime.combine(date_input_datetime, time_end_obj)
             booking_duration = datetime_end - datetime_start
             booking_minutes = booking_duration.total_seconds() / 60
 
             temp_co = Bookings.objects.create(
-                id_coworking=id_coworking,
-                id_user=acc.id,
+                id_coworking=coworking_space,
+                id_user=acc,
                 price=booking_minutes * serv.price / 60,
                 type=type_coworking,
-                date_start=time_start,
-                date_end=time_end,
+                date_start=date_start_obj,
+                date_end=date_end_obj,
             )
 
             return JsonResponse({'success': 'Form submitted successfully!'}, status=200)

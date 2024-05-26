@@ -60,59 +60,59 @@
             <div id="overlay" class="overlay"></div>
 
             <div class="book-window" id="book-window">
-                    <button class="close" id="closePopup">X</button>
-                    <h1 style="margin-top: -40px;">{{item.type}}</h1>
-                    <div style=" display: flex;">
-                        <div class="left-box">
-                            <h3>Жека Кравченко</h3>        
-                            <h4>{{item.num_of_seats}} человека</h4>             
-                        </div>
-                        <div class="right-up-box">
-                            <h3>Цена за час:&nbsp</h3>
-                            <h3>1200 руб</h3><!---->
-                        </div>
+                <button class="close" id="closePopup">X</button>
+                <h1 style="margin-top: -40px;">{{item.type}}</h1>
+                <div style=" display: flex;">
+                    <div class="left-box">
+                        <h3>Жека Кравченко</h3>
+                        <h4>{{item.num_of_seats}} человека</h4>
                     </div>
-                    <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
-                        <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                    <div class="right-up-box">
+                        <h3>Цена за час:&nbsp</h3>
+                        <h3>1200 руб</h3>
+                    </div>
+                </div>
+                <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
+                    <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
 
-                        <div class="accept-book" id="accept-book" style="display: none;">
-                            <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
-                            <h4 id="output" style="margin-left: 160px;">Вы можете закрыть это окно</h4>
-                        </div>
+                    <div class="accept-book" id="accept-book" style="display: none;">
+                        <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
+                        <h4 id="output" style="margin-left: 160px;">Вы можете закрыть это окно</h4>
+                    </div>
 
-                        <div class="right-box" id="norm-book" style="width: 520px; margin-left: 10px;">
-                            <form id="book-service" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="type" value="{{item.type}}">
-                                <input type="hidden" name="idCowk" value="{{key}}">
-                                <div class="time-input">
-                                    <div class="time-box">
-                                        <label for="date-input">Выберите дату:</label>
-                                        <input type="date" id="date-input" name="date-input" required>
+                    <div class="right-box" id="norm-book" style="width: 520px; margin-left: 10px;">
+                        <form id="book-service" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="type" value="{{item.type}}">
+                            <input type="hidden" name="idCowk" value="{{key}}">
+                            <div class="time-input">
+                                <div class="time-box">
+                                    <label for="date-input">Выберите дату:</label>
+                                    <input type="date" id="date-input" name="date-input" required>
+                                </div>
+                                <div class="time-box">
+                                    <label for="time-input">Выберите время:</label>
+                                    <div class="ttt">
+                                        <div class= "tt" style="display: flex; flex-direction: row; justify-content: center;">
+                                        <p style="margin-right: 10px; margin-left: -20px; margin-top: 28px;">Начало</p>
+                                        <input type="time" id="time-input" name="time-input" required>
                                     </div>
-                                    <div class="time-box">
-                                        <label for="time-input">Выберите время:</label>
-                                        <div class="ttt">
-                                            <div class= "tt" style="display: flex; flex-direction: row; justify-content: center;">
-                                            <p style="margin-right: 10px; margin-left: -20px; margin-top: 28px;">Начало</p>
-                                            <input type="time" id="time-input" name="time-input" required>
-                                        </div>
-                                            <div class= "tt" style="display: flex; flex-direction: row;margin-right: 17px; margin-top: -10px;">
-                                                <p style="margin-right: 10px; margin-left: -13  px; margin-top: 8px;">Конец</p>
-                                            <input type="time" id="time-input2" name="time-input2" style="margin-left: 10px; margin-top: 0px;" required>
-                                        </div>
-                                        </div>
+                                        <div class= "tt" style="display: flex; flex-direction: row;margin-right: 17px; margin-top: -10px;">
+                                            <p style="margin-right: 10px; margin-left: -13  px; margin-top: 8px;">Конец</p>
+                                        <input type="time" id="time-input2" name="time-input2" style="margin-left: 10px; margin-top: 0px;" required>
+                                    </div>
                                     </div>
                                 </div>
-                                <div style="margin-left: 30%; margin-top: -5px;">
-                                    <p id="error_book" style="color: aliceblue; display: none;">Выбранная дата уже прошла</p>
-                                </div>
-                                
-                                <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 11px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+                            </div>
+                            <div style="margin-left: 30%; margin-top: -5px;">
+                                <p id="error_book" style="color: aliceblue; display: none;">Выбранная дата уже прошла</p>
+                            </div>
 
-                            </form>
-                        </div>
+                            <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 11px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+
+                        </form>
                     </div>
+                </div>
 
             </div>
 
