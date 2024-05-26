@@ -76,7 +76,7 @@ def about(request):
 
 def create_coworking(request):
     user_info = request.session.get('user_info', [])
-
+    acc = None
     if user_info:
         acc = Businesses.objects.filter(email=user_info[0]).first()
         if not acc:
@@ -104,7 +104,7 @@ def create_coworking(request):
 
         return redirect(reverse('profile'))
 
-    return render(request, 'main/create_coworking.html', {'avatar': acc.img})
+    return render(request, 'main/create_coworking.html', {'avatar': acc.img if acc else None})
 
 
 def contacts(request):
