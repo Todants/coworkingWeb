@@ -29,7 +29,7 @@
             <h2>{{name_coworking}}</h2>
             <div class="score" style="margin-left: 20px;">
                 <div class="heart-icon" ><img src="{% static 'main/img/heart.png' %}" alt="Right Image 1"></div>
-                <h4>{{ value.rating }}</h4>
+                <h4>{{ rating }}</h4>
             </div>
         </div>
         <p>{{description}}</p>
@@ -49,6 +49,7 @@
         </div>
     </div>
 </div>
+
 <div class="spaces-h1">
 <h2 style="margin-left: 50px;">Spaces</h2>
     <div class="spaces">
@@ -64,6 +65,7 @@
                     <h3>ФИО</h3>
                     <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
                         <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+
                         <div class="accept-book" id="accept-book" style="display: none;">
                             <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
                             <h4 id="output" style="margin-left: 160px;">Вы можете закрыть это окно</h4>
@@ -72,6 +74,8 @@
                         <div class="right-box" id="norm-book" style="width: 520px; margin-left: 10px;">
                             <form id="book-service" method="POST">
                                 {% csrf_token %}
+                                <input type="hidden" name="type" value="{{item.type}}">
+                                <input type="hidden" name="idCowk" value="{{key}}">
                                 <div class="time-input">
                                     <div class="time-box">
                                         <label for="date-input">Выберите дату:</label>
@@ -92,10 +96,11 @@
                                     </div>
                                 </div>
                                 <div style="margin-left: 30%; margin-top: -5px;">
-                                    <p style="color: aliceblue;">Выбранная дата уже прошла</p>
+                                    <p id="error_book" style="color: aliceblue; display: none;">Выбранная дата уже прошла</p>
                                 </div>
                                 
                                 <button type="submit" class="BookBtn" id="accept-book-btn" style="height: 45px; margin-top: 11px; width: 94%; margin-left: 20px;">Подтвердить бронирование</button>
+
                             </form>
                         </div>
                     </div>
@@ -124,49 +129,51 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('.two_window').each(function() {
+            var container = $(this);
+            var btnOpen = container.find('.BookBtn').last();
+            var btnClose = container.find('.close');
+            var form = container.find('#book-service');
+            var overlay = container.find('.overlay');
+            var bookWindow = container.find('.book-window');
+            var errorBook = container.find('#error_book');
+            var acceptBook = container.find('#accept-book');
+            var normBook = container.find('#norm-book');
+            var output = container.find('#output');
 
-</script>
-<script>
-    servicess = document.querySelectorAll(".two_window")
+            btnOpen.on('click', function() {
+                bookWindow.show();
+                overlay.show();
+            });
 
-    servicess.forEach(container => {
-        btnopen = container.querySelectorAll('.BookBtn')
-        btnopen = btnopen[1]
-        btnopen.addEventListener('click', function() {
-            container.querySelector('.book-window').style.display = 'block';
-            container.querySelector('.overlay').style.display = 'block';
-        });
-        container.querySelector('#closePopup').addEventListener('click', function() {
-        container.querySelector('#book-window').style.display = 'none';
-        container.querySelector('#overlay').style.display = 'none';
-        });
+            btnClose.on('click', function() {
+                bookWindow.hide();
+                overlay.hide();
+            });
 
-        $(document).ready(function() {
-            $('#book-service').submit(function(event) {
+            form.on('submit', function(event) {
                 event.preventDefault();
-                var formData = $(this).serialize();
+                var formData = form.serialize();
                 $.ajax({
                     url: '/coworking/{{ key }}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
-                        dateTime = `${dateInput} ${timeInput}:00`;
-                        container.querySelector('#output').innerText = `Выбранное время: ${dateTime}`;
-                        container.querySelector('#accept-book').style.display = 'block';
-                        container.querySelector('#norm-book').style.display = 'none';
+                        var dateInput = form.find('#date-input').val();
+                        var timeInput = form.find('#time-input').val();
+                        var dateTime = `${dateInput} ${timeInput}:00`;
+                        output.text(`Выбранное время: ${dateTime}`);
+                        acceptBook.show();
+                        normBook.hide();
                     },
-                    error: function(xhr, status, error) {
+                    error: function(xhr) {
                         var errors = JSON.parse(xhr.responseText).error;
-                        if (errors.password) {
-                            $('#error-password-user').show();
-                        } else {
-                            $('#error-password-user').hide();
-                        }
+                        errorBook.text(errors.password).show();
                     }
                 });
             });
         });
-    })
-
+    });
 </script>
 {% endblock %}

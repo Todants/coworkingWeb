@@ -95,7 +95,6 @@ def create_coworking(request):
             description=description,
             address=address
         )
-        print(temp_co)
         for field in avatar_fields:
             if field in request.FILES:
                 Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
@@ -332,14 +331,41 @@ def coworking(request, cowork_id):
         date_input = request.POST.get('date-input')
         time_start = request.POST.get('time-input')
         time_end = request.POST.get('time-input2')
+        type_coworking = request.POST.get('type')
+        id_coworking = request.POST.get('idCowk')
         if date_input and time_start and time_end:
             date_input_datetime = datetime.strptime(date_input, '%Y-%m-%d').date()
             current_date = datetime.now().date()
-
             if date_input_datetime < current_date:
-                print('Ошибка 1')
-            else:
-                print(2222)
+                return JsonResponse({'error': {'password': 'Выбранная дата уже прошла'}}, status=400)
+
+            try:
+                time_start_obj = datetime.strptime(time_start, '%H:%M').time()
+                time_end_obj = datetime.strptime(time_end, '%H:%M').time()
+            except ValueError:
+                return JsonResponse({'error': {'password': 'Неверный формат времени'}}, status=400)
+
+            if time_start_obj >= time_end_obj:
+                return JsonResponse({'error': {'password': 'Время окончания должно быть позже времени начала'}},
+                                    status=400)
+
+            coworking_space = CoworkingSpaces.objects.get(id=id_coworking)
+
+            if time_start_obj < coworking_space.date_start or time_end_obj > coworking_space.date_end:
+                return JsonResponse(
+                    {'error': {'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
+                    status=400)
+
+            temp_co = Bookings.objects.create(
+                id_coworking = ,
+                id_user = ,
+                price = ,
+                type = ,
+                date_start = ,
+                date_end = ,
+            )
+
+            return JsonResponse({'success': 'Form submitted successfully!'}, status=200)
 
     spaces = Services.objects.filter(id_coworking=cowork_id)
     images = Images.objects.filter(id_coworking=cowork_id)
@@ -347,7 +373,9 @@ def coworking(request, cowork_id):
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
-               'avatar': acc.img if acc else None}
+               'avatar': acc.img if acc else None,
+               'rating': round(cowk.rating_sum/cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
+               }
 
     return render(request, 'main/temp_coworking.html', context)
 
