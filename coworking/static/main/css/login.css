@@ -23,13 +23,6 @@
 
 
 
-.container p{
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-    margin: 20px 0;
-}
-
 .container span {
     font-size: 12px;
 }
@@ -50,6 +43,11 @@
     padding: 0 120px;
     margin-top: 10%;
     
+}
+
+.errorp p{
+    color: var(--gray-color);
+    margin-top: 5px;
 }
 
 form h4{

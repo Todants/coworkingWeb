@@ -20,7 +20,7 @@
 
 
 {% block content %}
-<div class="wrapper" style="margin-top: 100px;">
+<div class="wrapper" style="margin-top: 90px;">
   <div class="left">
       <form id="profileForm" method="POST" enctype="multipart/form-data" style="width: 80%; justify-content: center; display: flex;">
             {% csrf_token %}
@@ -77,8 +77,9 @@
   <div class="right">
       <div class="projects">
           <h3>Ближайшие бронирования</h3>
-          {% if not next_book %}
+          
           <div class="projects_data">
+          {% if not next_book %}
             <div class="value-empty">
               <h1>Пусто</h1>
             </div>
@@ -104,13 +105,13 @@
     
     <div class="projects">
           <h3>Прошедшие бронирования</h3>
-          {% if not prev_book %}
+          
           <div class="projects_data">
+          {% if not prev_book %}
             <div class="value-empty">
               <h1>Пусто</h1>
             </div>
           {% endif %}
-          <div class="projects_data">
             {% for value in prev_book %}
                <div class="data">
                   <img src="{{value.image.file.url}}" alt="user" width="250" height="100">

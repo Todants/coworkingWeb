@@ -25,7 +25,9 @@
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
 
-                <div id="error-password-user" style="display: none;">Invalid login or password</div>
+                <div id="error-password-user" class="errorp" style="display: none;">
+                    <p>Invalid login or password</p>
+                </div>
 
                 <button type="submit" class="btnLogin">Войти</button>
                 <a href="{% url 'registration' %}">Создать аккаунт</a>
