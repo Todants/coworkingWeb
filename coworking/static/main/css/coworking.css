@@ -273,6 +273,7 @@ font-family: "Sans pro Light";
     justify-content: center;
     font-family: "Sans pro 400";
     color: var(--gray-color);
+
     border: 2px solid  #5a5a5a;
     border-radius: 50px;
     padding: 10px 17px;
@@ -293,7 +294,7 @@ font-family: "Sans pro Light";
 
 .time-box{
 width: 50%;
-height: 70%;
+height: 50%;
 display: flex;
 flex-direction: column; /* Расположение элементов в столбик */
 align-items: center; /* Центрирование по горизонтали */
@@ -308,7 +309,7 @@ align-items: center; /* Центрирование по горизонтали *
 .time-input input{
     align-items: center; /* Центрирование по горизонтали */
     
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid transparent;
@@ -323,7 +324,7 @@ align-items: center; /* Центрирование по горизонтали *
 
 .time-input{
 display: flex;
-margin-top: 20px;
+margin-top: 10px;
 
 }
 
