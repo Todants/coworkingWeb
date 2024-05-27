@@ -27,13 +27,13 @@
           <h4>{{ name }}</h4>
         </div>
         <form method="POST" id="email-form" style="margin-top: 10px; width: 100%;">
-        {% csrf_token %}
-        <span>Email</span>
-        <div class="Info">
-          <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
-          <button type="button" class="toggle" id="toggle1"> &#9998; </button>
-        </div>
-      </form>
+            {% csrf_token %}
+            <span>Email</span>
+            <div class="Info">
+              <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
+              <button type="button" class="toggle" id="toggle1"> &#9998; </button>
+            </div>
+          </form>
 
       <form method="POST" id="phone-form" style="width: 100%;">
         {% csrf_token %}
