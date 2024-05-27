@@ -121,7 +121,9 @@
                 <h2 style="margin-left: 10px;">{{item.type}}</h2>
                 <h4>{{item.num_of_seats}}</h4>
                 <h4>Цена за час: {{item.price}} руб.</h4>
-                <button type="submit" id="openPopup" class="BookBtn" style="margin-top: 10px;">Забронировать</button>
+                {% if username %}
+                    <button type="submit" id="openPopup" class="BookBtn" style="margin-top: 10px;">Забронировать</button>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

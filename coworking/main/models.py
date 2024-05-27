@@ -72,4 +72,4 @@ class Services(models.Model):
     price = models.BigIntegerField(null=False)
     type = models.CharField(max_length=50, blank=False, null=False)
     num_of_seats = models.BigIntegerField(null=False)
-    img = models.ImageField(upload_to='upldfile/', null=True, blank=True)
+    img = models.ImageField(upload_to='upldfile/', null=False, blank=True)

@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.timezone import make_aware
+from django.utils.timezone import make_aware, now
 
 from .models import Businesses, Users, Services, CoworkingSpaces, Images, Bookings
 from django.http import JsonResponse
@@ -81,29 +81,47 @@ def create_coworking(request):
     if user_info:
         acc = Businesses.objects.filter(email=user_info[0]).first()
         if not acc:
-            pass
-            #return redirect(reverse('profile'))
+            return redirect(reverse('profile'))
     else:
-        pass
-        #return redirect(reverse('login_view'))
+        return redirect(reverse('login_view'))
     if request.POST:
         com_name = request.POST.get('text1')
         description = request.POST.get('text2')
         address = request.POST.get('text3')
-        files = request.FILES.getlist('file')
+        time_start = request.POST.get('text2')
+        time_end = request.POST.get('text3')
         avatar_fields = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5']
+        tariff_data = request.POST.get('tariffData')
 
-        temp_co = CoworkingSpaces.objects.create(
-            id_company=acc,
-            coworking_name=com_name,
-            description=description,
-            address=address
-        )
-        for field in avatar_fields:
-            if field in request.FILES:
-                Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+        time_start_obj = datetime.strptime(time_start, '%H:%M').time()
+        time_end_obj = datetime.strptime(time_end, '%H:%M').time()
 
-        return redirect(reverse('profile'))
+        if tariff_data and com_name and description and address and time_start_obj and time_end_obj:
+
+            temp_co = CoworkingSpaces.objects.create(
+                id_company=acc,
+                coworking_name=com_name,
+                description=description,
+                address=address,
+                date_start=time_start_obj,
+                date_end=time_end_obj,
+            )
+
+            tariffs = json.loads(tariff_data)
+            for tariff in tariffs:
+                Services.object.create(
+                    id_coworking=temp_co,
+                    price=tariff['price'],
+                    type=tariff['name'],
+                    num_of_seats=tariff['seats'],
+                    image=tariff['image'],
+                )
+
+            for field in avatar_fields:
+                if field in request.FILES:
+                    Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+
+            return redirect(reverse('profile'))
 
     return render(request, 'main/create_coworking.html', {'avatar': acc.img if acc else None})
 
@@ -189,8 +207,8 @@ def profile(request):
         birthday = str(acc.date_of_birth)
 
         next_book = []
-        nb = Bookings.objects.filter(date_start__gt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
-                                                                                           'price')
+        nb = Bookings.objects.filter(date_end__gt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
+                                                                                         'price')
         for book in nb:
             next_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
@@ -200,8 +218,8 @@ def profile(request):
                               })
 
         prev_book = []
-        nb = Bookings.objects.filter(date_start__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
-                                                                                           'id', 'rating')
+        nb = Bookings.objects.filter(date_end__lt=timezone.now(), id_user=acc.id).values('id_coworking', 'date_start',
+                                                                                         'id', 'rating')
         for book in nb:
             prev_book.append({'image': Images.objects.filter(id_coworking=book['id_coworking']).first(),
                               'address': CoworkingSpaces.objects.get(id=book['id_coworking']).address,
@@ -325,8 +343,10 @@ def coworking(request, cowork_id):
     if user_info:
         authorize_check = 'main/base_logged_in.html'
         acc = Businesses.objects.filter(email=user_info[0]).first()
+        role = 'bis'
         if not acc:
             acc = Users.objects.filter(email=user_info[0]).first()
+            role = 'user'
         if Businesses.objects.filter(email=user_info[0]).exists():
             pass
     else:
@@ -361,8 +381,12 @@ def coworking(request, cowork_id):
             if time_start_obj < coworking_space.date_start or time_end_obj > coworking_space.date_end:
                 return JsonResponse(
                     {'error': {
-                        'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до {coworking_space.date_end.strftime('%H:%M')} по мск."}},
+                        'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до "
+                                    f"{coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
+
+            if date_start_obj <= now():
+                return JsonResponse({'error': {'password': 'Выбранное время уже прошло'}}, status=400)
 
             serv = Services.objects.filter(id_coworking=id_coworking, type=type_coworking).first()
             datetime_start = datetime.combine(date_input_datetime, time_start_obj)
@@ -426,7 +450,7 @@ def coworking(request, cowork_id):
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
-               'avatar': acc.img if acc else None, 'username': f'{acc.first_name} {acc.last_name}',
+               'avatar': acc.img if acc else None, 'username': f'{acc.first_name} {acc.last_name}' if role == 'user' else None,
                'working_time': f"{cowk.date_start.strftime('%H:%M')} - {cowk.date_end.strftime('%H:%M')}",
                'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
                }
