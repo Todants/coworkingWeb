@@ -70,6 +70,6 @@ class Services(models.Model):
     id = models.AutoField(primary_key=True)
     id_coworking = models.ForeignKey(CoworkingSpaces, on_delete=models.CASCADE, to_field='id')
     price = models.BigIntegerField(null=False)
-    type = models.CharField(max_length=50, blank=False, null=False)
+    type = models.CharField(max_length=100, blank=False, null=False)
     num_of_seats = models.BigIntegerField(null=False)
-    img = models.ImageField(upload_to='upldfile/', null=False, blank=True)
+    img = models.ImageField(max_length=200, upload_to='upldfile/', null=False, blank=True)

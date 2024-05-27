@@ -21,29 +21,29 @@
         <div class="left-image">
             <div class="left-img">
                 <img id="preview1" src="{% static 'main/img/pict1_template.jpg' %}" alt="Preview Image 1" style="cursor:pointer;">
-                <input type="file" id="avatarInput1" name="pict1" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput1" name="pict1" accept="image/*" style="display:none;" >
             </div>
         </div>
 
         <div class="right-images">
 
             <div class="photos">
-                <input type="file" id="avatarInput2" name="pict2"  accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput2" name="pict2"  accept="image/*" style="display:none;" >
                 <img id="preview2" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 2" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput3" name="pict3" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput3" name="pict3" accept="image/*" style="display:none;" >
                 <img id="preview3" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 3" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput4" name="pict4" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput4" name="pict4" accept="image/*" style="display:none;" >
                 <img id="preview4" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 4" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput5" name="pict5" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput5" name="pict5" accept="image/*" style="display:none;" >
                 <img id="preview5" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 5" style="cursor:pointer;">
             </div>
 
@@ -63,8 +63,8 @@
     <div class="price">
       <div class="left">
         <h1> Описание коворкинга </h1>
-        <p contenteditable="true"></p>
-        <input name="text2" id="editableContent" hidden>
+        <p id="editableField" contenteditable="true"></p>
+        <input name="text2" id="editableContent" value="" hidden>
       </div>
       <div class="right">
         <h1> Преимущества </h1></h>
@@ -179,8 +179,6 @@
     <button type="submit" class="BookBtn2" style="margin-top: 17px;">Создать коворкинг</button>
 </form>
 
-
-
 <script>
     document.getElementById('addHtmlButton').addEventListener('click', function() {
         tariffs = [];
@@ -195,7 +193,7 @@
                     name: nameElement.value,
                     seats: seatsElement.value,
                     price: priceElement.value,
-                    image: imageElement.src
+                    image: imageElement
                 };
                 tariffs.push(tariffData);
             } else {

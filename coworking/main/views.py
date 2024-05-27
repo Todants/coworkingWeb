@@ -1,7 +1,11 @@
+import base64
 import json
 import os
+from random import randint
+from time import sleep
 
 from django.conf import settings
+from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -96,6 +100,7 @@ def create_coworking(request):
         time_start_obj = datetime.strptime(time_start, '%H:%M').time()
         time_end_obj = datetime.strptime(time_end, '%H:%M').time()
 
+        print(len(tariff_data), com_name, description, address, time_start_obj, time_end_obj)
         if tariff_data and com_name and description and address and time_start_obj and time_end_obj:
 
             temp_co = CoworkingSpaces.objects.create(
@@ -108,13 +113,26 @@ def create_coworking(request):
             )
 
             tariffs = json.loads(tariff_data)
-            for tariff in tariffs:
-                Services.object.create(
+            for tariff in tariffs[:-1]:
+                avatar_base64 = tariff['image']
+
+                if avatar_base64.startswith('data:image'):
+                    avatar_base64 = avatar_base64.split(',')[1]
+
+                avatar_data = base64.b64decode(avatar_base64)
+
+                avatar_file = ContentFile(avatar_data,
+                                          name=f'ava{randint(1, 9999999)}{randint(1, 9999999)}{randint(1, 999999)}.jpg')
+
+                fs = FileSystemStorage()
+                filename = fs.save('upldfile/' + avatar_file.name, avatar_file)
+
+                Services.objects.create(
                     id_coworking=temp_co,
                     price=tariff['price'],
                     type=tariff['name'],
                     num_of_seats=tariff['seats'],
-                    image=tariff['image'],
+                    img='upldfile/' + avatar_file.name,
                 )
 
             for field in avatar_fields:
@@ -450,7 +468,8 @@ def coworking(request, cowork_id):
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
-               'avatar': acc.img if acc else None, 'username': f'{acc.first_name} {acc.last_name}' if role == 'user' else None,
+               'avatar': acc.img if acc else None,
+               'username': f'{acc.first_name} {acc.last_name}' if role == 'user' else None,
                'working_time': f"{cowk.date_start.strftime('%H:%M')} - {cowk.date_end.strftime('%H:%M')}",
                'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
                }
