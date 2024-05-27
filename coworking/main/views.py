@@ -165,23 +165,25 @@ def profile(request):
         return redirect(reverse('login_view'))
 
     if request.method == 'POST':
-        data = json.loads(request.body)
-        if data:
-            book_id, cowk_id = map(int, data.get('rating_id').split())
-            rating_value = int(data.get('rating'))
+        try:
+            data = json.loads(request.body)
+            if data:
+                book_id, cowk_id = map(int, data.get('rating_id').split())
+                rating_value = int(data.get('rating'))
 
-            book = Bookings.objects.get(id=book_id)
-            cowk = CoworkingSpaces.objects.get(id=cowk_id)
-            if book.rating > 0:
-                cowk.rating_sum += rating_value - book.rating
-            else:
-                cowk.rating_sum += rating_value
-                cowk.rating_count += 1
+                book = Bookings.objects.get(id=book_id)
+                cowk = CoworkingSpaces.objects.get(id=cowk_id)
+                if book.rating > 0:
+                    cowk.rating_sum += rating_value - book.rating
+                else:
+                    cowk.rating_sum += rating_value
+                    cowk.rating_count += 1
 
-            book.rating = rating_value
-            book.save()
-            cowk.save()
-
+                book.rating = rating_value
+                book.save()
+                cowk.save()
+        except:
+            pass
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         birthday = request.POST.get('birthday')
