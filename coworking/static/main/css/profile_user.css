@@ -54,7 +54,7 @@ body{
 }
 
 .wrapper .left .btn{
-  background: #d94d04;
+  background: white;
   font-family: 'Josefin Sans', sans-serif;
   text-transform: uppercase;
   padding: 12px 20px;
@@ -125,6 +125,7 @@ body{
   outline: none;
   font-size: 1em;
   margin-right: 40px;
+  color: white;
 }
 
 .wrapper .left span{
