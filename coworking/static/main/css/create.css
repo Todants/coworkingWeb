@@ -1,3 +1,25 @@
+:root {
+  --main-bg-color: #161616;
+  --white-orange-color: #d94d04;
+  --white-bg-color: #2e2e2e;
+  --gray-color: #f9f9f7;
+  --soliders: black;
+  --light-orange-color: #d94d04;
+}
+
+@font-face {
+  font-family: "Sans pro Regular";
+  src: url("/static/main/fonts/SourceSansPro-SemiBold.ttf");
+}
+@font-face {
+  font-family: "Sans pro Light";
+  src: url("/static/main/fonts/SourceSansPro-Light.ttf");
+}
+@font-face {
+  font-family: "Sans pro 400";
+  src: url("/static/main/fonts/SourceSansPro-Regular.ttf");
+}
+
 body {
 	margin: 0;
   padding: 0;
@@ -7,6 +29,70 @@ body {
 *{
   font-family: 'Josefin Sans', sans-serif;
 }
+
+form{
+  width: 100%;
+}
+
+.container {
+  width: 96%; /* Пример: установите желаемую ширину в процентах или пикселях */
+  margin: 0 auto; /* Центрируем контейнер на странице */
+  display: flex;
+  height: 60%;
+  max-height: 550px;
+  margin-top: 100px;
+}
+
+.left-image {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden; /* Добавляем overflow: hidden; */
+  border: 2px solid transparent;
+  border-radius: 50px;
+  width: 100%;
+  height: 97%;
+}
+
+
+.left-image img{
+  height: 100%;
+}
+
+
+.left-img{
+  height: 100%;
+  width: 100%;
+}
+
+.photos{
+  width: 50%;
+}
+
+.right-images {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden; /* Добавляем overflow: hidden; */
+
+}
+.right-images img {
+  width: 98%;
+  margin: 5px;
+  border: 2px solid transparent;
+  border-radius: 25px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .right-images{
+      display: none;
+  }
+  .left-image img {
+      height: 100%;
+      
+  }
+}
+
 
 .gallery {
 	--gap: 16px;
@@ -55,22 +141,35 @@ body {
   margin-left: 2%;
 }
 
-.wrapper .info{
+.line {
+  border: 1px solid var(--white-bg-color); /* Толщина 1px, стиль solid */
+  height: 5px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.info{
+  display: flex;
   align-items: center;
+  margin-left: 7%;
+
 }
 
 .info input{
-  margin-top: 5px;
-  padding: 10px;
+  margin-left: 10px;
+  padding: 7px;
   background: #2e2e2e;
   border-radius: 25px;
   outline: #161616;
   font-size: 1em;
-  border: 3px solid #d94d04;
+  border: 1px solid var(--light-orange-color);
+  color: aliceblue;
 }
 
 .info .toggle{
-  color: #d94d04;
+  color: var(--light-orange-color);
   background-color: #161616;
   border: transparent;
   display: inline-block;
@@ -80,24 +179,34 @@ body {
 
 .price{
   display: inline-flex;
+  width: 98%;
+  margin-left: 2%;
 }
 
 .price .left {
   margin-left: 2%;
   margin-right: 2%;
+  width: 50%;
 }
 
 .price .right{
   height: 100%;
-  width: 100%;
   color: white;
-  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
 }
+
+
 
 .price .right .element{
   display:flex;
   align-items: flex-start;
   justify-content: space-between;
+  width: 100%;
+  height: 30%;
+  margin-top: 15px;
 }
 
 .price h4{
@@ -106,34 +215,40 @@ body {
   position: top;
 }
 
-.price .right svg{
-  margin-top: 7.5%;
-}
-
-.price .right input{
-  margin-top: 10%;
-  margin-left: 5%;
-}
 
 .price .right .custom-checkbox{
-  border: 3px solid #d94d04;
+  border: 3px solid var(--light-orange-color);
 }
 
 .price .left h1{
   color: white;
 }
 
+.left h1{
+  margin-left: 25%;
+}
+.right-items{
+  display: flex;
+  flex-direction: column;
+  width: 42%;
+  margin-left: 23%;
+  margin-top: 1%;
+}
+
+.right h1{
+  margin-left: 30%;
+}
 
 .price p{
-  border: 3px solid #d94d04;
+  border: 1px solid var(--light-orange-color);
   color: white;
   border-radius: 15px;
-  width: 750px;
-  height: 250px;
+  height: 228px;
+  margin-top: 2%;
 }
 
 .tarifs{
-  width: 100vw;
+  width: 100%;
   height: 50vh;
   background-color: #161616;
   position: relative;
@@ -146,7 +261,7 @@ body {
   margin-right: 35px;
   width: 25%;
   height: 85%;
-  background-color: #d94d04;
+  background-color: var(--light-orange-color);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -161,6 +276,19 @@ body {
   font-family: sans-serif;
   border: 2px solid white;
   border-radius: 5px;
+}
+
+.space-img {
+  height: 162px;
+  width: auto;
+  margin-left: 5px;
+  border-radius: 25px;
+}
+
+.space-img img {
+  height: 100%;
+  border-radius: 25px;
+  margin-top: 5px;
 }
 
 .box1 img{
@@ -202,7 +330,7 @@ body {
   color: white;
   font-size: 1em;
   text-align: center;
-  border: 3px solid #d94d04;
+  border: 3px solid var(--light-orange-color);
 }
 
 .wrapper h1{
@@ -210,7 +338,7 @@ body {
   color: white;
   font-family: monospace;
   padding: 10px;
-  border: 3px solid #d94d04;
+  border: 3px solid var(--light-orange-color);
   border-radius: 15px;
   align-items: center;
   margin-right: 5%;
@@ -248,32 +376,133 @@ body {
 }
 
 .main:hover input~.checkbox-container {
-  background-color: #d94d04;
+  background-color: var(--light-orange-color);
 }
 
 .main input:active~.checkbox-container {
-  background-color: #d94d04;
+  background-color: var(--light-orange-color);
 }
 
 .main input:checked~.checkbox-container {
-  background-color: #d94d04;
+  background-color: var(--light-orange-color);
 }
 
 .checkbox-container::after {
   content: "";
   position: absolute;
   display: none;
-  left: 7px;
-  top: 3px;
+  left: 5px;
+  top: 1px;
   width: 6px;
   height: 12px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+.block {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  color: aliceblue;
+}
+.container {
+  width: 96%; /* Пример: установите желаемую ширину в процентах или пикселях */
+  margin: 0 auto; /* Центрируем контейнер на странице */
+  display: flex;
+  height: 60%;
+  max-height: 550px;
+  margin-top: 100px;
+}
+
+.spaces {
+  background-color: var(--white-bg-color);
+  width: 100%;
+  display: flex;
+}
+.spaces-h1 {
+  margin-top: 30px;
+  background-color: var(--white-bg-color);
+  width: 100%;
+}
+
+.container-space {
+  background-color: var(--main-bg-color);
+  height: 440px;
+  width: 300px;
+  margin: 30px;
+  margin-top: 0px;
+  border-radius: 25px;
+}
 
 .main input:checked~.checkbox-container::after {
   display: block;
 }
 
+.ser-info-box{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ser-info-box h3{
+  color: var(--gray-color);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: "Sans pro 400";
+}
+
+.ser-info-box input{
+  padding: 7px;
+  background: #2e2e2e;
+  border-radius: 25px;
+  outline: #161616;
+  font-size: 1em;
+  border: 1px solid var(--white-orange-color);
+  width: 97%;
+  color: aliceblue;
+}
+
+.ser-info-box .BookBtn{
+  color: var(--white-orange-color);
+  border: 2px solid var(--white-orange-color);
+  padding: 10px 20px;
+  background: transparent;
+  font-family: "Sans pro 400";
+  cursor: pointer;
+  
+  border-radius: 50px;
+  width: 285px;
+  margin-top: 15px;
+  transition: .75s;
+}
+
+.BookBtn2{
+  color: var(--white-orange-color);
+  border: 2px solid var(--white-orange-color);
+  padding: 10px 20px;
+  background: transparent;
+  font-family: "Sans pro 400";
+  cursor: pointer;
+  
+  border-radius: 50px;
+  width: 285px;
+  margin-top: 15px;
+  transition: .75s;
+  margin-left: 40%;
+  margin-bottom: 20px;
+}
+
+.BookBtn2:hover{ /* Кнопка регистрации/входа */
+  background: var(--white-orange-color);
+  color: var(--main-bg-color);
+}
+
+
+
+
+.ser-info-box .BookBtn:hover{ /* Кнопка регистрации/входа */
+  background: var(--white-orange-color);
+  color: var(--main-bg-color);
+}
 
