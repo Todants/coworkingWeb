@@ -33,7 +33,7 @@
             </div>
         </div>
         <p>{{description}}</p>
-        <p>График работы:&nbsp</p> <!---->
+        <p>График работы: {{working_time}}</p>
     </div>
 </div>
 <hr class="line">
@@ -64,16 +64,15 @@
                 <h1 style="margin-top: -40px;">{{item.type}}</h1>
                 <div style=" display: flex;">
                     <div class="left-box">
-                        <h3>Жека Кравченко</h3>
-                        <h4>{{item.num_of_seats}} человека</h4>
+                        <h3>Цена за час: {{item.price}} руб.</h3>
+                        <h4>{{item.num_of_seats}}</h4>
                     </div>
                     <div class="right-up-box">
-                        <h3>Цена за час:&nbsp</h3>
-                        <h3>1200 руб</h3>
+                        <h3>Бронь на имя: {{username}}</h3>
                     </div>
                 </div>
                 <div class="container-space" style="height: 224px; width: 100%; display: flex; margin-left: 0px;">
-                    <div class="space-img" style="height: 212px;" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                    <div class="space-img" style="height: 212px;" ><img src='/media/{{item.img}}' alt="Right Image 1"></div>
 
                     <div class="accept-book" id="accept-book" style="display: none;">
                         <h1 style="margin-left: 80px ; margin-top: 90px;">Бронь прошла успешно</h1>
@@ -118,11 +117,10 @@
 
 
             <div class="container-space">
-                <div class="space-img" ><img src='{{item.img.url}}' alt="Right Image 1"></div>
+                <div class="space-img" ><img src='/media/{{item.img}}' alt="Right Image 1"></div>
                 <h2 style="margin-left: 10px;">{{item.type}}</h2>
-                <h4>{{item.price}}</h4>
-                <h4>{{item.num_of_seats}} человека</h4>
-                <h4>Цена за час:&nbsp 1200</h4>
+                <h4>{{item.num_of_seats}}</h4>
+                <h4>Цена за час: {{item.price}} руб.</h4>
                 <button type="submit" id="openPopup" class="BookBtn" style="margin-top: 10px;">Забронировать</button>
             </div>
         </div>

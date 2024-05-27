@@ -412,13 +412,22 @@ def coworking(request, cowork_id):
 
             return JsonResponse({'success': 'Form submitted successfully!'}, status=200)
 
-    spaces = Services.objects.filter(id_coworking=cowork_id)
+    spaces = Services.objects.filter(id_coworking=cowork_id).values('type', 'price', 'num_of_seats', 'img')
     images = Images.objects.filter(id_coworking=cowork_id)
     cowk = CoworkingSpaces.objects.filter(id=cowork_id).first()
 
+    dic = {1: 'место', 2: 'места', 3: 'места', 4: 'места', 5: 'мест', 6: 'мест',
+           7: 'мест', 8: 'мест', 9: 'мест', 0: 'мест'}
+    for sp in spaces:
+        if 10 < int(sp["num_of_seats"]) % 100 < 20:
+            sp["num_of_seats"] = f'{sp["num_of_seats"]} мест'
+        else:
+            sp["num_of_seats"] = f'{sp["num_of_seats"]} {dic[int(sp["num_of_seats"]) % 10]}'
+
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
-               'avatar': acc.img if acc else None,
+               'avatar': acc.img if acc else None, 'username': f'{acc.first_name} {acc.last_name}',
+               'working_time': f"{cowk.date_start.strftime('%H:%M')} - {cowk.date_end.strftime('%H:%M')}",
                'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
                }
 
