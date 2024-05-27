@@ -116,8 +116,8 @@
 
 
 <div class="spaces-h1">
-    <h1 class="block"> Тарифы </h1>
-        <div class="spaces">
+    <h1 class="block" style="margin-bottom: 10px;"> Тарифы </h1>
+        <div class="spaces" id="htmlContainer">
             
             <div class="two_window">
                 <div class="container-space">
@@ -132,9 +132,9 @@
                         <input type="text" required="required" class ="editinginputs1" id="editingtoggle1" placeholder=""  maxlength="22" >
                         <h3>Стоимость за час</h3>
                         <input type="text" required="required" class ="editinginputs1" id="editingtoggle1" placeholder=""  maxlength="22" >
-                        <button id="addHtmlButton" class="BookBtn" style="margin-top: 17px;">Добавить</button>
+                        <button type="button" id="addHtmlButton" class="BookBtn" style="margin-top: 17px;">Добавить</button>
                     </div>
-                   
+                    
                 </div>
         </div>
     </div>
@@ -147,11 +147,23 @@
     document.getElementById('addHtmlButton').addEventListener('click', function() {
     // Создаем новый элемент
     const newElement = document.createElement('div');
+    newElement.className = 'two_window'; 
+    let values = document.querySelector('.ser-info-box').querySelectorAll('.editinginputs1');
+    let src = document.getElementById('preview6').src
     
+    for (i=0; i<3;i++){
+
+    console.log(values[i].value);
+    }
     // Добавляем в него HTML код
     newElement.innerHTML = `
-        <p>Это новый добавленный HTML код.</p>
-        <p>Можно добавить сколько угодно элементов.</p>
+        <div class="container-space">
+            <div class="space-img" ><img src='${src}' alt="Right Image 1"></div>
+            <h2 style="margin-left: 10px;">${values[0].value}</h2>
+            <h4>Мест: ${values[1].value}</h4>
+            <h4>Цена за час: ${values[2].value} руб.</h4>
+            <button type="button" id="deleteHtmlButton" class="BookBtn3">Удалить</button>
+        </div>
     `;
     
     // Добавляем новый элемент в контейнер
