@@ -360,6 +360,7 @@ def registration(request):
 def coworking(request, cowork_id):
     user_info = request.session.get('user_info', [])
     acc = None
+    role = None
     if user_info:
         authorize_check = 'main/base_logged_in.html'
         acc = Businesses.objects.filter(email=user_info[0]).first()
