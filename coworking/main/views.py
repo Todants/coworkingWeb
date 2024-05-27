@@ -88,9 +88,9 @@ def create_coworking(request):
         com_name = request.POST.get('text1')
         description = request.POST.get('text2')
         address = request.POST.get('text3')
-        time_start = request.POST.get('text2')
-        time_end = request.POST.get('text3')
-        avatar_fields = ['avatar1', 'avatar2', 'avatar3', 'avatar4', 'avatar5']
+        time_start = request.POST.get('time_start')
+        time_end = request.POST.get('time_end')
+        avatar_fields = ['pict1', 'pict2', 'pict3', 'pict4', 'pict5']
         tariff_data = request.POST.get('tariffData')
 
         time_start_obj = datetime.strptime(time_start, '%H:%M').time()

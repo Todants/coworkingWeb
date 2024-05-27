@@ -21,29 +21,29 @@
         <div class="left-image">
             <div class="left-img">
                 <img id="preview1" src="{% static 'main/img/pict1_template.jpg' %}" alt="Preview Image 1" style="cursor:pointer;">
-                <input type="file" id="avatarInput1" name="avatar1" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput1" name="pict1" accept="image/*" style="display:none;" required>
             </div>
         </div>
 
         <div class="right-images">
 
             <div class="photos">
-                <input type="file" id="avatarInput2" name="avatar2"  accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput2" name="pict2"  accept="image/*" style="display:none;" required>
                 <img id="preview2" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 2" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput3" name="avatar3" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput3" name="pict3" accept="image/*" style="display:none;" required>
                 <img id="preview3" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 3" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput4" name="avatar4" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput4" name="pict4" accept="image/*" style="display:none;" required>
                 <img id="preview4" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 4" style="cursor:pointer;">
             </div>
             <div class="photos">
 
-                <input type="file" id="avatarInput5" name="avatar5" accept="image/*" style="display:none;" required>
+                <input type="file" id="avatarInput5" name="pict5" accept="image/*" style="display:none;" required>
                 <img id="preview5" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 5" style="cursor:pointer;">
             </div>
 
@@ -64,7 +64,7 @@
       <div class="left">
         <h1> Описание коворкинга </h1>
         <p contenteditable="true"></p>
-        <input name="text2" id="editableContent" hidden required>
+        <input name="text2" id="editableContent" hidden>
       </div>
       <div class="right">
         <h1> Преимущества </h1></h>
@@ -153,12 +153,12 @@
     <div class="spaces-h1">
     <h1 class="block" style="margin-bottom: 10px;"> Тарифы </h1>
         <div class="spaces" id="htmlContainer">
-            
+
             <div class="two_window">
                 <div class="container-space">
                     <div class="space-img" >
                         <img id="preview6" src="{% static 'main/img/pict1_template.jpg' %}" alt="Preview Image 1" style="cursor:pointer;">
-                        <input type="file" id="avatarInput6" name="avatar1" accept="image/*" style="display:none;" required>
+                        <input type="file" id="avatarInput6" name="avatar${document.querySelectorAll('.two_window').length + 1}" accept="image/*" style="display:none;">
                     </div>
 
                     <div class="ser-info-box">
@@ -170,7 +170,7 @@
                         <input type="text" name="tariff_price" class ="editinginputs1" placeholder=""  maxlength="22" required>
                         <button type="button" id="addHtmlButton" class="BookBtn" style="margin-top: 17px;">Добавить</button>
                     </div>
-                    
+
                 </div>
         </div>
     </div>
@@ -238,10 +238,10 @@
     document.getElementById('addHtmlButton').addEventListener('click', function() {
     // Создаем новый элемент
     const newElement = document.createElement('div');
-    newElement.className = 'two_window'; 
+    newElement.className = 'two_window';
     let values = document.querySelector('.ser-info-box').querySelectorAll('.editinginputs1');
     let src = document.getElementById('preview6').src
-    
+
     for (i=0; i<3;i++){
 
     console.log(values[i].value);
@@ -250,21 +250,21 @@
     newElement.innerHTML = `
         <div class="container-space">
             <div class="space-img" ><img src='${src}' alt="Right Image 1"></div>
-            <input type="file" id="avatarInput6" name="avatar1" value="${src}" accept="image/*" style="display:none;" required>
+            <input type="file" id="avatarInput6" name="avatar${document.querySelectorAll('.two_window').length + 1}" value="${src}" accept="image/*" style="display:none;" >
 
             <h2 style="margin-left: 10px;">${values[0].value}</h2>
             <input type="text" name="tariff_name" class ="editinginputs1" placeholder="" value="${values[0].value}" style="display:none;" maxlength="22" required>
 
             <h4>Мест: ${values[1].value}</h4>
             <input type="text" name="tariff_seats" value="${values[1].value}" class ="editinginputs1" placeholder="" style="display:none;" maxlength="22" required>
-            
+
             <h4>Цена за час: ${values[2].value} руб.</h4>
             <input type="text" name="tariff_price" class ="editinginputs1" value="${values[2].value}" placeholder="" style="display:none;" maxlength="22" required>
 
             <button type="button" id="deleteHtmlButton" class="BookBtn3">Удалить</button>
         </div>
     `;
-    
+
     // Добавляем новый элемент в контейнер
     document.getElementById('htmlContainer').appendChild(newElement);
 });
@@ -303,7 +303,7 @@ function addEventListeners(inputId, previewId) {
             reader.onload = function(e) {
                 const preview = document.getElementById(previewId);
                 preview.src = e.target.result;
-               
+
             };
             reader.readAsDataURL(file);
         }
@@ -315,8 +315,6 @@ for (let i = 0; i < inputIds.length; i++) {
     addEventListeners(inputIds[i], previewIds[i]);
 }
 </script>
-
-
 
 {% endblock %}
 
