@@ -140,12 +140,12 @@
 
 <script>
     document.getElementById('addHtmlButton').addEventListener('click', function() {
-        const tariffs = [];
+        tariffs = [];
         document.querySelectorAll('.two_window').forEach(function(tariff) {
-            const nameElement = tariff.querySelector('.editinginputs1[name="tariff_name"]');
-            const seatsElement = tariff.querySelector('.editinginputs1[name="tariff_seats"]');
-            const priceElement = tariff.querySelector('.editinginputs1[name="tariff_price"]');
-            const imageElement = tariff.querySelector('.space-img img');
+            nameElement = tariff.querySelector('.editinginputs1[name="tariff_name"]');
+            seatsElement = tariff.querySelector('.editinginputs1[name="tariff_seats"]');
+            priceElement = tariff.querySelector('.editinginputs1[name="tariff_price"]');
+            imageElement = tariff.querySelector('.space-img img');
 
             if (nameElement && seatsElement && priceElement && imageElement) {
                 const tariffData = {
@@ -207,9 +207,17 @@
     newElement.innerHTML = `
         <div class="container-space">
             <div class="space-img" ><img src='${src}' alt="Right Image 1"></div>
+            <input type="file" id="avatarInput6" name="avatar1" value="${src}" accept="image/*" style="display:none;" required>
+
             <h2 style="margin-left: 10px;">${values[0].value}</h2>
+            <input type="text" name="tariff_name" class ="editinginputs1" placeholder="" value="${values[0].value}" style="display:none;" maxlength="22" required>
+
             <h4>Мест: ${values[1].value}</h4>
+            <input type="text" name="tariff_seats" value="${values[1].value}" class ="editinginputs1" placeholder="" style="display:none;" maxlength="22" required>
+            
             <h4>Цена за час: ${values[2].value} руб.</h4>
+            <input type="text" name="tariff_price" class ="editinginputs1" value="${values[2].value}" placeholder="" style="display:none;" maxlength="22" required>
+
             <button type="button" id="deleteHtmlButton" class="BookBtn3">Удалить</button>
         </div>
     `;

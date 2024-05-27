@@ -520,6 +520,12 @@ form{
 }
 
 
+.price p{
+  width: 300px; /* Ширина абзаца */
+  height: 100px; /* Высота абзаца */
+}
+
+
 
 
 .ser-info-box .BookBtn:hover{ /* Кнопка регистрации/входа */
