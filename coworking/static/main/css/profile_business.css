@@ -522,6 +522,21 @@ body{
   border-radius: 25px;
 }
 
+.wrapper .right .projects .btn_1{
+  background-color: white;
+  border-radius: 25px;
+  width: 9%;
+  height: 5%;
+  margin-left: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.wrapper .right .projects .btn_1:hover {
+  transition: 0.2s ease-in-out;
+  color: #d94d04;
+}
+
 
 
 .wrapper .left .btn:hover{
