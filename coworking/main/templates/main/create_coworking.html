@@ -168,9 +168,10 @@
                         <input type="text" name="tariff_seats" class ="editinginputs1" placeholder=""  maxlength="22" required>
                         <h3>Стоимость за час</h3>
                         <input type="text" name="tariff_price" class ="editinginputs1" placeholder=""  maxlength="22" required>
-                        <button type="button" id="addHtmlButton" class="BookBtn" style="margin-top: 17px;">Добавить</button>
+                        <span class="errmsg" style="margin-top:10px; color: aliceblue; display: none;" >Заполните все поля</span>
+                        
                     </div>
-
+                    <button type="button" id="addHtmlButton" class="BookBtn">Добавить</button>
                 </div>
         </div>
     </div>
@@ -180,9 +181,10 @@
 </form>
 
 <script>
+    tariffs = []
     document.getElementById('addHtmlButton').addEventListener('click', function() {
-        tariffs = [];
-        document.querySelectorAll('.two_window').forEach(function(tariff) {
+        
+        tariff = document.querySelector('.two_window');
             nameElement = tariff.querySelector('.editinginputs1[name="tariff_name"]');
             seatsElement = tariff.querySelector('.editinginputs1[name="tariff_seats"]');
             priceElement = tariff.querySelector('.editinginputs1[name="tariff_price"]');
@@ -199,8 +201,7 @@
             } else {
                 console.error('Some tariff elements are missing:', { nameElement, seatsElement, priceElement, imageElement });
             }
-        });
-
+        
         document.getElementById('tariffData').value = JSON.stringify(tariffs);
     });
 
@@ -232,40 +233,74 @@
     });
 </script>
 
+
+
 <script>
     document.getElementById('addHtmlButton').addEventListener('click', function() {
     // Создаем новый элемент
-    const newElement = document.createElement('div');
-    newElement.className = 'two_window';
     let values = document.querySelector('.ser-info-box').querySelectorAll('.editinginputs1');
     let src = document.getElementById('preview6').src
-
+    let pr = 0;
     for (i=0; i<3;i++){
-
-    console.log(values[i].value);
+        
+        if (values[i].value){
+            pr = 1;
+        }
+        else{
+            pr = 0;
+        }
     }
-    // Добавляем в него HTML код
-    newElement.innerHTML = `
-        <div class="container-space">
-            <div class="space-img" ><img src='${src}' alt="Right Image 1"></div>
-            <input type="file" id="avatarInput6" name="avatar${document.querySelectorAll('.two_window').length + 1}" value="${src}" accept="image/*" style="display:none;" >
 
-            <h2 style="margin-left: 10px;">${values[0].value}</h2>
-            <input type="text" name="tariff_name" class ="editinginputs1" placeholder="" value="${values[0].value}" style="display:none;" maxlength="22" required>
+    if (pr == 1){
+        const newElement = document.createElement('div');
+        newElement.className = 'two_window';
+        newElement.id = `deleteHtmlButton${document.querySelectorAll('.two_window').length + 1}`;
+        
 
-            <h4>Мест: ${values[1].value}</h4>
-            <input type="text" name="tariff_seats" value="${values[1].value}" class ="editinginputs1" placeholder="" style="display:none;" maxlength="22" required>
+        
+        // Добавляем в него HTML код
+        newElement.innerHTML = `
+            <div class="container-space">
+                <div class="space-img" ><img src='${src}' alt="Right Image 1"></div>
+                <input type="file" id="avatarInput6" name="avatar${document.querySelectorAll('.two_window').length + 1}" value="${src}" accept="image/*" style="display:none;" >
 
-            <h4>Цена за час: ${values[2].value} руб.</h4>
-            <input type="text" name="tariff_price" class ="editinginputs1" value="${values[2].value}" placeholder="" style="display:none;" maxlength="22" required>
+                <h2 style="margin-left: 10px;">${values[0].value}</h2>
+                <input type="text" name="tariff_name" class ="editinginputs1" placeholder="" value="${values[0].value}" style="display:none;" maxlength="22" required>
 
-            <button type="button" id="deleteHtmlButton" class="BookBtn3">Удалить</button>
-        </div>
-    `;
+                <h4>Мест: ${values[1].value}</h4>
+                <input type="text" name="tariff_seats" value="${values[1].value}" class ="editinginputs1" placeholder="" style="display:none;" maxlength="22" required>
 
-    // Добавляем новый элемент в контейнер
-    document.getElementById('htmlContainer').appendChild(newElement);
+                <h4>Цена за час: ${values[2].value} руб.</h4>
+                <input type="text" name="tariff_price" class ="editinginputs1" value="${values[2].value}" placeholder="" style="display:none;" maxlength="22" required>
+
+                <button type="button" onclick="removeElement(this)" class="BookBtn3">Удалить</button>
+            </div>
+        `;
+
+        // Добавляем новый элемент в контейнер
+        document.getElementById('htmlContainer').appendChild(newElement);
+    }
+    else{
+        document.querySelector('.errmsg').style.display = 'block';
+        
+    }
+   
 });
+
+function removeElement(button) {
+    // Получаем родительский элемент кнопки и удаляем его
+    let delitem = button.parentElement;
+    console.log(delitem);
+    for (i=0; i < tariffs.length; i++){
+        if ((delitem.querySelector('.editinginputs1[name="tariff_name"]').value == tariffs[i].name) && (delitem.querySelector('.editinginputs1[name="tariff_seats"]').value == tariffs[i].seats) && (delitem.querySelector('.editinginputs1[name="tariff_price"]').value == tariffs[i].price)){
+            console.log('123');
+            tariffs.splice(i, 1);
+        }
+
+    }
+    button.parentElement.remove();
+}
+
 </script>
 
 <script>
