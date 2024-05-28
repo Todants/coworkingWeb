@@ -96,7 +96,6 @@ def create_coworking(request):
         time_end = request.POST.get('time_end')
         avatar_fields = ['pict1', 'pict2', 'pict3', 'pict4', 'pict5']
         tariff_data = request.POST.get('tariffData')
-
         time_start_obj = datetime.strptime(time_start, '%H:%M').time()
         time_end_obj = datetime.strptime(time_end, '%H:%M').time()
 
@@ -110,6 +109,11 @@ def create_coworking(request):
                 address=address,
                 date_start=time_start_obj,
                 date_end=time_end_obj,
+                benefits={'wifi': 'wifi' in request.POST, 'coffe': 'coffe' in request.POST,
+                          'printer': 'printer' in request.POST, 'kitchen': 'kitchen' in request.POST,
+                          'fitness': 'fitness' in request.POST, 'fruits': 'fruits' in request.POST,
+                          'locker': 'locker' in request.POST, 'parking': 'parking' in request.POST,
+                }
             )
 
             tariffs = json.loads(tariff_data)
@@ -471,7 +475,7 @@ def coworking(request, cowork_id):
 
     context = {'authorize_check': authorize_check, 'spaces': spaces, 'big_img': images[0], 'small_img': images[1:],
                'description': cowk.description, 'name_coworking': cowk.coworking_name, 'key': cowk.id,
-               'avatar': acc.img if acc else None,
+               'avatar': acc.img if acc else None, 'benefits': cowk.benefits,
                'username': f'{acc.first_name} {acc.last_name}' if role == 'user' else None,
                'working_time': f"{cowk.date_start.strftime('%H:%M')} - {cowk.date_end.strftime('%H:%M')}",
                'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,

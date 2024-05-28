@@ -37,8 +37,8 @@ class CoworkingSpaces(models.Model):
     rating_count = models.BigIntegerField(null=False, default=0)
     rating_sum = models.BigIntegerField(null=False, default=0)
     address = models.CharField(max_length=500, blank=False, null=True)
-    benefits = models.JSONField(default={'wifi': False, 'coffe': False, 'printer': False, 'locker': False,
-                                         'fruits': False, 'parking': False, 'kitchen': False})
+    benefits = models.JSONField(default={'wifi': False, 'coffe': False, 'printer': False, 'kitchen': False,
+                                         'fitness': False, 'fruits': False, 'locker': False, 'parking': False})
 
     def __str__(self):
         return f'{self.id_company} , {self.description} ,{self.date_start} ,{self.date_end}'
