@@ -66,6 +66,11 @@
                     <p> Кухня </p>
                 </div>
                 {% endif %}
+                {% if not benefits.kitchen and not benefits.wifi and not benefits.coffe and not benefits.printer and not benefits.fitness and not benefits.fruits and not benefits.locker and not benefits.parking %}
+                <div class="item">
+                    <p> Не указаны </p>
+                </div>
+                {% endif %}
             </div>
             <div style="display: flex; flex-direction: column; margin-left: 30px;">
                 {% if benefits.fitness %}
