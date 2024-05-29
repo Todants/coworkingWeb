@@ -223,7 +223,7 @@ def profile(request):
                 user_profile.img = 'upldfile/' + avatar.name
                 user_profile.save()
 
-    next_book, prev_book, cowork_list = None, None, None
+    next_book, prev_book, cowork_list, bookings = None, None, None, None
     acc = Businesses.objects.filter(email=user_info[0]).first()
     if not acc:
         acc = Users.objects.filter(email=user_info[0]).first()
@@ -265,9 +265,23 @@ def profile(request):
                                 'serv': Services.objects.filter(id_coworking=book['id']).count()
                                 })
 
+        bookings = []
+        nb = list(nb)
+        numb = 1
+        for i in nb:
+            books = Bookings.objects.filter(id_coworking=i['id'], date_end__gt=timezone.now()).values('id_user', 'price', 'type', 'date_start', 'date_end')
+            for j in books:
+                username = Users.objects.filter(id=j['id_user']).values('first_name', 'last_name')
+
+                bookings.append({'iter': numb, 'cowork': i['coworking_name'], 'price': j['price'], 'tariff': j['type'],
+                                 'username': f'{username[0]["first_name"]} {username[0]["last_name"]}',
+                                 'date_start': j['date_start'], 'date_end': j['date_end'],
+                                 })
+                numb += 1
+
     context = {'email': acc.email, 'phone': acc.phone_number, 'password': acc.password, 'name': name,
                'birthday': birthday, 'avatar': acc.img, 'next_book': next_book, 'prev_book': prev_book,
-               'cowork_list': cowork_list}
+               'cowork_list': cowork_list, 'bookings': bookings}
 
     if Businesses.objects.filter(email=user_info[0]).exists():
         return render(request, 'main/profile_business.html', context)

@@ -62,7 +62,6 @@
     <div class="right">
         <div class="projects">
             <h3>Будущие бронирования</h3>
-            <button type="submit" class="btn_1"> 1 </button>
             <div class="projects_data">
               <table>
                 <caption>
@@ -70,82 +69,27 @@
                 </caption>
                 <thead>
                   <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">id_coworking</th>
-                    <th scope="col">id_user</th>
-                    <th scope="col">price</th>
-                    <th scope="col">type</th>
-                    <th scope="col">date_start</th>
-                    <th scope="col">date_end</th>
+                    <th scope="col">№</th>
+                    <th scope="col">Коворкинг</th>
+                    <th scope="col">Имя Фамилия</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Тариф</th>
+                    <th scope="col">Время начала</th>
+                    <th scope="col">Время окончания</th>
                   </tr>
                 </thead>
                 <tbody>
+                {% for book in bookings %}
                   <tr>
-                    <th scope="row">5</th>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>1</td>
-                    <td>1</td>
+                    <th scope="row">{{book.iter}}</th>
+                    <td>{{book.cowork}}</td>
+                    <td>{{book.username}}</td>
+                    <td>{{book.price}}</td>
+                    <td>{{book.tariff}}</td>
+                    <td>{{book.date_start}}</td>
+                    <td>{{book.date_end}}</td>
                   </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>1</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>1</td>
-                    <td>3</td>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>1</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>1</td>
-                    <td>4</td>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>1</td>
-                    <td>1</td>
-                  </tr>
-                </tr>
-                <tr>
-                  <th scope="row">8</th>
-                  <td>1</td>
-                  <td>4</td>
-                  <td>111</td>
-                  <td>111</td>
-                  <td>1</td>
-                  <td>1</td>
-                </tr>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>1</td>
-                <td>4</td>
-                <td>111</td>
-                <td>111</td>
-                <td>1</td>
-                <td>1</td>
-              </tr>
-            </tr>
-            <tr>
-              <th scope="row">8</th>
-              <td>1</td>
-              <td>4</td>
-              <td>111</td>
-              <td>111</td>
-              <td>1</td>
-              <td>1</td>
-            </tr>
+                  {% endfor %}
               </table>
             </div>
         </div>
