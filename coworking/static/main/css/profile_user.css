@@ -217,7 +217,8 @@ body{
   border-top-right-radius: 25px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  width: 150px;
+  width: 208px;
+  height: 117px;
   position: top relative;
   margin-bottom: 45px;
 }
@@ -247,7 +248,8 @@ body{
   border-top-right-radius: 25px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-  width: 150px;
+  width: 208px;
+  height: 117px;
   position: top relative;
   margin-bottom: 45px;
 }
@@ -261,7 +263,8 @@ body{
 .wrapper .right .projects .projects_data{
   margin-top: 10px;
   overflow-y: auto;
-  display: flex;
+  display: inline-flex;
+  width: 100%;
 }
 
 .right .projects{
