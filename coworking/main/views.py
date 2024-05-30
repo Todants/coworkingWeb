@@ -2,7 +2,7 @@ import base64
 import json
 import os
 from random import randint
-from time import sleep
+import time
 
 from django.conf import settings
 from django.core.files.base import ContentFile
@@ -99,7 +99,6 @@ def create_coworking(request):
         time_start_obj = datetime.strptime(time_start, '%H:%M').time()
         time_end_obj = datetime.strptime(time_end, '%H:%M').time()
 
-        print(len(tariff_data), com_name, description, address, time_start_obj, time_end_obj)
         if tariff_data and com_name and description and address and time_start_obj and time_end_obj:
 
             temp_co = CoworkingSpaces.objects.create(
@@ -423,8 +422,10 @@ def coworking(request, cowork_id):
                         'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до "
                                     f"{coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
+            
+            ms = int(round(time.time() * 1))
 
-            if date_start_obj <= now():
+            if time.mktime(date_start_obj.timetuple()) <= ms:
                 return JsonResponse({'error': {'password': 'Выбранное время уже прошло'}}, status=400)
 
             serv = Services.objects.filter(id_coworking=id_coworking, type=type_coworking).first()
