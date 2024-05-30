@@ -32,7 +32,9 @@ body{
   margin-bottom: 80px;
   border-radius: 20px;
   padding-left: 40px;
+  display: flex;
   padding-right: 40px;@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+  
 
   *{
     margin: 0;
@@ -473,8 +475,6 @@ body{
 }
 
 .btn_three {
-  width: 180px;
-  height: 60px;
   cursor: pointer;
   background: transparent;
   border: 1px solid #161616;
@@ -520,21 +520,6 @@ body{
   transition: color 0.4s linear;
   position: relative;
   border-radius: 25px;
-}
-
-.wrapper .right .projects .btn_1{
-  background-color: white;
-  border-radius: 25px;
-  width: 9%;
-  height: 5%;
-  margin-left: 2%;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-
-.wrapper .right .projects .btn_1:hover {
-  transition: 0.2s ease-in-out;
-  color: #d94d04;
 }
 
 
