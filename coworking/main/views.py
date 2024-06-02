@@ -1,21 +1,21 @@
 import base64
 import json
 import os
-from random import randint
 import time
+from datetime import datetime
+from random import randint
 
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.timezone import make_aware, now
+from django.utils.timezone import make_aware
 
 from .models import Businesses, Users, Services, CoworkingSpaces, Images, Bookings
-from django.http import JsonResponse
-from datetime import datetime
 
 
 def index(request):
@@ -33,8 +33,9 @@ def index(request):
     coworkings = CoworkingSpaces.objects.all()
     for i in coworkings:
         images = Images.objects.filter(id_coworking=i.id)
-        cowork[i.id] = {'name': i.coworking_name, 'image': images[0].file,
-                        'rating': round(i.rating_sum / i.rating_count, 1) if i.rating_count > 0 else 0.0}
+        if images and images.count() == 5:
+            cowork[i.id] = {'name': i.coworking_name, 'image': images[0].file,
+                            'rating': round(i.rating_sum / i.rating_count, 1) if i.rating_count > 0 else 0.0}
 
     context = {'authorize_check': authorize_check, 'coworkings': cowork, 'avatar': acc.img if acc else None}
 
@@ -81,7 +82,6 @@ def about(request):
 
 def create_coworking(request):
     user_info = request.session.get('user_info', [])
-    acc = None
     if user_info:
         acc = Businesses.objects.filter(email=user_info[0]).first()
         if not acc:
@@ -101,48 +101,52 @@ def create_coworking(request):
 
         if tariff_data and com_name and description and address and time_start_obj and time_end_obj:
 
-            temp_co = CoworkingSpaces.objects.create(
-                id_company=acc,
-                coworking_name=com_name,
-                description=description,
-                address=address,
-                date_start=time_start_obj,
-                date_end=time_end_obj,
-                benefits={'wifi': 'wifi' in request.POST, 'coffe': 'coffe' in request.POST,
-                          'printer': 'printer' in request.POST, 'kitchen': 'kitchen' in request.POST,
-                          'fitness': 'fitness' in request.POST, 'fruits': 'fruits' in request.POST,
-                          'locker': 'locker' in request.POST, 'parking': 'parking' in request.POST,
-                }
-            )
+            try:
 
-            tariffs = json.loads(tariff_data)
-            for tariff in tariffs[:-1]:
-                avatar_base64 = tariff['image']
-
-                if avatar_base64.startswith('data:image'):
-                    avatar_base64 = avatar_base64.split(',')[1]
-
-                avatar_data = base64.b64decode(avatar_base64)
-
-                avatar_file = ContentFile(avatar_data,
-                                          name=f'ava{randint(1, 9999999)}{randint(1, 9999999)}{randint(1, 999999)}.jpg')
-
-                fs = FileSystemStorage()
-                filename = fs.save('upldfile/' + avatar_file.name, avatar_file)
-
-                Services.objects.create(
-                    id_coworking=temp_co,
-                    price=tariff['price'],
-                    type=tariff['name'],
-                    num_of_seats=tariff['seats'],
-                    img='upldfile/' + avatar_file.name,
+                temp_co = CoworkingSpaces.objects.create(
+                    id_company=acc,
+                    coworking_name=com_name,
+                    description=description,
+                    address=address,
+                    date_start=time_start_obj,
+                    date_end=time_end_obj,
+                    benefits={'wifi': 'wifi' in request.POST, 'coffe': 'coffe' in request.POST,
+                              'printer': 'printer' in request.POST, 'kitchen': 'kitchen' in request.POST,
+                              'fitness': 'fitness' in request.POST, 'fruits': 'fruits' in request.POST,
+                              'locker': 'locker' in request.POST, 'parking': 'parking' in request.POST,
+                              }
                 )
 
-            for field in avatar_fields:
-                if field in request.FILES:
-                    Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+                tariffs = json.loads(tariff_data)
+                for tariff in tariffs[:-1]:
+                    avatar_base64 = tariff['image']
 
-            return redirect(reverse('profile'))
+                    if avatar_base64.startswith('data:image'):
+                        avatar_base64 = avatar_base64.split(',')[1]
+
+                    avatar_data = base64.b64decode(avatar_base64)
+
+                    avatar_file = ContentFile(avatar_data,
+                                              name=f'ava{randint(1, 9999999)}{randint(1, 9999999)}{randint(1, 999999)}.jpg')
+
+                    fs = FileSystemStorage()
+                    fs.save('upldfile/' + avatar_file.name, avatar_file)
+
+                    Services.objects.create(
+                        id_coworking=temp_co,
+                        price=tariff['price'],
+                        type=tariff['name'],
+                        num_of_seats=tariff['seats'],
+                        img='upldfile/' + avatar_file.name,
+                    )
+
+                for field in avatar_fields:
+                    if field in request.FILES:
+                        Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+
+                return redirect(reverse('profile'))
+            except:
+                return redirect(reverse('create_coworking'))
 
     return render(request, 'main/create_coworking.html', {'avatar': acc.img if acc else None})
 
@@ -218,7 +222,7 @@ def profile(request):
 
                 avatar = request.FILES['avatar']
                 fs = FileSystemStorage()
-                filename = fs.save('upldfile/' + avatar.name, avatar)
+                fs.save('upldfile/' + avatar.name, avatar)
                 user_profile.img = 'upldfile/' + avatar.name
                 user_profile.save()
 
@@ -268,7 +272,10 @@ def profile(request):
         nb = list(nb)
         numb = 1
         for i in nb:
-            books = Bookings.objects.filter(id_coworking=i['id'], date_end__gt=timezone.now()).values('id_user', 'price', 'type', 'date_start', 'date_end')
+            books = Bookings.objects.filter(id_coworking=i['id'], date_end__gt=timezone.now()).values('id_user',
+                                                                                                      'price', 'type',
+                                                                                                      'date_start',
+                                                                                                      'date_end')
             for j in books:
                 username = Users.objects.filter(id=j['id_user']).values('first_name', 'last_name')
 
@@ -422,7 +429,7 @@ def coworking(request, cowork_id):
                         'password': f"Выбранный коворкинг работает с {coworking_space.date_start.strftime('%H:%M')} до "
                                     f"{coworking_space.date_end.strftime('%H:%M')} по мск."}},
                     status=400)
-            
+
             ms = int(round(time.time() * 1))
 
             if time.mktime(date_start_obj.timetuple()) <= ms:
@@ -465,7 +472,7 @@ def coworking(request, cowork_id):
                 return JsonResponse({'error': {'password': 'На выбранный промежуток времени уже заняты все места'}},
                                     status=400)
 
-            temp_co = Bookings.objects.create(
+            Bookings.objects.create(
                 id_coworking=coworking_space,
                 id_user=acc,
                 price=booking_minutes * serv.price / 60,
@@ -494,6 +501,7 @@ def coworking(request, cowork_id):
                'username': f'{acc.first_name} {acc.last_name}' if role == 'user' else None,
                'working_time': f"{cowk.date_start.strftime('%H:%M')} - {cowk.date_end.strftime('%H:%M')}",
                'rating': round(cowk.rating_sum / cowk.rating_count, 1) if cowk.rating_count > 0 else 0.0,
+               'address': cowk.address,
                }
 
     return render(request, 'main/temp_coworking.html', context)

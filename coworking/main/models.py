@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 
 class Users(models.Model):
@@ -24,10 +23,11 @@ class Businesses(models.Model):
     img = models.ImageField(upload_to='upldfile/', default='upldfile/base_avatar.jpg')
 
     def __str__(self):
-        return f'{self.company_name} , {self.email} ,{self.password} ,{self.phone_number}'
+        return f'{self.company_name}, {self.email}, {self.password}, {self.phone_number}'
 
 
 class CoworkingSpaces(models.Model):
+
     id = models.AutoField(primary_key=True)
     id_company = models.ForeignKey(Businesses, on_delete=models.CASCADE, to_field='id')
     coworking_name = models.CharField(max_length=50)
@@ -40,20 +40,19 @@ class CoworkingSpaces(models.Model):
     benefits = models.JSONField(default={'wifi': False, 'coffe': False, 'printer': False, 'kitchen': False,
                                          'fitness': False, 'fruits': False, 'locker': False, 'parking': False})
 
-    def __str__(self):
-        return f'{self.id_company} , {self.description} ,{self.date_start} ,{self.date_end}'
-
 
 class Images(models.Model):
+
     id = models.AutoField(primary_key=True)
     id_coworking = models.ForeignKey(CoworkingSpaces, on_delete=models.CASCADE, to_field='id')
     file = models.FileField(upload_to='upldfile/')
 
     def __str__(self):
-        return f'{self.id} , {self.id_coworking} ,{self.file} '
+        return f'{self.id}, {self.id_coworking}, {self.file} '
 
 
 class Bookings(models.Model):
+
     id = models.AutoField(primary_key=True)
     id_coworking = models.ForeignKey(CoworkingSpaces, on_delete=models.CASCADE, to_field='id')
     id_user = models.ForeignKey(Users, on_delete=models.CASCADE, to_field='id')
@@ -63,12 +62,9 @@ class Bookings(models.Model):
     date_end = models.DateTimeField(null=False)
     rating = models.BigIntegerField(null=False, default=0)
 
-    def formatted_date_start(self):
-        local_time = timezone.localtime(self.date_start)
-        return local_time.strftime('%d.%m.%Y - %H:%M')
-
 
 class Services(models.Model):
+
     id = models.AutoField(primary_key=True)
     id_coworking = models.ForeignKey(CoworkingSpaces, on_delete=models.CASCADE, to_field='id')
     price = models.BigIntegerField(null=False)
