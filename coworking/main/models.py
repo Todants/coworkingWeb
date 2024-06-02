@@ -70,4 +70,5 @@ class Services(models.Model):
     price = models.BigIntegerField(null=False)
     type = models.CharField(max_length=100, blank=False, null=False)
     num_of_seats = models.BigIntegerField(null=False)
-    img = models.ImageField(max_length=200, upload_to='upldfile/', null=False, blank=True)
+    img = models.ImageField(max_length=200, upload_to='upldfile/', null=False, blank=True,
+                            default='static/main/img/coworking1.jpg')

@@ -8,6 +8,7 @@ from random import randint
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
+from django.db import transaction
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -102,47 +103,51 @@ def create_coworking(request):
         if tariff_data and com_name and description and address and time_start_obj and time_end_obj:
 
             try:
+                with transaction.atomic():
 
-                temp_co = CoworkingSpaces.objects.create(
-                    id_company=acc,
-                    coworking_name=com_name,
-                    description=description,
-                    address=address,
-                    date_start=time_start_obj,
-                    date_end=time_end_obj,
-                    benefits={'wifi': 'wifi' in request.POST, 'coffe': 'coffe' in request.POST,
-                              'printer': 'printer' in request.POST, 'kitchen': 'kitchen' in request.POST,
-                              'fitness': 'fitness' in request.POST, 'fruits': 'fruits' in request.POST,
-                              'locker': 'locker' in request.POST, 'parking': 'parking' in request.POST,
-                              }
-                )
-
-                tariffs = json.loads(tariff_data)
-                for tariff in tariffs[:-1]:
-                    avatar_base64 = tariff['image']
-
-                    if avatar_base64.startswith('data:image'):
-                        avatar_base64 = avatar_base64.split(',')[1]
-
-                    avatar_data = base64.b64decode(avatar_base64)
-
-                    avatar_file = ContentFile(avatar_data,
-                                              name=f'ava{randint(1, 9999999)}{randint(1, 9999999)}{randint(1, 999999)}.jpg')
-
-                    fs = FileSystemStorage()
-                    fs.save('upldfile/' + avatar_file.name, avatar_file)
-
-                    Services.objects.create(
-                        id_coworking=temp_co,
-                        price=tariff['price'],
-                        type=tariff['name'],
-                        num_of_seats=tariff['seats'],
-                        img='upldfile/' + avatar_file.name,
+                    temp_co = CoworkingSpaces.objects.create(
+                        id_company=acc,
+                        coworking_name=com_name,
+                        description=description,
+                        address=address,
+                        date_start=time_start_obj,
+                        date_end=time_end_obj,
+                        benefits={'wifi': 'wifi' in request.POST, 'coffe': 'coffe' in request.POST,
+                                  'printer': 'printer' in request.POST, 'kitchen': 'kitchen' in request.POST,
+                                  'fitness': 'fitness' in request.POST, 'fruits': 'fruits' in request.POST,
+                                  'locker': 'locker' in request.POST, 'parking': 'parking' in request.POST,
+                                  }
                     )
 
-                for field in avatar_fields:
-                    if field in request.FILES:
-                        Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
+                    tariffs = json.loads(tariff_data)
+                    if len(tariffs) == 0:
+                        raise ValueError("Empty tariffs")
+
+                    for tariff in tariffs:
+                        avatar_base64 = tariff['image']
+
+                        if avatar_base64.startswith('data:image'):
+                            avatar_base64 = avatar_base64.split(',')[1]
+
+                        avatar_data = base64.b64decode(avatar_base64)
+
+                        avatar_file = ContentFile(avatar_data,
+                                                  name=f'ava{randint(1, 9999999)}{randint(1, 9999999)}{randint(1, 999999)}.jpg')
+
+                        fs = FileSystemStorage()
+                        fs.save('upldfile/' + avatar_file.name, avatar_file)
+
+                        Services.objects.create(
+                            id_coworking=temp_co,
+                            price=tariff['price'],
+                            type=tariff['name'],
+                            num_of_seats=tariff['seats'],
+                            img='upldfile/' + avatar_file.name,
+                        )
+
+                    for field in avatar_fields:
+                        if field in request.FILES:
+                            Images.objects.create(id_coworking=temp_co, file=request.FILES[field])
 
                 return redirect(reverse('profile'))
             except:

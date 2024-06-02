@@ -21,7 +21,7 @@
         <div class="left-image">
             <div class="left-img">
                 <img id="preview1" src="{% static 'main/img/pict1_template.jpg' %}" alt="Preview Image 1" style="cursor:pointer;">
-                <input type="file" id="avatarInput1" name="pict1" accept="image/*" style="display:none;" >
+                <input type="file" id="avatarInput1" name="pict1" accept="image/*" style="display:none;">
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             <div class="photos">
 
                 <input type="file" id="avatarInput5" name="pict5" accept="image/*" style="display:none;" >
-                <img id="preview5" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 5" style="cursor:pointer;">
+                <img id="preview5" src="{% static 'main/img/pictN_template.jpg' %}" alt="Preview Image 5" style="cursor:pointer;" >
             </div>
 
         </div>
@@ -56,8 +56,8 @@
         <span> Адрес </span>
           <input type="Name" name="text3" class ="editinginputs1" placeholder=""  maxlength="500" required>
         <span> Рабочие часы </span>
-        <input type="time" name="time_start" class ="editinginputs1" placeholder="" required>
-        <input type="time" name="time_end" class ="editinginputs1" placeholder="" required>
+        <input type="time" name="time_start" id="time_start" class ="editinginputs1" placeholder="" required>
+        <input type="time" name="time_end" id="time_end" class ="editinginputs1" placeholder="" required>
     </div>
     <hr class="line">
     <div class="price">
@@ -170,7 +170,6 @@
 
     <button type="submit" class="BookBtn2" style="margin-top: 17px;">Создать коворкинг</button>
 </form>
-
 <script>
     tariffs = []
     document.getElementById('addHtmlButton').addEventListener('click', function() {
@@ -206,6 +205,7 @@
             const seatsElement = tariff.querySelector('.editinginputs1[name="tariff_seats"]');
             const priceElement = tariff.querySelector('.editinginputs1[name="tariff_price"]');
             const imageElement = tariff.querySelector('.space-img img');
+        document.getElementById('tariffData').value = JSON.stringify(tariffs);
 
             if (nameElement && seatsElement && priceElement && imageElement) {
                 const tariffData = {
@@ -220,11 +220,58 @@
             }
         });
 
-        document.getElementById('tariffData').value = JSON.stringify(tariffs);
+        var temp = document.getElementById('avatarInput1').value;
+        if (!temp) {
+            alert('Пожалуйста, выберите фото №1!');
+            event.preventDefault();
+            return;
+        }
+        var temp = document.getElementById('avatarInput2').value;
+        if (!temp) {
+            alert('Пожалуйста, выберите фото №2!');
+            event.preventDefault();
+            return;
+        }
+        var temp = document.getElementById('avatarInput3').value;
+        if (!temp) {
+            alert('Пожалуйста, выберите фото №3!');
+            event.preventDefault();
+            return;
+        }
+        var temp = document.getElementById('avatarInput4').value;
+        if (!temp) {
+            alert('Пожалуйста, выберите фото №4!');
+            event.preventDefault();
+            return;
+        }
+        var temp = document.getElementById('avatarInput5').value;
+        if (!temp) {
+            alert('Пожалуйста, выберите фото №5!');
+            event.preventDefault();
+            return;
+        }
+        var temp = document.getElementById('editableContent').value;
+        if (!temp) {
+            alert('Пожалуйста, введите описание!');
+            event.preventDefault();
+            return;
+        }
+        var timeStart = document.getElementById('time_start').value;
+        var timeEnd = document.getElementById('time_end').value;
+        var temp = document.getElementById('tariffData').value;
+        if (!temp) {
+            alert('Пожалуйста, добавьте тарифы!');
+            event.preventDefault();
+            return;
+        }
+        if (timeStart && timeEnd && timeEnd <= timeStart) {
+            alert('Время окончания должно быть позже времени начала.');
+            event.preventDefault();
+            return;
+        }
+
     });
 </script>
-
-
 
 <script>
 

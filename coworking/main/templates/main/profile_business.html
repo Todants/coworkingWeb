@@ -28,7 +28,7 @@
         </div>
         <form method="POST" id="email-form" style="margin-top: 10px; width: 100%;">
             {% csrf_token %}
-            <span>Email</span>
+            <span>Почта</span>
             <div class="Info">
               <input type="email" name="email" required="required" class="editinginputs1" id="editingtoggle1" placeholder="{{email}}" value="{{email}}" maxlength="22" disabled>
               <button type="button" class="toggle" id="toggle1"> &#9998; </button>
@@ -37,7 +37,7 @@
 
       <form method="POST" id="phone-form" style="width: 100%;">
         {% csrf_token %}
-        <span>Phone</span>
+        <span>Телефон</span>
         <div class="Info">
           <input type="tel" name="phone" required="required" class="editinginputs2" id="editingtoggle2" placeholder="{{phone}}" value="{{phone}}" maxlength="16" disabled>
           <button type="button" class="toggle" id="toggle2"> &#9998; </button>
@@ -46,7 +46,7 @@
 
       <form method="POST" id="password-form" style="width: 100%;">
         {% csrf_token %}
-        <span>Password</span>
+        <span>Пароль</span>
         <div class="Info">
           <input type="password" name="password" required="required" class="editinginputs4" id="editingtoggle4" placeholder="{{password}}" value="{{password}}" maxlength="20" disabled>
           <button type="button" class="toggle" id="toggle4"> &#9998; </button>
@@ -55,7 +55,7 @@
         
       <form action="{% url 'login_view' %}" method="post" id="logout-form" style="width: 80%; justify-content: center; display: flex; height: 8%;"  >
         {% csrf_token %}
-        <button type="submit" class="btn">Log Out</button>
+        <button type="submit" class="btn">Выход</button>
         <input type="hidden" name="logout" value="true">
     </form>
     </div>
